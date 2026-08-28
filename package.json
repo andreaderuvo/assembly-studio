@@ -1,6 +1,16 @@
 {
   "name": "assembly-studio",
   "version": "0.1.0",
+  "keywords": [
+    "3d",
+    "assembly",
+    "cad",
+    "freecad",
+    "step",
+    "stl",
+    "threejs",
+    "webgl"
+  ],
   "private": true,
   "type": "module",
   "scripts": {
