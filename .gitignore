@@ -1,6 +1,7 @@
 node_modules/
 build/web/
 build/recovery/
+build/private/
 webapp/data/*.tmp
 webapp/data/assembly.test.json
 __pycache__/

@@ -1,5 +1,5 @@
 {
-  "source": "/home/dev/projects/rc_Car/pancar_18e.FCStd",
+  "source": "build/private/source.FCStd",
   "assembly": "/home/dev/projects/rc_Car/build/assembly/rc_car_full_working_v7.FCStd",
   "normalization": {
     "base_mm": [

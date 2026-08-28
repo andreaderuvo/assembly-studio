@@ -1209,7 +1209,7 @@ Importing project files......
 [32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/pivot_ball_holder_upper_right_steering__Body360.step(1146 ents)  Write  Done[0m
 [117/117] pivot_ball_holder_upper_right_steering
 Exported 117 components; failures: 0
-	Command being timed: "/tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/bin/freecadcmd tools/export_step_components.py --pass pancar_18e.FCStd build/step_export"
+	Command being timed: "/tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/bin/freecadcmd tools/export_step_components.py --pass build/private/source.FCStd build/step_export"
 	User time (seconds): 13.10
 	System time (seconds): 0.40
 	Percent of CPU this job got: 98%
