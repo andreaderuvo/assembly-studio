@@ -1,0 +1,296 @@
+{
+  "source": "/home/dev/projects/rc_Car/pancar_18e.FCStd",
+  "assembly": "/home/dev/projects/rc_Car/build/assembly/rc_car_full_working_v6.FCStd",
+  "normalization": {
+    "base_mm": [
+      -0.0,
+      -0.0,
+      -0.0
+    ],
+    "quaternion_xyzw": [
+      0.336417494,
+      -0.0,
+      -0.0,
+      0.941712945
+    ]
+  },
+  "components": [
+    {
+      "name": "chassis_4mm",
+      "label": "chassis_4mm001",
+      "status": "exact-source-joint",
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "name": "rear_tower_left",
+      "label": "rear_tower_left001",
+      "status": "exact-source-joint",
+      "placement": {
+        "base_mm": [
+          151.719549,
+          -35.5,
+          24.0
+        ],
+        "quaternion_xyzw": [
+          0.707106781,
+          0.0,
+          0.0,
+          0.707106781
+        ]
+      }
+    },
+    {
+      "name": "rear_tower_right",
+      "label": "rear_tower_right001",
+      "status": "exact-source-joint",
+      "placement": {
+        "base_mm": [
+          151.719549,
+          35.5,
+          24.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.707106781,
+          0.707106781,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "lipo_holder_flex",
+      "label": "lipo_holder_flex001",
+      "status": "exact-source-joint",
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          4.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "name": "lipo_barrier_rear003",
+      "label": "lipo_barrier_rear005",
+      "status": "exact-source-joint",
+      "placement": {
+        "base_mm": [
+          -2.145143,
+          3.750261,
+          4.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "name": "lipo_barrier_rear004",
+      "label": "lipo_barrier_rear006",
+      "status": "exact-source-joint",
+      "placement": {
+        "base_mm": [
+          -2.145143,
+          -3.750261,
+          31.0
+        ],
+        "quaternion_xyzw": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "Body354",
+      "label": "rear_upperdeck",
+      "status": "provisional-authored-placement",
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          41.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "name": "Body347",
+      "label": "front_upperdeck",
+      "status": "user-guided-above-lipo-divider",
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          54.006226
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "z_offset_mm": 41.006226,
+      "interface_evidence": "User-guided above central LiPo divider; 4 XY holes match near x=-170.28 mm"
+    },
+    {
+      "name": "Body356",
+      "label": "double_fan_support",
+      "status": "user-guided-above-rear-right-shoulder",
+      "placement": {
+        "base_mm": [
+          107.030141,
+          -12.308747,
+          54.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          -0.707106781,
+          0.707106781
+        ]
+      },
+      "translation_mm": [
+        127.278296,
+        -9.439409,
+        54.0
+      ],
+      "guided_rotation_deg_z": -90.0,
+      "interface_evidence": "User-guided; 25 mm fan-holder pair aligned to the two motor-mount holes"
+    },
+    {
+      "name": "Body172",
+      "label": "shaft_rear",
+      "status": "inferred-rear-bearing-axis",
+      "axis": "rear",
+      "axis_center_mm": [
+        151.719549,
+        0.0,
+        29.0
+      ],
+      "interface_evidence": "Aligned local Z axis to transverse rear bearing axis"
+    },
+    {
+      "name": "Body246",
+      "label": "pulley_rear",
+      "status": "inferred-rear-bearing-axis",
+      "axis": "rear",
+      "axis_center_mm": [
+        151.719549,
+        0.0,
+        29.0
+      ],
+      "interface_evidence": "Aligned local Z axis to transverse rear bearing axis"
+    },
+    {
+      "name": "Body253",
+      "label": "shaft_front_hollow_petcf",
+      "status": "inferred-front-bearing-axis",
+      "axis": "front",
+      "axis_center_mm": [
+        -83.8768,
+        0.0,
+        45.1
+      ],
+      "interface_evidence": "Aligned local Z axis to transverse front bearing axis"
+    },
+    {
+      "name": "Fusion006",
+      "label": "pulley_front_capped",
+      "status": "inferred-front-bearing-axis",
+      "axis": "front",
+      "axis_center_mm": [
+        -83.8768,
+        0.0,
+        45.1
+      ],
+      "interface_evidence": "Aligned local Z axis to transverse front bearing axis"
+    },
+    {
+      "name": "Body255",
+      "label": "tower_right",
+      "status": "inferred-front-symmetric-pivot",
+      "translation_mm": [
+        -173.769,
+        -20.0,
+        5.0
+      ],
+      "interface_evidence": "Main vertical bore aligned at x=-170.269, y=-20.0"
+    },
+    {
+      "name": "Body262",
+      "label": "tower_left",
+      "status": "inferred-front-symmetric-pivot",
+      "translation_mm": [
+        -173.769,
+        20.0,
+        -40.0
+      ],
+      "interface_evidence": "Main vertical bore aligned at x=-170.269, y=20.0"
+    },
+    {
+      "name": "Body323",
+      "label": "suspension_upper_reinforce",
+      "status": "inferred-bridge-above-front-towers",
+      "interface_evidence": "Rotated across vehicle and centered on front pivot pair"
+    },
+    {
+      "name": "lipo_left",
+      "label": "LiPo left",
+      "status": "reference-two-lipo-layout"
+    },
+    {
+      "name": "lipo_right",
+      "label": "LiPo right",
+      "status": "reference-two-lipo-layout"
+    },
+    {
+      "name": "wheel_rear_left",
+      "label": "wheel_rear",
+      "status": "reference-wheel-axis-envelope"
+    },
+    {
+      "name": "wheel_rear_right",
+      "label": "wheel_rear001",
+      "status": "reference-wheel-axis-envelope"
+    },
+    {
+      "name": "wheel_front_left",
+      "label": "wheel_front",
+      "status": "reference-wheel-axis-envelope"
+    },
+    {
+      "name": "wheel_front_right",
+      "label": "wheel_front001",
+      "status": "reference-wheel-axis-envelope"
+    }
+  ]
+}

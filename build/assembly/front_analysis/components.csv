@@ -1,0 +1,2 @@
+name,label,type,size_x_mm,size_y_mm,size_z_mm,volume_mm3,parents
+CoreAssembly,RC car core assembly,App::Part,,,,,

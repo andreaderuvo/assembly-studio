@@ -1,0 +1,2816 @@
+{
+  "source": "/home/dev/projects/rc_Car/pancar_18e.FCStd",
+  "linear_deflection_mm": 0.2,
+  "angular_deflection_deg": 20.0,
+  "components": [
+    {
+      "name": "Body060",
+      "label": "wheel_rear",
+      "type": "PartDesign::Body",
+      "group": "assembly",
+      "stl": "stl/assembly/wheel_rear__Body060.stl",
+      "triangles": 312,
+      "size_mm": [
+        70.0,
+        69.804266,
+        62.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "ThreadedRod",
+      "label": "M12x10-ThreadedRod",
+      "type": "Part::FeaturePython",
+      "group": "ungrouped",
+      "stl": "stl/ungrouped/M12x10-ThreadedRod__ThreadedRod.stl",
+      "triangles": 6646,
+      "size_mm": [
+        11.829967,
+        11.828814,
+        10.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body068",
+      "label": "wheel_front",
+      "type": "PartDesign::Body",
+      "group": "assembly",
+      "stl": "stl/assembly/wheel_front__Body068.stl",
+      "triangles": 300,
+      "size_mm": [
+        59.902719,
+        59.95134,
+        37.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body086",
+      "label": "lipo",
+      "type": "PartDesign::Body",
+      "group": "assembly",
+      "stl": "stl/assembly/lipo__Body086.stl",
+      "triangles": 300,
+      "size_mm": [
+        140.0,
+        47.0,
+        25.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body090",
+      "label": "motor",
+      "type": "PartDesign::Body",
+      "group": "assembly",
+      "stl": "stl/assembly/motor__Body090.stl",
+      "triangles": 572,
+      "size_mm": [
+        42.0,
+        42.0,
+        87.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Fusion",
+      "label": "Fusion",
+      "type": "Part::MultiFuse",
+      "group": "ungrouped",
+      "stl": "stl/ungrouped/Fusion__Fusion.stl",
+      "triangles": 1328,
+      "size_mm": [
+        7.965168,
+        7.988675,
+        36.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Fusion001",
+      "label": "Fusion001",
+      "type": "Part::MultiFuse",
+      "group": "ungrouped",
+      "stl": "stl/ungrouped/Fusion001__Fusion001.stl",
+      "triangles": 280,
+      "size_mm": [
+        16.0,
+        3.0,
+        31.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body099",
+      "label": "collar_wheel_3.50mm",
+      "type": "PartDesign::Body",
+      "group": "optionals",
+      "stl": "stl/optionals/collar_wheel_3.50mm__Body099.stl",
+      "triangles": 288,
+      "size_mm": [
+        16.0,
+        16.0,
+        3.5
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Fillet006",
+      "label": "Fillet006",
+      "type": "Part::Fillet",
+      "group": "ungrouped",
+      "stl": "stl/ungrouped/Fillet006__Fillet006.stl",
+      "triangles": 2440,
+      "size_mm": [
+        16.0,
+        3.0,
+        31.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Fusion002",
+      "label": "Fusion002",
+      "type": "Part::MultiFuse",
+      "group": "ungrouped",
+      "stl": "stl/ungrouped/Fusion002__Fusion002.stl",
+      "triangles": 3972,
+      "size_mm": [
+        16.0,
+        7.988675,
+        36.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Fillet007",
+      "label": "dogbone",
+      "type": "Part::Fillet",
+      "group": "assembly",
+      "stl": "stl/assembly/dogbone__Fillet007.stl",
+      "triangles": 4118,
+      "size_mm": [
+        16.0,
+        7.999931,
+        36.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Fusion003",
+      "label": "pivot_ball",
+      "type": "Part::MultiFuse",
+      "group": "assembly",
+      "stl": "stl/assembly/pivot_ball__Fusion003.stl",
+      "triangles": 680,
+      "size_mm": [
+        7.96003,
+        7.999994,
+        22.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body130",
+      "label": "shim_rear",
+      "type": "PartDesign::Body",
+      "group": "belt",
+      "stl": "stl/belt/shim_rear__Body130.stl",
+      "triangles": 600,
+      "size_mm": [
+        11.383822,
+        13.5,
+        11.383822
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body133",
+      "label": "pinion",
+      "type": "PartDesign::Body",
+      "group": "transmission",
+      "stl": "stl/transmission/pinion__Body133.stl",
+      "triangles": 5480,
+      "size_mm": [
+        20.90224,
+        20.973876,
+        18.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body136",
+      "label": "plate_wheel",
+      "type": "PartDesign::Body",
+      "group": "optionals",
+      "stl": "stl/optionals/plate_wheel__Body136.stl",
+      "triangles": 436,
+      "size_mm": [
+        16.0,
+        16.0,
+        5.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body139",
+      "label": "esc_holder_light",
+      "type": "PartDesign::Body",
+      "group": "old",
+      "stl": "stl/old/esc_holder_light__Body139.stl",
+      "triangles": 1286,
+      "size_mm": [
+        130.0,
+        55.0,
+        3.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body002",
+      "label": "lipo_link",
+      "type": "PartDesign::Body",
+      "group": "central",
+      "stl": "stl/central/lipo_link__Body002.stl",
+      "triangles": 776,
+      "size_mm": [
+        14.722749,
+        50.0,
+        5.0
+      ],
+      "placement_mm": [
+        0.0,
+        -4e-06,
+        31.000004
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body162",
+      "label": "servo_arms_nylon",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/servo_arms_nylon__Body162.stl",
+      "triangles": 640,
+      "size_mm": [
+        26.0,
+        20.0,
+        5.5
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body168",
+      "label": "stop_wheel",
+      "type": "PartDesign::Body",
+      "group": "transmission",
+      "stl": "stl/transmission/stop_wheel__Body168.stl",
+      "triangles": 460,
+      "size_mm": [
+        9.1,
+        25.0,
+        9.1
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body171",
+      "label": "spur_49t",
+      "type": "PartDesign::Body",
+      "group": "transmission",
+      "stl": "stl/transmission/spur_49t__Body171.stl",
+      "triangles": 14180,
+      "size_mm": [
+        50.992737,
+        50.966538,
+        18.0
+      ],
+      "placement_mm": [
+        4.0,
+        -4.0,
+        -2.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "Body172",
+      "label": "shaft_rear",
+      "type": "PartDesign::Body",
+      "group": "transmission",
+      "stl": "stl/transmission/shaft_rear__Body172.stl",
+      "triangles": 1292,
+      "size_mm": [
+        11.5,
+        11.5,
+        219.8
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        -28.7
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body174",
+      "label": "shim_left_metal",
+      "type": "PartDesign::Body",
+      "group": "shims",
+      "stl": "stl/shims/shim_left_metal__Body174.stl",
+      "triangles": 288,
+      "size_mm": [
+        14.0,
+        14.0,
+        2.8
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body176",
+      "label": "shim_right_metal",
+      "type": "PartDesign::Body",
+      "group": "shims",
+      "stl": "stl/shims/shim_right_metal__Body176.stl",
+      "triangles": 288,
+      "size_mm": [
+        14.0,
+        14.0,
+        1.4
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body177",
+      "label": "shim_rear_metal",
+      "type": "PartDesign::Body",
+      "group": "shims",
+      "stl": "stl/shims/shim_rear_metal__Body177.stl",
+      "triangles": 600,
+      "size_mm": [
+        11.383822,
+        16.5,
+        11.383822
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body178",
+      "label": "rear_body_holder",
+      "type": "PartDesign::Body",
+      "group": "bodyshell",
+      "stl": "stl/bodyshell/rear_body_holder__Body178.stl",
+      "triangles": 2200,
+      "size_mm": [
+        8.0,
+        80.0,
+        8.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body180",
+      "label": "tower_body",
+      "type": "PartDesign::Body",
+      "group": "bodyshell",
+      "stl": "stl/bodyshell/tower_body__Body180.stl",
+      "triangles": 1864,
+      "size_mm": [
+        8.0,
+        20.0,
+        30.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body181",
+      "label": "esc_holder_rear",
+      "type": "PartDesign::Body",
+      "group": "rear",
+      "stl": "stl/rear/esc_holder_rear__Body181.stl",
+      "triangles": 1364,
+      "size_mm": [
+        70.0,
+        88.0,
+        12.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body186",
+      "label": "bumper",
+      "type": "PartDesign::Body",
+      "group": "bodyshell",
+      "stl": "stl/bodyshell/bumper__Body186.stl",
+      "triangles": 4576,
+      "size_mm": [
+        259.987578,
+        44.0,
+        8.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body188",
+      "label": "towers_holder",
+      "type": "PartDesign::Body",
+      "group": "bodyshell",
+      "stl": "stl/bodyshell/towers_holder__Body188.stl",
+      "triangles": 972,
+      "size_mm": [
+        94.0,
+        12.0,
+        3.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        -6.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body198",
+      "label": "bodyshell_rear_holder",
+      "type": "PartDesign::Body",
+      "group": "bodyshell",
+      "stl": "stl/bodyshell/bodyshell_rear_holder__Body198.stl",
+      "triangles": 1004,
+      "size_mm": [
+        220.0,
+        18.0,
+        14.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body202",
+      "label": "balestra_holder_down",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/balestra_holder_down__Body202.stl",
+      "triangles": 460,
+      "size_mm": [
+        30.0,
+        4.4,
+        7.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body213",
+      "label": "front_tire",
+      "type": "PartDesign::Body",
+      "group": "assembly",
+      "stl": "stl/assembly/front_tire__Body213.stl",
+      "triangles": 292,
+      "size_mm": [
+        30.0,
+        54.900931,
+        54.950443
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body214",
+      "label": "shaft_rear_metal_backup",
+      "type": "PartDesign::Body",
+      "group": "backup",
+      "stl": "stl/backup/shaft_rear_metal_backup__Body214.stl",
+      "triangles": 1292,
+      "size_mm": [
+        11.5,
+        11.5,
+        219.8
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        -28.7
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body223",
+      "label": "shim_rear0_12_5mm",
+      "type": "PartDesign::Body",
+      "group": "shims",
+      "stl": "stl/shims/shim_rear0_12_5mm__Body223.stl",
+      "triangles": 600,
+      "size_mm": [
+        11.383822,
+        13.5,
+        11.383822
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body224",
+      "label": "shim_rear0_13_5mm",
+      "type": "PartDesign::Body",
+      "group": "shims",
+      "stl": "stl/shims/shim_rear0_13_5mm__Body224.stl",
+      "triangles": 600,
+      "size_mm": [
+        11.383822,
+        14.5,
+        11.383822
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body225",
+      "label": "shaft_carbon_fiber_filler",
+      "type": "PartDesign::Body",
+      "group": "backup",
+      "stl": "stl/backup/shaft_carbon_fiber_filler__Body225.stl",
+      "triangles": 464,
+      "size_mm": [
+        9.0,
+        9.0,
+        11.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body228",
+      "label": "front_belt_holder",
+      "type": "PartDesign::Body",
+      "group": "belt",
+      "stl": "stl/belt/front_belt_holder__Body228.stl",
+      "triangles": 1140,
+      "size_mm": [
+        10.5,
+        14.0,
+        17.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body229",
+      "label": "spur_holder",
+      "type": "PartDesign::Body",
+      "group": "transmission",
+      "stl": "stl/transmission/spur_holder__Body229.stl",
+      "triangles": 1618,
+      "size_mm": [
+        30.5,
+        30.5,
+        16.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body230",
+      "label": "bumper_holder",
+      "type": "PartDesign::Body",
+      "group": "bodyshell",
+      "stl": "stl/bodyshell/bumper_holder__Body230.stl",
+      "triangles": 1562,
+      "size_mm": [
+        83.161336,
+        45.0,
+        14.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        -3.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body234",
+      "label": "chassis_4mm",
+      "type": "PartDesign::Body",
+      "group": "chassis",
+      "stl": "stl/chassis/chassis_4mm__Body234.stl",
+      "triangles": 12788,
+      "size_mm": [
+        361.473012,
+        90.008158,
+        4.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body235",
+      "label": "rear_tower_right",
+      "type": "PartDesign::Body",
+      "group": "rear",
+      "stl": "stl/rear/rear_tower_right__Body235.stl",
+      "triangles": 1970,
+      "size_mm": [
+        93.0,
+        50.0,
+        9.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        18.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body238",
+      "label": "fan_support",
+      "type": "PartDesign::Body",
+      "group": "optionals",
+      "stl": "stl/optionals/fan_support__Body238.stl",
+      "triangles": 1368,
+      "size_mm": [
+        49.0,
+        48.0,
+        5.0
+      ],
+      "placement_mm": [
+        0.0,
+        55.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body246",
+      "label": "pulley_rear",
+      "type": "PartDesign::Body",
+      "group": "transmission",
+      "stl": "stl/transmission/pulley_rear__Body246.stl",
+      "triangles": 11388,
+      "size_mm": [
+        34.0,
+        34.0,
+        21.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        74.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body247",
+      "label": "turnbuckle_4mm",
+      "type": "PartDesign::Body",
+      "group": "optionals",
+      "stl": "stl/optionals/turnbuckle_4mm__Body247.stl",
+      "triangles": 432,
+      "size_mm": [
+        10.2,
+        41.201286,
+        5.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body251",
+      "label": "drive_train_petcf",
+      "type": "PartDesign::Body",
+      "group": "ungrouped",
+      "stl": "stl/ungrouped/drive_train_petcf__Body251.stl",
+      "triangles": 1110,
+      "size_mm": [
+        19.999981,
+        18.999962,
+        30.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        -12.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body252",
+      "label": "pulley_petcf",
+      "type": "PartDesign::Body",
+      "group": "ungrouped",
+      "stl": "stl/ungrouped/pulley_petcf__Body252.stl",
+      "triangles": 10376,
+      "size_mm": [
+        30.0,
+        30.0,
+        11.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        15.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Fusion004",
+      "label": "pulley_front",
+      "type": "Part::MultiFuse",
+      "group": "old",
+      "stl": "stl/old/pulley_front__Fusion004.stl",
+      "triangles": 11340,
+      "size_mm": [
+        30.0,
+        30.0,
+        30.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body253",
+      "label": "shaft_front_hollow_petcf",
+      "type": "PartDesign::Body",
+      "group": "transmission",
+      "stl": "stl/transmission/shaft_front_hollow_petcf__Body253.stl",
+      "triangles": 1668,
+      "size_mm": [
+        12.0,
+        11.581164,
+        90.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body",
+      "label": "tower_bearing_plug",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/tower_bearing_plug__Body.stl",
+      "triangles": 260,
+      "size_mm": [
+        20.1,
+        19.5,
+        12.0
+      ],
+      "placement_mm": [
+        3.5,
+        18.0,
+        21.5
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body255",
+      "label": "tower_right",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/tower_right__Body255.stl",
+      "triangles": 1408,
+      "size_mm": [
+        40.0,
+        38.0,
+        30.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        17.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body256",
+      "label": "lipo_holder_flex",
+      "type": "PartDesign::Body",
+      "group": "central",
+      "stl": "stl/central/lipo_holder_flex__Body256.stl",
+      "triangles": 1048,
+      "size_mm": [
+        162.0,
+        8.0,
+        27.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body259",
+      "label": "servo_holder_longer",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/servo_holder_longer__Body259.stl",
+      "triangles": 564,
+      "size_mm": [
+        17.5,
+        20.0,
+        7.974219
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body260",
+      "label": "servo_holder_cable_longer",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/servo_holder_cable_longer__Body260.stl",
+      "triangles": 528,
+      "size_mm": [
+        17.5,
+        20.0,
+        8.0
+      ],
+      "placement_mm": [
+        28.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 180.0
+    },
+    {
+      "name": "Body262",
+      "label": "tower_left",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/tower_left__Body262.stl",
+      "triangles": 1404,
+      "size_mm": [
+        40.0,
+        38.0,
+        30.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        47.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body278",
+      "label": "shaft_front_petcf",
+      "type": "PartDesign::Body",
+      "group": "transmission",
+      "stl": "stl/transmission/shaft_front_petcf__Body278.stl",
+      "triangles": 1320,
+      "size_mm": [
+        12.099895,
+        11.630093,
+        90.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body279",
+      "label": "collar_wheel_3mm",
+      "type": "PartDesign::Body",
+      "group": "optionals",
+      "stl": "stl/optionals/collar_wheel_3mm__Body279.stl",
+      "triangles": 288,
+      "size_mm": [
+        16.0,
+        16.0,
+        3.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body285",
+      "label": "balestra_holder_top",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/balestra_holder_top__Body285.stl",
+      "triangles": 460,
+      "size_mm": [
+        22.0,
+        5.6,
+        7.0
+      ],
+      "placement_mm": [
+        0.0,
+        -5.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body286",
+      "label": "wheel_train_w_pin_short",
+      "type": "PartDesign::Body",
+      "group": "old",
+      "stl": "stl/old/wheel_train_w_pin_short__Body286.stl",
+      "triangles": 1420,
+      "size_mm": [
+        16.976733,
+        14.290365,
+        33.0
+      ],
+      "placement_mm": [
+        73.0,
+        41.0,
+        41.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body287",
+      "label": "wheel_spring_holder_long",
+      "type": "PartDesign::Body",
+      "group": "transmission",
+      "stl": "stl/transmission/wheel_spring_holder_long__Body287.stl",
+      "triangles": 284,
+      "size_mm": [
+        9.5,
+        9.5,
+        8.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body288",
+      "label": "shim_M12x1",
+      "type": "PartDesign::Body",
+      "group": "shims",
+      "stl": "stl/shims/shim_M12x1__Body288.stl",
+      "triangles": 288,
+      "size_mm": [
+        16.595542,
+        16.595542,
+        1.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body289",
+      "label": "steering_block_M10",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/steering_block_M10__Body289.stl",
+      "triangles": 6932,
+      "size_mm": [
+        44.0,
+        17.5,
+        47.0
+      ],
+      "placement_mm": [
+        108.0,
+        12.0,
+        54.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "ThreadedRod001",
+      "label": "M10x10-ThreadedRod",
+      "type": "Part::FeaturePython",
+      "group": "ungrouped",
+      "stl": "stl/ungrouped/M10x10-ThreadedRod__ThreadedRod001.stl",
+      "triangles": 8210,
+      "size_mm": [
+        9.84675,
+        9.849546,
+        10.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body290",
+      "label": "stop_pivot_ball_M10",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/stop_pivot_ball_M10__Body290.stl",
+      "triangles": 8432,
+      "size_mm": [
+        9.84675,
+        9.849546,
+        9.45614
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body291",
+      "label": "link_central_rear",
+      "type": "PartDesign::Body",
+      "group": "optionals",
+      "stl": "stl/optionals/link_central_rear__Body291.stl",
+      "triangles": 316,
+      "size_mm": [
+        20.0,
+        15.0,
+        8.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body292",
+      "label": "rear_wing",
+      "type": "PartDesign::Body",
+      "group": "optionals",
+      "stl": "stl/optionals/rear_wing__Body292.stl",
+      "triangles": 982,
+      "size_mm": [
+        47.819401,
+        243.0,
+        5.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body296",
+      "label": "suspension_upper",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/suspension_upper__Body296.stl",
+      "triangles": 1068,
+      "size_mm": [
+        33.0,
+        54.5,
+        3.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body297",
+      "label": "pivot_ball_holder_upper_right",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/pivot_ball_holder_upper_right__Body297.stl",
+      "triangles": 970,
+      "size_mm": [
+        36.2,
+        16.0,
+        12.0
+      ],
+      "placement_mm": [
+        14.0,
+        -135.6,
+        82.0
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "Body299",
+      "label": "suspension_lower",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/suspension_lower__Body299.stl",
+      "triangles": 2960,
+      "size_mm": [
+        40.0,
+        158.0,
+        12.0
+      ],
+      "placement_mm": [
+        13.0,
+        8.6,
+        77.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body300",
+      "label": "pivot_ball_holder_lower",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/pivot_ball_holder_lower__Body300.stl",
+      "triangles": 732,
+      "size_mm": [
+        28.2,
+        16.0,
+        11.0
+      ],
+      "placement_mm": [
+        14.0,
+        -134.6,
+        81.5
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "Body301",
+      "label": "pivot_ball_holder_upper_left",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/pivot_ball_holder_upper_left__Body301.stl",
+      "triangles": 966,
+      "size_mm": [
+        36.2,
+        16.0,
+        12.0
+      ],
+      "placement_mm": [
+        14.0,
+        -135.6,
+        101.0
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "Body302",
+      "label": "wheel_train_w_pin_nylon",
+      "type": "PartDesign::Body",
+      "group": "old",
+      "stl": "stl/old/wheel_train_w_pin_nylon__Body302.stl",
+      "triangles": 1198,
+      "size_mm": [
+        16.976733,
+        14.290365,
+        32.5
+      ],
+      "placement_mm": [
+        124.0,
+        41.0,
+        41.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body305",
+      "label": "boomerang_steering_block_sx",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/boomerang_steering_block_sx__Body305.stl",
+      "triangles": 628,
+      "size_mm": [
+        29.0,
+        20.0,
+        9.0
+      ],
+      "placement_mm": [
+        -53.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "rotation_deg": 180.0
+    },
+    {
+      "name": "Body306",
+      "label": "boomerang_steeribg_block_dx",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/boomerang_steeribg_block_dx__Body306.stl",
+      "triangles": 628,
+      "size_mm": [
+        29.0,
+        20.0,
+        9.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body308",
+      "label": "front_spring",
+      "type": "PartDesign::Body",
+      "group": "optionals",
+      "stl": "stl/optionals/front_spring__Body308.stl",
+      "triangles": 1660,
+      "size_mm": [
+        69.0,
+        24.0,
+        4.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body310",
+      "label": "esc_holder_light_mobile",
+      "type": "PartDesign::Body",
+      "group": "old",
+      "stl": "stl/old/esc_holder_light_mobile__Body310.stl",
+      "triangles": 608,
+      "size_mm": [
+        74.0,
+        55.0,
+        3.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body311",
+      "label": "mobile_lipo",
+      "type": "PartDesign::Body",
+      "group": "old",
+      "stl": "stl/old/mobile_lipo__Body311.stl",
+      "triangles": 1280,
+      "size_mm": [
+        7.5,
+        7.5,
+        8.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body236",
+      "label": "lipo_barrier_dx",
+      "type": "PartDesign::Body",
+      "group": "old",
+      "stl": "stl/old/lipo_barrier_dx__Body236.stl",
+      "triangles": 784,
+      "size_mm": [
+        168.8,
+        40.0,
+        27.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body237",
+      "label": "lipo_barrier_sx",
+      "type": "PartDesign::Body",
+      "group": "old",
+      "stl": "stl/old/lipo_barrier_sx__Body237.stl",
+      "triangles": 1080,
+      "size_mm": [
+        176.8,
+        40.0,
+        27.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body312",
+      "label": "lipo_barrier_front_10mm",
+      "type": "PartDesign::Body",
+      "group": "old",
+      "stl": "stl/old/lipo_barrier_front_10mm__Body312.stl",
+      "triangles": 1268,
+      "size_mm": [
+        21.0,
+        40.0,
+        27.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body313",
+      "label": "front_belt_tensioner_new_4mm",
+      "type": "PartDesign::Body",
+      "group": "belt",
+      "stl": "stl/belt/front_belt_tensioner_new_4mm__Body313.stl",
+      "triangles": 844,
+      "size_mm": [
+        8.0,
+        18.0,
+        12.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        -4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body315",
+      "label": "lipo_barrier_rear",
+      "type": "PartDesign::Body",
+      "group": "old",
+      "stl": "stl/old/lipo_barrier_rear__Body315.stl",
+      "triangles": 480,
+      "size_mm": [
+        46.0,
+        40.0,
+        27.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body317",
+      "label": "front_belt_tensioner_new_3mm",
+      "type": "PartDesign::Body",
+      "group": "belt",
+      "stl": "stl/belt/front_belt_tensioner_new_3mm__Body317.stl",
+      "triangles": 844,
+      "size_mm": [
+        8.0,
+        18.0,
+        11.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        -4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body319",
+      "label": "shim_10mm",
+      "type": "PartDesign::Body",
+      "group": "shims",
+      "stl": "stl/shims/shim_10mm__Body319.stl",
+      "triangles": 288,
+      "size_mm": [
+        8.0,
+        8.0,
+        10.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body320",
+      "label": "esc_plate_rear",
+      "type": "PartDesign::Body",
+      "group": "central",
+      "stl": "stl/central/esc_plate_rear__Body320.stl",
+      "triangles": 1868,
+      "size_mm": [
+        49.0,
+        110.0,
+        3.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body321",
+      "label": "tower_body_right",
+      "type": "PartDesign::Body",
+      "group": "bodyshell",
+      "stl": "stl/bodyshell/tower_body_right__Body321.stl",
+      "triangles": 2160,
+      "size_mm": [
+        8.0,
+        20.0,
+        30.0
+      ],
+      "placement_mm": [
+        27.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body323",
+      "label": "suspension_upper_reinforce",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/suspension_upper_reinforce__Body323.stl",
+      "triangles": 1496,
+      "size_mm": [
+        114.0,
+        32.000001,
+        5.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body324",
+      "label": "front_belt_tensioner_lower",
+      "type": "PartDesign::Body",
+      "group": "belt",
+      "stl": "stl/belt/front_belt_tensioner_lower__Body324.stl",
+      "triangles": 504,
+      "size_mm": [
+        6.0,
+        6.0,
+        7.5
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body325",
+      "label": "front_belt_tensioner_lower_plate",
+      "type": "PartDesign::Body",
+      "group": "belt",
+      "stl": "stl/belt/front_belt_tensioner_lower_plate__Body325.stl",
+      "triangles": 432,
+      "size_mm": [
+        14.0,
+        14.0,
+        2.5
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body326",
+      "label": "lipo_barrier_front_11",
+      "type": "PartDesign::Body",
+      "group": "old",
+      "stl": "stl/old/lipo_barrier_front_11__Body326.stl",
+      "triangles": 1268,
+      "size_mm": [
+        21.0,
+        40.0,
+        27.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body327",
+      "label": "lipo_barrier_front_10.5mm",
+      "type": "PartDesign::Body",
+      "group": "old",
+      "stl": "stl/old/lipo_barrier_front_10.5mm__Body327.stl",
+      "triangles": 1268,
+      "size_mm": [
+        21.0,
+        40.0,
+        27.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body328",
+      "label": "tower_body_left",
+      "type": "PartDesign::Body",
+      "group": "bodyshell",
+      "stl": "stl/bodyshell/tower_body_left__Body328.stl",
+      "triangles": 2160,
+      "size_mm": [
+        8.0,
+        20.0,
+        30.0
+      ],
+      "placement_mm": [
+        27.0,
+        50.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 180.0
+    },
+    {
+      "name": "Body329",
+      "label": "front_lipo_link_long",
+      "type": "PartDesign::Body",
+      "group": "central",
+      "stl": "stl/central/front_lipo_link_long__Body329.stl",
+      "triangles": 1748,
+      "size_mm": [
+        54.0,
+        52.0,
+        14.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        -5.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body332",
+      "label": "rear_tower_left",
+      "type": "PartDesign::Body",
+      "group": "rear",
+      "stl": "stl/rear/rear_tower_left__Body332.stl",
+      "triangles": 2136,
+      "size_mm": [
+        93.0,
+        40.0,
+        9.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body335",
+      "label": "rear_belt_tensioner_support",
+      "type": "PartDesign::Body",
+      "group": "rear",
+      "stl": "stl/rear/rear_belt_tensioner_support__Body335.stl",
+      "triangles": 768,
+      "size_mm": [
+        16.999921,
+        28.051522,
+        4.0
+      ],
+      "placement_mm": [
+        0.0,
+        -5.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body336",
+      "label": "rear_belt_tensioner_shaft",
+      "type": "PartDesign::Body",
+      "group": "rear",
+      "stl": "stl/rear/rear_belt_tensioner_shaft__Body336.stl",
+      "triangles": 504,
+      "size_mm": [
+        7.0,
+        7.0,
+        4.4
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body337",
+      "label": "rear_belt_tensioner_shim",
+      "type": "PartDesign::Body",
+      "group": "rear",
+      "stl": "stl/rear/rear_belt_tensioner_shim__Body337.stl",
+      "triangles": 288,
+      "size_mm": [
+        6.0,
+        6.0,
+        7.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body338",
+      "label": "esc_capacitor_plate",
+      "type": "PartDesign::Body",
+      "group": "optionals",
+      "stl": "stl/optionals/esc_capacitor_plate__Body338.stl",
+      "triangles": 176,
+      "size_mm": [
+        14.5,
+        12.0,
+        35.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body340",
+      "label": "lipo_barrier_front_10mm001",
+      "type": "PartDesign::Body",
+      "group": "central",
+      "stl": "stl/central/lipo_barrier_front_10mm001__Body340.stl",
+      "triangles": 1876,
+      "size_mm": [
+        8.0,
+        40.0,
+        27.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body341",
+      "label": "lipo_lateral_blocker",
+      "type": "PartDesign::Body",
+      "group": "central",
+      "stl": "stl/central/lipo_lateral_blocker__Body341.stl",
+      "triangles": 646,
+      "size_mm": [
+        160.0,
+        4.0,
+        13.8
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body342",
+      "label": "lipo_barrier_rear003",
+      "type": "PartDesign::Body",
+      "group": "central",
+      "stl": "stl/central/lipo_barrier_rear003__Body342.stl",
+      "triangles": 1136,
+      "size_mm": [
+        20.0,
+        40.0,
+        27.0
+      ],
+      "placement_mm": [
+        56.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body346",
+      "label": "wheel_drive_shaft",
+      "type": "PartDesign::Body",
+      "group": "transmission",
+      "stl": "stl/transmission/wheel_drive_shaft__Body346.stl",
+      "triangles": 968,
+      "size_mm": [
+        16.97106,
+        14.392762,
+        32.0
+      ],
+      "placement_mm": [
+        124.0,
+        41.0,
+        41.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body347",
+      "label": "front_upperdeck",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/front_upperdeck__Body347.stl",
+      "triangles": 1000,
+      "size_mm": [
+        108.299052,
+        50.0,
+        29.006226
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        13.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body348",
+      "label": "drive_train_petcf001",
+      "type": "PartDesign::Body",
+      "group": "ungrouped",
+      "stl": "stl/ungrouped/drive_train_petcf001__Body348.stl",
+      "triangles": 1112,
+      "size_mm": [
+        19.999981,
+        19.0,
+        30.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        -12.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body349",
+      "label": "pulley_petcf001",
+      "type": "PartDesign::Body",
+      "group": "ungrouped",
+      "stl": "stl/ungrouped/pulley_petcf001__Body349.stl",
+      "triangles": 10352,
+      "size_mm": [
+        30.0,
+        30.0,
+        11.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        15.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Fusion005",
+      "label": "pulley_front001",
+      "type": "Part::MultiFuse",
+      "group": "old",
+      "stl": "stl/old/pulley_front001__Fusion005.stl",
+      "triangles": 11384,
+      "size_mm": [
+        30.0,
+        30.0,
+        30.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body350",
+      "label": "drive_shaft_plastic_cap",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/drive_shaft_plastic_cap__Body350.stl",
+      "triangles": 484,
+      "size_mm": [
+        13.5,
+        10.5,
+        6.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body351",
+      "label": "drive_train_petcf002",
+      "type": "PartDesign::Body",
+      "group": "ungrouped",
+      "stl": "stl/ungrouped/drive_train_petcf002__Body351.stl",
+      "triangles": 1074,
+      "size_mm": [
+        19.999981,
+        18.999962,
+        30.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        -12.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body352",
+      "label": "pulley_petcf002",
+      "type": "PartDesign::Body",
+      "group": "ungrouped",
+      "stl": "stl/ungrouped/pulley_petcf002__Body352.stl",
+      "triangles": 10376,
+      "size_mm": [
+        30.0,
+        30.0,
+        11.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        15.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Fusion006",
+      "label": "pulley_front_capped",
+      "type": "Part::MultiFuse",
+      "group": "transmission",
+      "stl": "stl/transmission/pulley_front_capped__Fusion006.stl",
+      "triangles": 11304,
+      "size_mm": [
+        30.0,
+        30.0,
+        30.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body353",
+      "label": "wheel_spring_holder_short",
+      "type": "PartDesign::Body",
+      "group": "transmission",
+      "stl": "stl/transmission/wheel_spring_holder_short__Body353.stl",
+      "triangles": 284,
+      "size_mm": [
+        8.0,
+        8.0,
+        3.5
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body354",
+      "label": "rear_upperdeck",
+      "type": "PartDesign::Body",
+      "group": "rear",
+      "stl": "stl/rear/rear_upperdeck__Body354.stl",
+      "triangles": 1988,
+      "size_mm": [
+        99.392828,
+        71.8826,
+        60.400212
+      ],
+      "placement_mm": [
+        0.0,
+        25.978314,
+        31.719508
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 39.317516
+    },
+    {
+      "name": "Body355",
+      "label": "rear_belt_tensioner_support_longer",
+      "type": "PartDesign::Body",
+      "group": "rear",
+      "stl": "stl/rear/rear_belt_tensioner_support_longer__Body355.stl",
+      "triangles": 848,
+      "size_mm": [
+        17.0,
+        36.706411,
+        4.0
+      ],
+      "placement_mm": [
+        0.0,
+        -5.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body356",
+      "label": "double_fan_support",
+      "type": "PartDesign::Body",
+      "group": "optionals",
+      "stl": "stl/optionals/double_fan_support__Body356.stl",
+      "triangles": 2100,
+      "size_mm": [
+        90.5,
+        48.0,
+        5.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body357",
+      "label": "lipo_holder_lighter",
+      "type": "PartDesign::Body",
+      "group": "central",
+      "stl": "stl/central/lipo_holder_lighter__Body357.stl",
+      "triangles": 1974,
+      "size_mm": [
+        162.0,
+        8.0,
+        27.0
+      ],
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body358",
+      "label": "pivot_ball_holder_lower_improved_steering",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/pivot_ball_holder_lower_improved_steering__Body358.stl",
+      "triangles": 606,
+      "size_mm": [
+        28.2,
+        14.0,
+        11.0
+      ],
+      "placement_mm": [
+        14.0,
+        -134.6,
+        81.5
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "Body359",
+      "label": "pivot_ball_holder_upper_left_steering",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/pivot_ball_holder_upper_left_steering__Body359.stl",
+      "triangles": 828,
+      "size_mm": [
+        36.2,
+        14.0,
+        12.0
+      ],
+      "placement_mm": [
+        14.0,
+        -135.6,
+        101.0
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "Body360",
+      "label": "pivot_ball_holder_upper_right_steering",
+      "type": "PartDesign::Body",
+      "group": "front",
+      "stl": "stl/front/pivot_ball_holder_upper_right_steering__Body360.stl",
+      "triangles": 832,
+      "size_mm": [
+        36.2,
+        14.0,
+        12.0
+      ],
+      "placement_mm": [
+        14.0,
+        -135.6,
+        82.0
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    }
+  ],
+  "failures": []
+}

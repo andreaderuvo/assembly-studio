@@ -1,0 +1,241 @@
+{
+  "assembly": "/home/dev/projects/rc_Car/build/assembly/rc_car_full_working_v9.FCStd",
+  "parts": 36,
+  "aabb_candidate_pairs": 58,
+  "completed_candidate_pairs": 58,
+  "complete": true,
+  "collisions": [
+    {
+      "first": "rear_tower_left",
+      "first_label": "rear_tower_left001",
+      "second": "motor_reference",
+      "second_label": "motor",
+      "intersection_volume_mm3": 9742.8648
+    },
+    {
+      "first": "lipo_holder_flex",
+      "first_label": "lipo_holder_flex001",
+      "second": "lipo_lateral_blocker_assembled",
+      "second_label": "lipo_lateral_blocker",
+      "intersection_volume_mm3": 6457.1492
+    },
+    {
+      "first": "lipo_barrier_front_right",
+      "first_label": "lipo_barrier_front_10mm001",
+      "second": "lipo_barrier_front_left",
+      "second_label": "lipo_barrier_front_10mm002",
+      "intersection_volume_mm3": 5921.05
+    },
+    {
+      "first": "Body172",
+      "first_label": "shaft_rear",
+      "second": "wheel_rear_right",
+      "second_label": "wheel_rear001",
+      "intersection_volume_mm3": 5587.2936
+    },
+    {
+      "first": "Body172",
+      "first_label": "shaft_rear",
+      "second": "wheel_rear_left",
+      "second_label": "wheel_rear",
+      "intersection_volume_mm3": 5582.7656
+    },
+    {
+      "first": "wheel_rear_left",
+      "first_label": "wheel_rear",
+      "second": "bodyshell_rear_holder_assembled",
+      "second_label": "bodyshell_rear_holder",
+      "intersection_volume_mm3": 4274.9178
+    },
+    {
+      "first": "wheel_rear_right",
+      "first_label": "wheel_rear001",
+      "second": "bodyshell_rear_holder_assembled",
+      "second_label": "bodyshell_rear_holder",
+      "intersection_volume_mm3": 4274.9178
+    },
+    {
+      "first": "bumper_holder_assembled",
+      "first_label": "bumper_holder",
+      "second": "bumper_assembled",
+      "second_label": "bumper",
+      "intersection_volume_mm3": 3938.489
+    },
+    {
+      "first": "spur_49t_assembled",
+      "first_label": "spur_49t",
+      "second": "spur_holder_assembled",
+      "second_label": "spur_holder",
+      "intersection_volume_mm3": 3773.6164
+    },
+    {
+      "first": "lipo_right",
+      "first_label": "LiPo right",
+      "second": "front_lipo_link_long_assembled",
+      "second_label": "front_lipo_link_long",
+      "intersection_volume_mm3": 2476.8331
+    },
+    {
+      "first": "lipo_right",
+      "first_label": "LiPo right",
+      "second": "lipo_barrier_front_right",
+      "second_label": "lipo_barrier_front_10mm001",
+      "intersection_volume_mm3": 2414.8603
+    },
+    {
+      "first": "lipo_right",
+      "first_label": "LiPo right",
+      "second": "lipo_barrier_front_left",
+      "second_label": "lipo_barrier_front_10mm002",
+      "intersection_volume_mm3": 2414.8603
+    },
+    {
+      "first": "lipo_left",
+      "first_label": "LiPo left",
+      "second": "front_lipo_link_long_assembled",
+      "second_label": "front_lipo_link_long",
+      "intersection_volume_mm3": 2387.7149
+    },
+    {
+      "first": "Body347",
+      "first_label": "front_upperdeck",
+      "second": "Body323",
+      "second_label": "suspension_upper_reinforce",
+      "intersection_volume_mm3": 1915.2578
+    },
+    {
+      "first": "motor_reference",
+      "first_label": "motor",
+      "second": "pinion_assembled",
+      "second_label": "pinion",
+      "intersection_volume_mm3": 1664.982
+    },
+    {
+      "first": "lipo_holder_flex",
+      "first_label": "lipo_holder_flex001",
+      "second": "front_lipo_link_long_assembled",
+      "second_label": "front_lipo_link_long",
+      "intersection_volume_mm3": 1149.7079
+    },
+    {
+      "first": "motor_reference",
+      "first_label": "motor",
+      "second": "spur_49t_assembled",
+      "second_label": "spur_49t",
+      "intersection_volume_mm3": 969.4376
+    },
+    {
+      "first": "front_lipo_link_long_assembled",
+      "first_label": "front_lipo_link_long",
+      "second": "lipo_barrier_front_right",
+      "second_label": "lipo_barrier_front_10mm001",
+      "intersection_volume_mm3": 745.3398
+    },
+    {
+      "first": "front_lipo_link_long_assembled",
+      "first_label": "front_lipo_link_long",
+      "second": "lipo_barrier_front_left",
+      "second_label": "lipo_barrier_front_10mm002",
+      "intersection_volume_mm3": 745.3398
+    },
+    {
+      "first": "lipo_lateral_blocker_assembled",
+      "first_label": "lipo_lateral_blocker",
+      "second": "front_lipo_link_long_assembled",
+      "second_label": "front_lipo_link_long",
+      "intersection_volume_mm3": 573.9479
+    },
+    {
+      "first": "lipo_barrier_rear003",
+      "first_label": "lipo_barrier_rear005",
+      "second": "esc_plate_rear_assembled",
+      "second_label": "esc_plate_rear",
+      "intersection_volume_mm3": 534.9868
+    },
+    {
+      "first": "lipo_barrier_rear004",
+      "first_label": "lipo_barrier_rear006",
+      "second": "esc_plate_rear_assembled",
+      "second_label": "esc_plate_rear",
+      "intersection_volume_mm3": 534.9644
+    },
+    {
+      "first": "lipo_holder_flex",
+      "first_label": "lipo_holder_flex001",
+      "second": "esc_plate_rear_assembled",
+      "second_label": "esc_plate_rear",
+      "intersection_volume_mm3": 495.738
+    },
+    {
+      "first": "Body253",
+      "first_label": "shaft_front_hollow_petcf",
+      "second": "Fusion006",
+      "second_label": "pulley_front_capped",
+      "intersection_volume_mm3": 429.3375
+    },
+    {
+      "first": "Body262",
+      "first_label": "tower_left",
+      "second": "bumper_holder_assembled",
+      "second_label": "bumper_holder",
+      "intersection_volume_mm3": 350.6913
+    },
+    {
+      "first": "lipo_holder_flex",
+      "first_label": "lipo_holder_flex001",
+      "second": "steering_bellcrank_right",
+      "second_label": "boomerang_steeribg_block_dx",
+      "intersection_volume_mm3": 239.5324
+    },
+    {
+      "first": "Body347",
+      "first_label": "front_upperdeck",
+      "second": "Fusion006",
+      "second_label": "pulley_front_capped",
+      "intersection_volume_mm3": 190.997
+    },
+    {
+      "first": "rear_tower_right",
+      "first_label": "rear_tower_right001",
+      "second": "spur_49t_assembled",
+      "second_label": "spur_49t",
+      "intersection_volume_mm3": 78.0183
+    },
+    {
+      "first": "Body246",
+      "first_label": "pulley_rear",
+      "second": "motor_reference",
+      "second_label": "motor",
+      "intersection_volume_mm3": 64.8455
+    },
+    {
+      "first": "lipo_lateral_blocker_assembled",
+      "first_label": "lipo_lateral_blocker",
+      "second": "steering_bellcrank_right",
+      "second_label": "boomerang_steeribg_block_dx",
+      "intersection_volume_mm3": 43.6452
+    },
+    {
+      "first": "Body347",
+      "first_label": "front_upperdeck",
+      "second": "Body262",
+      "second_label": "tower_left",
+      "intersection_volume_mm3": 15.5892
+    },
+    {
+      "first": "chassis_4mm",
+      "first_label": "chassis_4mm001",
+      "second": "spur_49t_assembled",
+      "second_label": "spur_49t",
+      "intersection_volume_mm3": 7.807
+    },
+    {
+      "first": "motor_reference",
+      "first_label": "motor",
+      "second": "spur_holder_assembled",
+      "second_label": "spur_holder",
+      "intersection_volume_mm3": 2.7991
+    }
+  ],
+  "failed_pairs": []
+}

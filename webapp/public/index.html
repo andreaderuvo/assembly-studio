@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111821">
+    <title>Assembly Studio</title>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/vendor/three.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <div class="brand">
+          <div class="brand-mark"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg></div>
+          <div>
+            <h1>Assembly Studio</h1>
+            <p data-i18n="brand.subtitle">Human-guided · AI-assisted · FreeCAD-verified</p>
+          </div>
+        </div>
+        <div class="header-status">
+          <div class="locale-tools">
+            <select id="localeSelect" aria-label="Language" data-i18n-aria-label="i18n.language"></select>
+            <button id="importLocaleButton" class="header-action" type="button" title="Import translation" data-i18n-title="i18n.importTitle" data-i18n="i18n.importButton">Import</button>
+            <button id="exportLocaleButton" class="header-action" type="button" title="Download translation template" data-i18n-title="i18n.exportTitle" data-i18n="i18n.exportButton">Template</button>
+            <input id="localeFileInput" class="hidden" type="file" accept="application/json,.json">
+          </div>
+          <span id="revisionBadge" class="badge">rev —</span>
+          <span id="aiBadge" class="badge muted">AI —</span>
+          <span id="freecadBadge" class="badge muted">FreeCAD —</span>
+        </div>
+      </header>
+
+      <aside class="sidebar components-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="eyebrow" data-i18n="components.eyebrow">Model</span>
+            <h2 data-i18n="components.title">Components</h2>
+          </div>
+          <span id="componentCount" class="count">0</span>
+        </div>
+        <label class="search-box">
+          <span>⌕</span>
+          <input id="componentSearch" type="search" placeholder="Search logical name or STL filename…" data-i18n-placeholder="components.search">
+        </label>
+        <div class="presence-filter" role="group" aria-label="Assembly presence" data-i18n-aria-label="components.filterLabel">
+          <button type="button" class="presence-filter-button active" data-presence="all"><span data-i18n="components.filterAll">All</span><small id="filterAllCount">0</small></button>
+          <button type="button" class="presence-filter-button" data-presence="placed"><span data-i18n="components.filterPlaced">Placed</span><small id="filterPlacedCount">0</small></button>
+          <button type="button" class="presence-filter-button" data-presence="unplaced"><span data-i18n="components.filterUnplaced">Not placed</span><small id="filterUnplacedCount">0</small></button>
+        </div>
+        <form id="newGroupForm" class="new-group-form">
+          <input id="newGroupName" maxlength="80" placeholder="New group name" data-i18n-placeholder="groups.newPlaceholder">
+          <button type="submit" title="Create group" data-i18n-title="groups.createTitle"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+        </form>
+        <div id="componentList" class="component-list" aria-label="Component list" data-i18n-aria-label="components.listLabel"></div>
+      </aside>
+
+      <main class="workspace">
+        <div class="toolbar" role="toolbar" aria-label="Assembly tools" data-i18n-aria-label="toolbar.label">
+          <div class="tool-group">
+            <button id="selectMode" class="tool active" title="Select" data-i18n-title="toolbar.selectTitle"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 3 14 9-7 2-3 7L5 3Z"/></svg><span data-i18n="toolbar.select">Select</span></button>
+            <button id="translateMode" class="tool" title="Move (W)" data-i18n-title="toolbar.moveTitle"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M12 3l-3 3m3-3 3 3M21 12l-3-3m3 3-3 3M12 21l-3-3m3 3 3-3M3 12l3-3m-3 3 3 3"/></svg><span data-i18n="toolbar.move">Move</span> <kbd>W</kbd></button>
+            <button id="rotateMode" class="tool" title="Rotate (E)" data-i18n-title="toolbar.rotateTitle"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg><span data-i18n="toolbar.rotate">Rotate</span> <kbd>E</kbd></button>
+            <button id="mateMode" class="hidden" aria-hidden="true" tabindex="-1"></button>
+          </div>
+          <div class="separator"></div>
+          <div class="tool-group compact">
+            <button id="viewIso" class="tool icon" title="Isometric view" data-i18n-title="toolbar.isoTitle">ISO</button>
+            <button id="viewTop" class="tool icon" title="Top view" data-i18n-title="toolbar.topTitle">TOP</button>
+            <button id="viewFront" class="tool icon" title="Front view" data-i18n-title="toolbar.frontTitle">FRONT</button>
+            <button id="fitView" class="tool icon" title="Fit all" data-i18n-title="toolbar.fitTitle">FIT</button>
+            <button id="sceneSettingsButton" class="tool icon" type="button" title="Scene appearance" data-i18n-title="scene.title">SCENE</button>
+          </div>
+          <div class="toolbar-spacer"></div>
+          <button id="magnetToggle" class="tool magnet" title="Show hole magnets" data-i18n-title="toolbar.snapTitle"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v8a6 6 0 0 0 12 0V3M6 7h4M14 7h4"/></svg><span data-i18n="snap.off">Snap</span></button>
+          <button id="undoButton" class="tool" title="Undo (Ctrl+Z)" data-i18n-title="toolbar.undoTitle"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7 4 12l5 5M4 12h9a6 6 0 0 1 6 6"/></svg><span data-i18n="toolbar.undo">Undo</span></button>
+          <button id="redoButton" class="tool" title="Redo (Ctrl+Shift+Z)" data-i18n-title="toolbar.redoTitle"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 7 5 5-5 5m5-5h-9a6 6 0 0 0-6 6"/></svg><span data-i18n="toolbar.redo">Redo</span></button>
+          <button id="saveProjectButton" class="tool" data-i18n="toolbar.saveProject">Save</button>
+          <button id="loadProjectButton" class="tool" data-i18n="toolbar.loadProject">Load</button>
+          <input id="projectFileInput" class="hidden" type="file" accept="application/json,.json">
+          <button id="clearAssemblyButton" class="tool" title="Clear assembly" data-i18n-title="toolbar.clearTitle"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/></svg><span data-i18n="toolbar.clear">Clear</span></button>
+          <button id="approxButton" class="tool warning" data-i18n="toolbar.quickCheck">Quick check</button>
+          <button id="exactButton" class="tool primary" data-i18n="toolbar.freecadCheck">FreeCAD check</button>
+          <button id="exportButton" class="tool accent" data-i18n="toolbar.export">Export FCStd</button>
+          <button id="exportStepButton" class="tool accent" data-i18n="toolbar.exportStep">Export STEP</button>
+          <button id="exportImageButton" class="tool" data-i18n="toolbar.exportImage">Export image</button>
+        </div>
+        <div id="viewport" class="viewport" tabindex="0">
+          <canvas id="viewCubeCanvas" class="view-cube" width="232" height="232" role="button" tabindex="0" aria-label="View cube" data-i18n-aria-label="viewCube.label" data-i18n-title="viewCube.help"></canvas>
+          <div id="loadingOverlay" class="loading-overlay">
+            <div class="spinner"></div>
+            <strong data-i18n="loading.geometry">Loading geometry</strong>
+            <span id="loadingProgress">0 / 36</span>
+          </div>
+          <div class="viewport-hint" data-i18n="viewport.hint">Drag a part: move · Drag empty space: orbit · Shift+drag: depth · M: mate holes</div>
+        </div>
+        <footer class="statusbar">
+          <span id="statusText" data-i18n="status.initializing">Initializing…</span>
+          <span id="selectionSummary" data-i18n="selection.none">No selection</span>
+        </footer>
+      </main>
+
+      <aside class="sidebar inspector-panel">
+        <section class="inspector-section">
+          <span class="eyebrow" data-i18n="selection.eyebrow">Selection</span>
+          <div class="selection-title-row">
+            <h2 id="selectedLabel" data-i18n="selection.noComponent">No component</h2>
+            <button id="revealComponent" class="reveal-link hidden" type="button" data-i18n="selection.reveal">Reveal in Components</button>
+          </div>
+          <p id="selectedMeta" class="muted-text" data-i18n="selection.help">Click and drag a part directly in the scene.</p>
+          <div id="transformEditor" class="transform-editor hidden">
+            <div class="component-properties">
+              <label><span data-i18n="selection.logicalName">Logical name</span><input id="componentName" maxlength="80"></label>
+              <label><span data-i18n="selection.stlFilename">STL file</span><input id="componentStlFilename" readonly></label>
+              <label><span data-i18n="selection.group">Group</span><select id="componentGroup"></select></label>
+              <button id="saveComponentProperties" class="button ghost" type="button" data-i18n="selection.saveDetails">Save details</button>
+            </div>
+            <section class="anchor-browser" aria-labelledby="anchorTreeTitle">
+              <div class="field-heading anchor-browser-heading">
+                <span id="anchorTreeTitle" data-i18n="anchors.title">Anchors</span>
+                <span id="anchorCount">0</span>
+              </div>
+              <p class="anchor-browser-help" data-i18n="anchors.help">Select magnets here when they are hidden by the model.</p>
+              <div id="anchorTree" class="anchor-tree"></div>
+            </section>
+            <div class="field-heading"><span data-i18n="selection.position">Center position</span> <span>mm</span></div>
+            <div class="vector-fields">
+              <label>X<input id="positionX" type="number" step="0.5"></label>
+              <label>Y<input id="positionY" type="number" step="0.5"></label>
+              <label>Z<input id="positionZ" type="number" step="0.5"></label>
+            </div>
+            <label class="color-field">
+              <span data-i18n="selection.color">Part color</span>
+              <input id="partColor" type="color" value="#8ea4b8">
+              <output id="partColorValue">#8ea4b8</output>
+            </label>
+            <label class="material-field">
+              <span data-i18n="material.label">Visual material</span>
+              <select id="partMaterial">
+                <option value="default" data-i18n="material.default">Default</option>
+                <option value="aluminum" data-i18n="material.aluminum">Aluminum</option>
+                <option value="steel" data-i18n="material.steel">Steel</option>
+                <option value="carbon" data-i18n="material.carbon">Carbon fiber</option>
+                <option value="bronze" data-i18n="material.bronze">Bronze</option>
+                <option value="copper" data-i18n="material.copper">Copper</option>
+                <option value="plastic-matte" data-i18n="material.plasticMatte">Matte plastic</option>
+                <option value="plastic-gloss" data-i18n="material.plasticGloss">Gloss plastic</option>
+                <option value="rubber" data-i18n="material.rubber">Rubber</option>
+              </select>
+            </label>
+            <label class="opacity-field">
+              <span data-i18n="selection.opacity">Opacity</span>
+              <input id="partOpacity" type="range" min="10" max="100" step="5" value="100">
+              <output id="partOpacityValue">100%</output>
+            </label>
+            <div id="quickRotatePanel" class="quick-rotate-panel hidden">
+              <div class="field-heading"><span data-i18n="rotate.quickTitle">Quick rotation</span><span data-i18n="rotate.axis">Axis</span></div>
+              <div class="quick-axis" role="group" aria-label="Rotation axis" data-i18n-aria-label="rotate.axis">
+                <button type="button" class="quick-axis-button" data-axis="x">X</button>
+                <button type="button" class="quick-axis-button" data-axis="y">Y</button>
+                <button type="button" class="quick-axis-button active" data-axis="z">Z</button>
+              </div>
+              <div class="quick-angles">
+                <button type="button" class="button quick-rotate" data-degrees="90">90°</button>
+                <button type="button" class="button quick-rotate" data-degrees="180">180°</button>
+                <button type="button" class="button quick-rotate" data-degrees="270">270°</button>
+              </div>
+            </div>
+            <div class="inspector-actions">
+              <button id="applyTransform" class="button primary" data-i18n="selection.applyPosition">Apply position</button>
+              <button id="resetComponent" class="button ghost" data-i18n="selection.resetPart">Reset part</button>
+              <button id="duplicateComponent" class="button ghost" type="button" data-i18n="selection.duplicate">Duplicate part</button>
+            </div>
+          </div>
+          <div id="matePanel" class="mate-panel hidden">
+            <div class="proposal-title" data-i18n="mate.title">Hole-to-hole mate</div>
+            <p id="mateStatus" data-i18n="mate.help">Pick two compatible magnets.</p>
+            <div class="magnet-legend" aria-label="Magnet types">
+              <span><i class="hole"></i><b data-i18n="mate.typeHole">Hole</b></span>
+              <span><i class="plane"></i><b data-i18n="mate.typePlane">Face</b></span>
+              <span><i class="shaft"></i><b data-i18n="mate.typeShaft">Shaft</b></span>
+              <span><i class="seat"></i><b data-i18n="mate.typeSeat">Seat</b></span>
+            </div>
+            <select id="snapFilter" class="snap-filter" aria-label="Magnet filter">
+              <option value="all" data-i18n="filter.all">All magnets</option>
+              <option value="hole" selected data-i18n="filter.holes">Holes</option>
+              <option value="plane" data-i18n="filter.planes">Faces &amp; midplanes</option>
+              <option value="shaft" data-i18n="filter.shafts">Shafts &amp; hole axes</option>
+              <option value="seat" data-i18n="filter.seats">Cylindrical seats</option>
+              <option value="edge" data-i18n="filter.edges">Edges &amp; slots</option>
+              <option value="point" data-i18n="filter.points">Points &amp; centers</option>
+            </select>
+            <div id="planeMateOptions" class="plane-mate-options hidden">
+              <span class="plane-mate-label" data-i18n="planeMode.title">Face alignment</span>
+              <div class="plane-mate-buttons" role="group" aria-label="Face alignment mode" data-i18n-aria-label="planeMode.title">
+                <button type="button" class="plane-mode-button active" data-plane-mode="center" data-i18n="planeMode.center">Center</button>
+                <button type="button" class="plane-mode-button" data-plane-mode="slide" data-i18n="planeMode.slide">Flush / Slide</button>
+              </div>
+              <p id="planeMateHelp" data-i18n="planeMode.centerHelp">Align normals and both face centers.</p>
+            </div>
+            <button id="patternToggle" class="button ghost pattern-toggle" data-i18n="pattern.button">2-hole pattern</button>
+            <button id="throughToggle" class="button ghost pattern-toggle" data-i18n="through.button">Shaft through 2 holes</button>
+            <div id="mateSummary" class="mate-summary hidden"></div>
+            <div class="inspector-actions">
+              <button id="addFastenerFromHole" class="button primary hidden" type="button" data-i18n="fastener.add">Add fastener</button>
+              <button id="addBearingFromAnchor" class="button primary hidden" type="button" data-i18n="bearing.add">Add bearing</button>
+              <button id="applyMate" class="button accent hidden" disabled data-i18n="mate.apply">Apply mate</button>
+              <button id="cancelMate" class="button ghost" data-i18n="common.cancel">Cancel</button>
+            </div>
+          </div>
+          <div id="snapRotatePanel" class="mate-panel rotate-panel hidden">
+            <div class="proposal-title" data-i18n="rotate.title">Choose orientation</div>
+            <p id="snapRotateStatus" data-i18n="rotate.help">Rotate around the attached magnet.</p>
+            <div class="rotate-options">
+              <button class="button rotate-snap" data-degrees="90">90°</button>
+              <button class="button rotate-snap" data-degrees="180">180°</button>
+              <button class="button rotate-snap" data-degrees="270">270°</button>
+            </div>
+            <div class="adjust-fields">
+              <label><span data-i18n="adjust.angle">Angle °</span><input id="customSnapAngle" type="number" min="-360" max="360" value="0"></label>
+              <label><span data-i18n="adjust.offset">Offset mm</span><input id="customSnapOffset" type="number" min="-500" max="500" step="0.5" value="0"></label>
+            </div>
+            <button id="applySnapAdjustment" class="button primary rotate-dismiss" data-i18n="adjust.apply">Apply angle &amp; offset</button>
+            <button id="dismissSnapRotation" class="button ghost rotate-dismiss" data-i18n="rotate.keep">Keep current orientation</button>
+          </div>
+          <div id="jointPanel" class="mate-panel joint-panel hidden">
+            <div class="proposal-title" data-i18n="joint.title">Motion constraint</div>
+            <select id="jointType" class="snap-filter">
+              <option value="rigid" data-i18n="joint.rigid">Rigid assembly</option>
+              <option value="hinge" data-i18n="joint.hinge">Hinge / revolute</option>
+              <option value="slider" data-i18n="joint.slider">Slider</option>
+              <option value="ball" data-i18n="joint.ball">Ball joint</option>
+              <option value="gear" data-i18n="joint.gear">Gear ratio</option>
+              <option value="limits" data-i18n="joint.limits">Movement limits</option>
+              <option value="lock" data-i18n="joint.lock">Lock</option>
+            </select>
+            <div class="adjust-fields">
+              <label><span data-i18n="joint.minimum">Minimum</span><input id="jointMinimum" type="number" step="0.5"></label>
+              <label><span data-i18n="joint.maximum">Maximum</span><input id="jointMaximum" type="number" step="0.5"></label>
+              <label><span data-i18n="joint.ratio">Ratio</span><input id="jointRatio" type="number" step="0.1" value="1"></label>
+            </div>
+            <div class="inspector-actions">
+              <button id="saveJoint" class="button primary" data-i18n="joint.save">Save constraint</button>
+              <button id="dismissJoint" class="button ghost" data-i18n="joint.skip">Skip</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="inspector-section ai-section">
+          <div class="section-title-row">
+            <div>
+              <span class="eyebrow" data-i18n="ai.eyebrow">Copilot</span>
+              <h2 data-i18n="ai.title">Assembly assistant</h2>
+            </div>
+            <span class="ai-dot"></span>
+          </div>
+          <div id="chatLog" class="chat-log">
+            <div class="chat-message assistant">
+              <span data-i18n="ai.welcome">Describe where the part should go. I will show a preview before changing the assembly.</span>
+            </div>
+          </div>
+          <form id="chatForm" class="chat-form">
+            <textarea id="chatInput" rows="3" placeholder="E.g. move the motor 5 mm toward the center…" data-i18n-placeholder="ai.placeholder"></textarea>
+            <button type="submit" class="button accent" data-i18n="ai.propose">Propose assembly</button>
+          </form>
+          <div id="proposalPanel" class="proposal-panel hidden">
+            <div class="proposal-title" data-i18n="ai.preview">AI preview</div>
+            <p id="proposalSummary"></p>
+            <div id="proposalOperations" class="proposal-operations"></div>
+            <div class="inspector-actions">
+              <button id="applyProposal" class="button accent" data-i18n="ai.apply">Apply proposal</button>
+              <button id="discardProposal" class="button ghost" data-i18n="common.discard">Discard</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="inspector-section collisions-section">
+          <div class="section-title-row">
+            <div>
+              <span class="eyebrow" data-i18n="validation.eyebrow">Validation</span>
+              <h2 data-i18n="validation.title">Interferences</h2>
+            </div>
+            <span id="collisionCount" class="count danger">—</span>
+          </div>
+          <p id="validationMeta" class="muted-text" data-i18n="validation.initial">Exact report for the initial assembly.</p>
+          <div id="collisionList" class="collision-list"></div>
+        </section>
+      </aside>
+    </div>
+    <dialog id="fastenerDialog" class="native-dialog fastener-dialog" aria-labelledby="fastenerDialogTitle">
+      <form method="dialog">
+        <div class="dialog-icon"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8v5l-2 2v10h-4V10L8 8zM8 6h8M10 13h4M10 16h4"/></svg></div>
+        <div class="dialog-copy">
+          <h2 id="fastenerDialogTitle" data-i18n="fastener.title">Insert fastener</h2>
+          <p id="fastenerTargetLabel"></p>
+        </div>
+        <div class="fastener-fields">
+          <label><span data-i18n="fastener.standard">Standard</span><select id="fastenerStandard"><option value="ISO4762">ISO 4762 · Socket cap</option><option value="ISO10642">ISO 10642 · Countersunk</option></select></label>
+          <label><span data-i18n="fastener.size">Metric size</span><select id="fastenerDiameter"><option value="3">M3</option><option value="4">M4</option><option value="5">M5</option></select></label>
+          <label><span data-i18n="fastener.length">Length</span><input id="fastenerLength" type="number" min="4" max="80" step="1" value="12"><small>mm</small></label>
+          <label class="fastener-check"><input id="fastenerFlip" type="checkbox"><span data-i18n="fastener.flip">Insert from the opposite side</span></label>
+        </div>
+        <div class="dialog-actions">
+          <button class="button ghost" value="cancel" data-i18n="common.cancel">Cancel</button>
+          <button id="confirmFastener" class="button primary" type="button" data-i18n="fastener.insert">Insert</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="bearingDialog" class="native-dialog fastener-dialog" aria-labelledby="bearingDialogTitle">
+      <form method="dialog">
+        <div class="dialog-icon"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div class="dialog-copy">
+          <h2 id="bearingDialogTitle" data-i18n="bearing.title">Insert bearing</h2>
+          <p id="bearingTargetLabel"></p>
+        </div>
+        <div class="fastener-fields">
+          <label><span data-i18n="bearing.series">Series</span><select id="bearingSeries">
+            <option value="MR105">MR105 · 5×10×4</option><option value="623">623 · 3×10×4</option>
+            <option value="624">624 · 4×13×5</option><option value="625">625 · 5×16×5</option>
+            <option value="626">626 · 6×19×6</option><option value="688">688 · 8×16×5</option>
+            <option value="608">608 · 8×22×7</option>
+          </select></label>
+        </div>
+        <div class="dialog-actions">
+          <button class="button ghost" value="cancel" data-i18n="common.cancel">Cancel</button>
+          <button id="confirmBearing" class="button primary" type="button" data-i18n="bearing.insert">Insert</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="clearAssemblyDialog" class="native-dialog" aria-labelledby="clearDialogTitle" aria-describedby="clearDialogDescription">
+      <form method="dialog">
+        <div class="dialog-icon"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5"/></svg></div>
+        <div class="dialog-copy">
+          <h2 id="clearDialogTitle" data-i18n="assembly.clearTitle">Clear assembly?</h2>
+          <p id="clearDialogDescription" data-i18n="assembly.clearDescription">All parts will be removed from the scene. Catalog, groups, names and colors will be kept. You can restore everything with Undo.</p>
+        </div>
+        <div class="dialog-actions">
+          <button class="button ghost" value="cancel" data-i18n="common.cancel">Cancel</button>
+          <button id="confirmClearAssembly" class="button primary" type="button" data-i18n="assembly.clearAction">Clear assembly</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="exportImageDialog" class="native-dialog export-image-dialog" aria-labelledby="exportImageTitle">
+      <form method="dialog">
+        <div class="dialog-icon"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM7 15l3-3 2 2 2-2 3 3M15 9h.01"/></svg></div>
+        <div class="dialog-copy">
+          <h2 id="exportImageTitle" data-i18n="imageExport.title">Export technical view</h2>
+          <p data-i18n="imageExport.help">Choose a repeatable camera preset and output format.</p>
+        </div>
+        <div class="export-image-fields">
+          <label><span data-i18n="imageExport.format">Format</span><select id="imageExportFormat"><option value="png">PNG</option><option value="svg">SVG</option></select></label>
+          <label><span data-i18n="imageExport.view">View</span><select id="imageExportView">
+            <option value="current" data-i18n="imageExport.current">Current view</option>
+            <option value="iso-ne" data-i18n="imageExport.isoNE">Isometric NE</option>
+            <option value="iso-nw" data-i18n="imageExport.isoNW">Isometric NW</option>
+            <option value="iso-se" data-i18n="imageExport.isoSE">Isometric SE</option>
+            <option value="iso-sw" data-i18n="imageExport.isoSW">Isometric SW</option>
+            <option value="top" data-i18n="imageExport.top">Top</option>
+            <option value="bottom" data-i18n="imageExport.bottom">Bottom</option>
+            <option value="front" data-i18n="imageExport.front">Front</option>
+            <option value="rear" data-i18n="imageExport.rear">Rear</option>
+            <option value="left" data-i18n="imageExport.left">Left</option>
+            <option value="right" data-i18n="imageExport.right">Right</option>
+          </select></label>
+          <label><span data-i18n="imageExport.resolution">Resolution</span><select id="imageExportResolution"><option value="1280x720">1280 × 720</option><option value="1920x1080" selected>1920 × 1080</option><option value="2560x1440">2560 × 1440</option><option value="3840x2160">3840 × 2160</option></select></label>
+          <label class="fastener-check"><input id="imageExportFitWidth" type="checkbox"><span data-i18n="imageExport.fitWidth">Fit model to width</span></label>
+          <label class="fastener-check"><input id="imageExportClean" type="checkbox" checked><span data-i18n="imageExport.clean">Hide grid, axes, gizmo and magnets</span></label>
+        </div>
+        <div class="dialog-actions">
+          <button class="button ghost" value="cancel" data-i18n="common.cancel">Cancel</button>
+          <button id="confirmImageExport" class="button primary" type="button" data-i18n="imageExport.action">Export</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="loadProjectDialog" class="native-dialog" aria-labelledby="loadProjectTitle">
+      <form method="dialog">
+        <div class="dialog-icon"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h10l4 4v12H5zM9 13h6M12 10v6"/></svg></div>
+        <div class="dialog-copy">
+          <h2 id="loadProjectTitle" data-i18n="project.loadTitle">Load project?</h2>
+          <p data-i18n="project.loadDescription">The project replaces the current assembly. Undo can restore it.</p>
+          <p id="loadProjectSummary" class="project-summary"></p>
+        </div>
+        <div class="dialog-actions">
+          <button class="button ghost" value="cancel" data-i18n="common.cancel">Cancel</button>
+          <button id="confirmLoadProject" class="button primary" type="button" data-i18n="project.loadAction">Load project</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="sceneSettingsDialog" class="native-dialog scene-settings-dialog" aria-labelledby="sceneSettingsTitle">
+      <form method="dialog">
+        <div class="dialog-icon"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z"/></svg></div>
+        <div class="dialog-copy">
+          <h2 id="sceneSettingsTitle" data-i18n="scene.title">Scene appearance</h2>
+          <p data-i18n="scene.help">Choose a background that keeps every component readable.</p>
+        </div>
+        <div class="scene-settings-fields">
+          <label><span data-i18n="scene.preset">Preset</span><select id="scenePreset">
+            <option value="dark" data-i18n="scene.dark">Dark</option>
+            <option value="light" data-i18n="scene.light">Light</option>
+            <option value="studio" data-i18n="scene.studio">Neutral studio</option>
+            <option value="custom" data-i18n="scene.custom">Custom</option>
+          </select></label>
+          <label class="scene-color-field"><span data-i18n="scene.background">Background</span><input id="sceneBackgroundColor" type="color" value="#0b1117"><output id="sceneBackgroundValue">#0B1117</output></label>
+          <label class="fastener-check"><input id="sceneGridVisible" type="checkbox" checked><span data-i18n="scene.grid">Show grid</span></label>
+          <label class="fastener-check"><input id="sceneAxesVisible" type="checkbox" checked><span data-i18n="scene.axes">Show axes</span></label>
+          <label class="fastener-check"><input id="sceneLightingEnabled" type="checkbox" checked><span data-i18n="scene.lighting">Lights and reflections</span></label>
+        </div>
+        <div class="dialog-actions">
+          <button class="button ghost" value="cancel" data-i18n="common.cancel">Cancel</button>
+          <button id="applySceneSettings" class="button primary" type="button" data-i18n="scene.apply">Apply</button>
+        </div>
+      </form>
+    </dialog>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

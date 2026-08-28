@@ -1,0 +1,1484 @@
+{
+  "source": "/home/dev/projects/rc_Car/build/assembly/rc_car_full_working_v9.FCStd",
+  "linear_deflection_mm": 0.2,
+  "angular_deflection_deg": 20.0,
+  "components": [
+    {
+      "name": "chassis_4mm",
+      "label": "chassis_4mm001",
+      "type": "PartDesign::Feature",
+      "group": "Validated_placements_from_source_joints",
+      "stl": "stl/Validated_placements_from_source_joints/chassis_4mm001__chassis_4mm.stl",
+      "triangles": 12788,
+      "size_mm": [
+        361.473012,
+        90.008158,
+        4.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -188.753463,
+          -45.004079,
+          -0.0
+        ],
+        "max": [
+          172.719549,
+          45.004079,
+          4.0
+        ],
+        "center": [
+          -8.016957,
+          0.0,
+          2.0
+        ]
+      },
+      "placement_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "rear_tower_left",
+      "label": "rear_tower_left001",
+      "type": "PartDesign::Feature",
+      "group": "Validated_placements_from_source_joints",
+      "stl": "stl/Validated_placements_from_source_joints/rear_tower_left001__rear_tower_left.stl",
+      "triangles": 2136,
+      "size_mm": [
+        93.0,
+        9.0,
+        40.0
+      ],
+      "bounds_mm": {
+        "min": [
+          78.719549,
+          -44.5,
+          4.0
+        ],
+        "max": [
+          171.719549,
+          -35.5,
+          44.0
+        ],
+        "center": [
+          125.219549,
+          -40.0,
+          24.0
+        ]
+      },
+      "placement_mm": [
+        151.719549,
+        -35.5,
+        24.0
+      ],
+      "rotation_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "rear_tower_right",
+      "label": "rear_tower_right001",
+      "type": "PartDesign::Feature",
+      "group": "Validated_placements_from_source_joints",
+      "stl": "stl/Validated_placements_from_source_joints/rear_tower_right001__rear_tower_right.stl",
+      "triangles": 1970,
+      "size_mm": [
+        93.0,
+        9.0,
+        50.0
+      ],
+      "bounds_mm": {
+        "min": [
+          78.719549,
+          35.5,
+          4.0
+        ],
+        "max": [
+          171.719549,
+          44.5,
+          54.0
+        ],
+        "center": [
+          125.219549,
+          40.0,
+          29.0
+        ]
+      },
+      "placement_mm": [
+        151.719549,
+        35.5,
+        24.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.707107,
+        0.707107
+      ],
+      "rotation_deg": 180.0
+    },
+    {
+      "name": "lipo_holder_flex",
+      "label": "lipo_holder_flex001",
+      "type": "PartDesign::Feature",
+      "group": "Validated_placements_from_source_joints",
+      "stl": "stl/Validated_placements_from_source_joints/lipo_holder_flex001__lipo_holder_flex.stl",
+      "triangles": 1048,
+      "size_mm": [
+        162.0,
+        8.0,
+        27.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -85.0,
+          -4.0,
+          4.0
+        ],
+        "max": [
+          77.0,
+          4.0,
+          31.0
+        ],
+        "center": [
+          -4.0,
+          0.0,
+          17.5
+        ]
+      },
+      "placement_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "lipo_barrier_rear003",
+      "label": "lipo_barrier_rear005",
+      "type": "PartDesign::Feature",
+      "group": "Validated_placements_from_source_joints",
+      "stl": "stl/Validated_placements_from_source_joints/lipo_barrier_rear005__lipo_barrier_rear003.stl",
+      "triangles": 1136,
+      "size_mm": [
+        20.0,
+        40.0,
+        27.0
+      ],
+      "bounds_mm": {
+        "min": [
+          70.0,
+          -55.0,
+          4.0
+        ],
+        "max": [
+          90.0,
+          -15.0,
+          31.0
+        ],
+        "center": [
+          80.0,
+          -35.0,
+          17.5
+        ]
+      },
+      "placement_mm": [
+        -2.145143,
+        3.750261,
+        4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "lipo_barrier_rear004",
+      "label": "lipo_barrier_rear006",
+      "type": "PartDesign::Feature",
+      "group": "Validated_placements_from_source_joints",
+      "stl": "stl/Validated_placements_from_source_joints/lipo_barrier_rear006__lipo_barrier_rear004.stl",
+      "triangles": 1136,
+      "size_mm": [
+        20.0,
+        40.0,
+        27.0
+      ],
+      "bounds_mm": {
+        "min": [
+          70.0,
+          15.0,
+          4.0
+        ],
+        "max": [
+          90.0,
+          55.0,
+          31.0
+        ],
+        "center": [
+          80.0,
+          35.0,
+          17.5
+        ]
+      },
+      "placement_mm": [
+        -2.145143,
+        -3.750261,
+        31.0
+      ],
+      "rotation_axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 180.0
+    },
+    {
+      "name": "Body354",
+      "label": "rear_upperdeck",
+      "type": "PartDesign::Feature",
+      "group": "Provisional_placements_to_validate",
+      "stl": "stl/Provisional_placements_to_validate/rear_upperdeck__Body354.stl",
+      "triangles": 1988,
+      "size_mm": [
+        99.392828,
+        88.0,
+        16.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -9.225128,
+          -43.9928,
+          31.0
+        ],
+        "max": [
+          90.1677,
+          44.0072,
+          47.0
+        ],
+        "center": [
+          40.471286,
+          0.0072,
+          39.0
+        ]
+      },
+      "placement_mm": [
+        0.0,
+        0.0,
+        41.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body347",
+      "label": "front_upperdeck",
+      "type": "PartDesign::Feature",
+      "group": "Provisional_placements_to_validate",
+      "stl": "stl/Provisional_placements_to_validate/front_upperdeck__Body347.stl",
+      "triangles": 1000,
+      "size_mm": [
+        108.299052,
+        50.0,
+        29.006226
+      ],
+      "bounds_mm": {
+        "min": [
+          -175.269,
+          -25.0,
+          31.0
+        ],
+        "max": [
+          -66.969948,
+          25.0,
+          60.006226
+        ],
+        "center": [
+          -121.119474,
+          0.0,
+          45.503113
+        ]
+      },
+      "placement_mm": [
+        0.0,
+        0.0,
+        54.006226
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body356",
+      "label": "double_fan_support",
+      "type": "PartDesign::Feature",
+      "group": "Provisional_placements_to_validate",
+      "stl": "stl/Provisional_placements_to_validate/double_fan_support__Body356.stl",
+      "triangles": 2100,
+      "size_mm": [
+        48.0,
+        90.5,
+        5.0
+      ],
+      "bounds_mm": {
+        "min": [
+          91.719549,
+          -46.0,
+          54.0
+        ],
+        "max": [
+          139.719549,
+          44.5,
+          59.0
+        ],
+        "center": [
+          115.719549,
+          -0.75,
+          56.5
+        ]
+      },
+      "placement_mm": [
+        107.030141,
+        -12.308747,
+        54.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "Body172",
+      "label": "shaft_rear",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/shaft_rear__Body172.stl",
+      "triangles": 1292,
+      "size_mm": [
+        11.5,
+        219.8,
+        11.5
+      ],
+      "bounds_mm": {
+        "min": [
+          145.969549,
+          -109.9,
+          23.247601
+        ],
+        "max": [
+          157.469549,
+          109.9,
+          34.747601
+        ],
+        "center": [
+          151.719549,
+          0.0,
+          28.997601
+        ]
+      },
+      "placement_mm": [
+        151.719549,
+        -109.9,
+        28.997601
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "Body246",
+      "label": "pulley_rear",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/pulley_rear__Body246.stl",
+      "triangles": 11608,
+      "size_mm": [
+        34.0,
+        21.0,
+        34.0
+      ],
+      "bounds_mm": {
+        "min": [
+          134.719549,
+          -10.5,
+          12.0
+        ],
+        "max": [
+          168.719549,
+          10.5,
+          46.0
+        ],
+        "center": [
+          151.719549,
+          0.0,
+          29.0
+        ]
+      },
+      "placement_mm": [
+        151.719549,
+        1.5,
+        29.0
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "Body253",
+      "label": "shaft_front_hollow_petcf",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/shaft_front_hollow_petcf__Body253.stl",
+      "triangles": 1668,
+      "size_mm": [
+        12.0,
+        90.0,
+        11.581164
+      ],
+      "bounds_mm": {
+        "min": [
+          -89.874939,
+          -45.0,
+          39.318836
+        ],
+        "max": [
+          -77.874939,
+          45.0,
+          50.9
+        ],
+        "center": [
+          -83.874939,
+          0.0,
+          45.109418
+        ]
+      },
+      "placement_mm": [
+        -83.874939,
+        -45.0,
+        45.3
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "Fusion006",
+      "label": "pulley_front_capped",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/pulley_front_capped__Fusion006.stl",
+      "triangles": 11260,
+      "size_mm": [
+        30.0,
+        30.0,
+        30.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -98.8768,
+          -15.0,
+          30.1
+        ],
+        "max": [
+          -68.8768,
+          15.0,
+          60.1
+        ],
+        "center": [
+          -83.8768,
+          0.0,
+          45.1
+        ]
+      },
+      "placement_mm": [
+        -83.8768,
+        -9.0,
+        45.1
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "Body255",
+      "label": "tower_right",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/tower_right__Body255.stl",
+      "triangles": 1408,
+      "size_mm": [
+        40.0,
+        38.0,
+        30.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -193.769,
+          -38.0,
+          4.0
+        ],
+        "max": [
+          -153.769,
+          -0.0,
+          34.0
+        ],
+        "center": [
+          -173.769,
+          -19.0,
+          19.0
+        ]
+      },
+      "placement_mm": [
+        -173.769,
+        -20.0,
+        22.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body262",
+      "label": "tower_left",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/tower_left__Body262.stl",
+      "triangles": 1404,
+      "size_mm": [
+        40.0,
+        38.0,
+        30.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -193.769,
+          2.0,
+          4.0
+        ],
+        "max": [
+          -153.769,
+          40.0,
+          34.0
+        ],
+        "center": [
+          -173.769,
+          21.0,
+          19.0
+        ]
+      },
+      "placement_mm": [
+        -173.769,
+        20.0,
+        7.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "Body323",
+      "label": "suspension_upper_reinforce",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/suspension_upper_reinforce__Body323.stl",
+      "triangles": 1496,
+      "size_mm": [
+        32.000001,
+        114.0,
+        5.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -186.269001,
+          -57.0,
+          34.0
+        ],
+        "max": [
+          -154.269,
+          57.0,
+          39.0
+        ],
+        "center": [
+          -170.269,
+          0.0,
+          36.5
+        ]
+      },
+      "placement_mm": [
+        -170.269,
+        -0.0,
+        34.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "lipo_left",
+      "label": "LiPo left",
+      "type": "PartDesign::Feature",
+      "group": "Reference_components_for_envelope_validation",
+      "stl": "stl/Reference_components_for_envelope_validation/LiPo_left__lipo_left.stl",
+      "triangles": 300,
+      "size_mm": [
+        140.0,
+        47.0,
+        25.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -74.0,
+          -51.0,
+          4.0
+        ],
+        "max": [
+          66.0,
+          -4.0,
+          29.0
+        ],
+        "center": [
+          -4.0,
+          -27.5,
+          16.5
+        ]
+      },
+      "placement_mm": [
+        -4.0,
+        -27.5,
+        4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "lipo_right",
+      "label": "LiPo right",
+      "type": "PartDesign::Feature",
+      "group": "Reference_components_for_envelope_validation",
+      "stl": "stl/Reference_components_for_envelope_validation/LiPo_right__lipo_right.stl",
+      "triangles": 300,
+      "size_mm": [
+        140.0,
+        47.0,
+        25.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -74.0,
+          4.0,
+          4.0
+        ],
+        "max": [
+          66.0,
+          51.0,
+          29.0
+        ],
+        "center": [
+          -4.0,
+          27.5,
+          16.5
+        ]
+      },
+      "placement_mm": [
+        -4.0,
+        27.5,
+        4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "wheel_rear_left",
+      "label": "wheel_rear",
+      "type": "PartDesign::Feature",
+      "group": "Reference_components_for_envelope_validation",
+      "stl": "stl/Reference_components_for_envelope_validation/wheel_rear__wheel_rear_left.stl",
+      "triangles": 312,
+      "size_mm": [
+        70.0,
+        62.0,
+        69.804266
+      ],
+      "bounds_mm": {
+        "min": [
+          116.719549,
+          -109.9,
+          -5.902133
+        ],
+        "max": [
+          186.719549,
+          -47.9,
+          63.902133
+        ],
+        "center": [
+          151.719549,
+          -78.9,
+          29.0
+        ]
+      },
+      "placement_mm": [
+        151.719549,
+        -109.9,
+        29.0
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "wheel_rear_right",
+      "label": "wheel_rear001",
+      "type": "PartDesign::Feature",
+      "group": "Reference_components_for_envelope_validation",
+      "stl": "stl/Reference_components_for_envelope_validation/wheel_rear001__wheel_rear_right.stl",
+      "triangles": 312,
+      "size_mm": [
+        70.0,
+        62.0,
+        69.804266
+      ],
+      "bounds_mm": {
+        "min": [
+          116.719549,
+          47.9,
+          -5.902133
+        ],
+        "max": [
+          186.719549,
+          109.9,
+          63.902133
+        ],
+        "center": [
+          151.719549,
+          78.9,
+          29.0
+        ]
+      },
+      "placement_mm": [
+        151.719549,
+        47.9,
+        29.0
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "wheel_front_left",
+      "label": "wheel_front",
+      "type": "PartDesign::Feature",
+      "group": "Reference_components_for_envelope_validation",
+      "stl": "stl/Reference_components_for_envelope_validation/wheel_front__wheel_front_left.stl",
+      "triangles": 300,
+      "size_mm": [
+        59.902719,
+        37.0,
+        59.95134
+      ],
+      "bounds_mm": {
+        "min": [
+          -200.171719,
+          -109.9,
+          -0.97567
+        ],
+        "max": [
+          -140.269,
+          -72.9,
+          58.97567
+        ],
+        "center": [
+          -170.22036,
+          -91.4,
+          29.0
+        ]
+      },
+      "placement_mm": [
+        -170.269,
+        -109.9,
+        29.0
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "wheel_front_right",
+      "label": "wheel_front001",
+      "type": "PartDesign::Feature",
+      "group": "Reference_components_for_envelope_validation",
+      "stl": "stl/Reference_components_for_envelope_validation/wheel_front001__wheel_front_right.stl",
+      "triangles": 300,
+      "size_mm": [
+        59.902719,
+        37.0,
+        59.95134
+      ],
+      "bounds_mm": {
+        "min": [
+          -200.171719,
+          72.9,
+          -0.97567
+        ],
+        "max": [
+          -140.269,
+          109.9,
+          58.97567
+        ],
+        "center": [
+          -170.22036,
+          91.4,
+          29.0
+        ]
+      },
+      "placement_mm": [
+        -170.269,
+        72.9,
+        29.0
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "motor_reference",
+      "label": "motor",
+      "type": "PartDesign::Feature",
+      "group": "Reference_components_for_envelope_validation",
+      "stl": "stl/Reference_components_for_envelope_validation/motor__motor_reference.stl",
+      "triangles": 572,
+      "size_mm": [
+        42.0,
+        87.0,
+        42.0
+      ],
+      "bounds_mm": {
+        "min": [
+          94.719549,
+          -43.5,
+          8.0
+        ],
+        "max": [
+          136.719549,
+          43.5,
+          50.0
+        ],
+        "center": [
+          115.719549,
+          0.0,
+          29.0
+        ]
+      },
+      "placement_mm": [
+        115.719549,
+        -43.5,
+        29.0
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "spur_49t_assembled",
+      "label": "spur_49t",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/spur_49t__spur_49t_assembled.stl",
+      "triangles": 14124,
+      "size_mm": [
+        50.992737,
+        18.0,
+        50.966538
+      ],
+      "bounds_mm": {
+        "min": [
+          126.22318,
+          18.0,
+          3.516731
+        ],
+        "max": [
+          177.215918,
+          36.0,
+          54.483269
+        ],
+        "center": [
+          151.719549,
+          27.0,
+          29.0
+        ]
+      },
+      "placement_mm": [
+        151.719549,
+        18.0,
+        29.013793
+      ],
+      "rotation_axis": [
+        0.57735,
+        -0.57735,
+        -0.57735
+      ],
+      "rotation_deg": 240.0
+    },
+    {
+      "name": "spur_holder_assembled",
+      "label": "spur_holder",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/spur_holder__spur_holder_assembled.stl",
+      "triangles": 1618,
+      "size_mm": [
+        30.5,
+        16.0,
+        30.5
+      ],
+      "bounds_mm": {
+        "min": [
+          136.469549,
+          19.0,
+          13.75
+        ],
+        "max": [
+          166.969549,
+          35.0,
+          44.25
+        ],
+        "center": [
+          151.719549,
+          27.0,
+          29.0
+        ]
+      },
+      "placement_mm": [
+        147.361589,
+        19.0,
+        24.883407
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "pinion_assembled",
+      "label": "pinion",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/pinion__pinion_assembled.stl",
+      "triangles": 5480,
+      "size_mm": [
+        20.90224,
+        18.0,
+        20.973876
+      ],
+      "bounds_mm": {
+        "min": [
+          105.268429,
+          18.0,
+          18.513062
+        ],
+        "max": [
+          126.170669,
+          36.0,
+          39.486938
+        ],
+        "center": [
+          115.719549,
+          27.0,
+          29.0
+        ]
+      },
+      "placement_mm": [
+        115.676313,
+        18.0,
+        29.0
+      ],
+      "rotation_axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "lipo_lateral_blocker_assembled",
+      "label": "lipo_lateral_blocker",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/lipo_lateral_blocker__lipo_lateral_blocker_assembled.stl",
+      "triangles": 646,
+      "size_mm": [
+        160.0,
+        4.0,
+        13.8
+      ],
+      "bounds_mm": {
+        "min": [
+          -80.0,
+          -4.0,
+          4.0
+        ],
+        "max": [
+          80.0,
+          0.0,
+          17.8
+        ],
+        "center": [
+          0.0,
+          -2.0,
+          10.9
+        ]
+      },
+      "placement_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "front_lipo_link_long_assembled",
+      "label": "front_lipo_link_long",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/front_lipo_link_long__front_lipo_link_long_assembled.stl",
+      "triangles": 1748,
+      "size_mm": [
+        54.0,
+        52.0,
+        14.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -79.0243,
+          -26.0,
+          4.0
+        ],
+        "max": [
+          -25.0243,
+          26.0,
+          18.0
+        ],
+        "center": [
+          -52.0243,
+          0.0,
+          11.0
+        ]
+      },
+      "placement_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "lipo_barrier_front_right",
+      "label": "lipo_barrier_front_10mm001",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/lipo_barrier_front_10mm001__lipo_barrier_front_right.stl",
+      "triangles": 1876,
+      "size_mm": [
+        8.0,
+        40.0,
+        27.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -78.255364,
+          14.964546,
+          4.0
+        ],
+        "max": [
+          -70.255364,
+          54.964546,
+          31.0
+        ],
+        "center": [
+          -74.255364,
+          34.964546,
+          17.5
+        ]
+      },
+      "placement_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "lipo_barrier_front_left",
+      "label": "lipo_barrier_front_10mm002",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/lipo_barrier_front_10mm002__lipo_barrier_front_left.stl",
+      "triangles": 1876,
+      "size_mm": [
+        8.0,
+        40.0,
+        27.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -78.255364,
+          14.964546,
+          4.0
+        ],
+        "max": [
+          -70.255364,
+          54.964546,
+          31.0
+        ],
+        "center": [
+          -74.255364,
+          34.964546,
+          17.5
+        ]
+      },
+      "placement_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "bumper_holder_assembled",
+      "label": "bumper_holder",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/bumper_holder__bumper_holder_assembled.stl",
+      "triangles": 1562,
+      "size_mm": [
+        45.0,
+        83.161336,
+        14.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -233.753463,
+          -41.580668,
+          4.0
+        ],
+        "max": [
+          -188.753463,
+          41.580668,
+          18.0
+        ],
+        "center": [
+          -211.253463,
+          0.0,
+          11.0
+        ]
+      },
+      "placement_mm": [
+        -249.18273,
+        0.0,
+        4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "bumper_assembled",
+      "label": "bumper",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/bumper__bumper_assembled.stl",
+      "triangles": 4576,
+      "size_mm": [
+        44.0,
+        259.987578,
+        8.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -254.753463,
+          -129.993789,
+          4.0
+        ],
+        "max": [
+          -210.753463,
+          129.993789,
+          12.0
+        ],
+        "center": [
+          -232.753463,
+          0.0,
+          8.0
+        ]
+      },
+      "placement_mm": [
+        -242.176284,
+        0.0,
+        4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "bodyshell_rear_holder_assembled",
+      "label": "bodyshell_rear_holder",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/bodyshell_rear_holder__bodyshell_rear_holder_assembled.stl",
+      "triangles": 1004,
+      "size_mm": [
+        18.0,
+        220.0,
+        14.0
+      ],
+      "bounds_mm": {
+        "min": [
+          172.719549,
+          -110.0,
+          4.0
+        ],
+        "max": [
+          190.719549,
+          110.0,
+          18.0
+        ],
+        "center": [
+          181.719549,
+          0.0,
+          11.0
+        ]
+      },
+      "placement_mm": [
+        190.719549,
+        -0.0,
+        4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 90.0
+    },
+    {
+      "name": "steering_bellcrank_left",
+      "label": "boomerang_steering_block_sx",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/boomerang_steering_block_sx__steering_bellcrank_left.stl",
+      "triangles": 628,
+      "size_mm": [
+        29.0,
+        20.0,
+        9.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -125.0592,
+          -52.0,
+          4.0
+        ],
+        "max": [
+          -96.0592,
+          -32.0,
+          13.0
+        ],
+        "center": [
+          -110.5592,
+          -42.0,
+          8.5
+        ]
+      },
+      "placement_mm": [
+        -110.0592,
+        -52.0,
+        9.0
+      ],
+      "rotation_axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "rotation_deg": 180.0
+    },
+    {
+      "name": "steering_bellcrank_right",
+      "label": "boomerang_steeribg_block_dx",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/boomerang_steeribg_block_dx__steering_bellcrank_right.stl",
+      "triangles": 628,
+      "size_mm": [
+        29.0,
+        20.0,
+        9.0
+      ],
+      "bounds_mm": {
+        "min": [
+          -105.5592,
+          -3.0,
+          4.0
+        ],
+        "max": [
+          -76.5592,
+          17.0,
+          13.0
+        ],
+        "center": [
+          -91.0592,
+          7.0,
+          8.5
+        ]
+      },
+      "placement_mm": [
+        -91.5592,
+        -3.0,
+        4.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    },
+    {
+      "name": "esc_plate_rear_assembled",
+      "label": "esc_plate_rear",
+      "type": "PartDesign::Feature",
+      "group": "Placements_inferred_from_bearing_axes",
+      "stl": "stl/Placements_inferred_from_bearing_axes/esc_plate_rear__esc_plate_rear_assembled.stl",
+      "triangles": 1868,
+      "size_mm": [
+        49.0,
+        110.0,
+        3.0
+      ],
+      "bounds_mm": {
+        "min": [
+          44.156983,
+          -55.0438,
+          29.0
+        ],
+        "max": [
+          93.156983,
+          54.9562,
+          32.0
+        ],
+        "center": [
+          68.656983,
+          -0.0438,
+          30.5
+        ]
+      },
+      "placement_mm": [
+        0.0,
+        0.0,
+        29.0
+      ],
+      "rotation_axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "rotation_deg": 0.0
+    }
+  ],
+  "failures": []
+}

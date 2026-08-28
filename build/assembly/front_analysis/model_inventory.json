@@ -1,0 +1,1065 @@
+{
+  "source": "/home/dev/projects/rc_Car/build/assembly/rc_car_front_assembly.FCStd",
+  "document_label": "rc_car_front_assembly",
+  "freecad_version": "1.1.3",
+  "object_count": 19,
+  "component_count": 1,
+  "type_counts": {
+    "App::DocumentObjectGroup": 2,
+    "App::Line": 3,
+    "App::Origin": 1,
+    "App::Part": 1,
+    "App::Plane": 3,
+    "App::Point": 1,
+    "PartDesign::Feature": 8
+  },
+  "objects": [
+    {
+      "name": "CoreAssembly",
+      "label": "RC car core assembly",
+      "type_id": "App::Part",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "angle_deg": 0.0,
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "shape": {
+        "error": "'Part.Compound' object has no attribute 'CenterOfMass'"
+      },
+      "parents": [],
+      "children": [
+        "Origin",
+        "ExactPlacements",
+        "ProvisionalPlacements",
+        "chassis_4mm",
+        "rear_tower_left",
+        "rear_tower_right",
+        "lipo_holder_flex",
+        "lipo_barrier_rear003",
+        "lipo_barrier_rear004",
+        "Body354",
+        "Body347"
+      ],
+      "group_members": [
+        "ExactPlacements",
+        "ProvisionalPlacements",
+        "chassis_4mm",
+        "rear_tower_left",
+        "rear_tower_right",
+        "lipo_holder_flex",
+        "lipo_barrier_rear003",
+        "lipo_barrier_rear004",
+        "Body354",
+        "Body347"
+      ]
+    },
+    {
+      "name": "Origin",
+      "label": "Origin",
+      "type_id": "App::Origin",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "angle_deg": 0.0,
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "shape": null,
+      "parents": [
+        "CoreAssembly"
+      ],
+      "children": [
+        "X_Axis",
+        "Y_Axis",
+        "Z_Axis",
+        "XY_Plane",
+        "XZ_Plane",
+        "YZ_Plane",
+        "Origin001"
+      ],
+      "group_members": []
+    },
+    {
+      "name": "X_Axis",
+      "label": "X-axis",
+      "type_id": "App::Line",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "angle_deg": 0.0,
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "shape": {
+        "solid_count": 0,
+        "shell_count": 0,
+        "face_count": 0,
+        "edge_count": 1,
+        "volume_mm3": 0.0,
+        "area_mm2": 0.0,
+        "center_of_mass_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bounds_mm": {
+          "min": [
+            -1e+100,
+            0.0,
+            0.0
+          ],
+          "max": [
+            1e+100,
+            0.0,
+            0.0
+          ],
+          "size": [
+            2e+100,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "parents": [
+        "Origin"
+      ],
+      "children": []
+    },
+    {
+      "name": "Y_Axis",
+      "label": "Y-axis",
+      "type_id": "App::Line",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "quaternion_xyzw": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "angle_deg": 120.0,
+        "axis": [
+          0.57735,
+          0.57735,
+          0.57735
+        ]
+      },
+      "shape": {
+        "solid_count": 0,
+        "shell_count": 0,
+        "face_count": 0,
+        "edge_count": 1,
+        "volume_mm3": 0.0,
+        "area_mm2": 0.0,
+        "center_of_mass_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bounds_mm": {
+          "min": [
+            0.0,
+            -1e+100,
+            0.0
+          ],
+          "max": [
+            0.0,
+            1e+100,
+            0.0
+          ],
+          "size": [
+            0.0,
+            2e+100,
+            0.0
+          ]
+        }
+      },
+      "parents": [
+        "Origin"
+      ],
+      "children": []
+    },
+    {
+      "name": "Z_Axis",
+      "label": "Z-axis",
+      "type_id": "App::Line",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "quaternion_xyzw": [
+          0.5,
+          -0.5,
+          0.5,
+          0.5
+        ],
+        "angle_deg": 120.0,
+        "axis": [
+          0.57735,
+          -0.57735,
+          0.57735
+        ]
+      },
+      "shape": {
+        "solid_count": 0,
+        "shell_count": 0,
+        "face_count": 0,
+        "edge_count": 1,
+        "volume_mm3": 0.0,
+        "area_mm2": 0.0,
+        "center_of_mass_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bounds_mm": {
+          "min": [
+            0.0,
+            0.0,
+            -1e+100
+          ],
+          "max": [
+            0.0,
+            0.0,
+            1e+100
+          ],
+          "size": [
+            0.0,
+            0.0,
+            2e+100
+          ]
+        }
+      },
+      "parents": [
+        "Origin"
+      ],
+      "children": []
+    },
+    {
+      "name": "XY_Plane",
+      "label": "XY-plane",
+      "type_id": "App::Plane",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "angle_deg": 0.0,
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "shape": {
+        "solid_count": 0,
+        "shell_count": 0,
+        "face_count": 1,
+        "edge_count": 0,
+        "volume_mm3": 0.0,
+        "area_mm2": 8e+100,
+        "center_of_mass_mm": [
+          -5e+99,
+          -5e+99,
+          0.0
+        ],
+        "bounds_mm": {
+          "min": [
+            -1e+100,
+            -1e+100,
+            0.0
+          ],
+          "max": [
+            1e+100,
+            1e+100,
+            0.0
+          ],
+          "size": [
+            2e+100,
+            2e+100,
+            0.0
+          ]
+        }
+      },
+      "parents": [
+        "Origin"
+      ],
+      "children": []
+    },
+    {
+      "name": "XZ_Plane",
+      "label": "XZ-plane",
+      "type_id": "App::Plane",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "quaternion_xyzw": [
+          0.707106781,
+          0.0,
+          0.0,
+          0.707106781
+        ],
+        "angle_deg": 90.0,
+        "axis": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "shape": {
+        "solid_count": 0,
+        "shell_count": 0,
+        "face_count": 1,
+        "edge_count": 0,
+        "volume_mm3": 0.0,
+        "area_mm2": 8e+100,
+        "center_of_mass_mm": [
+          -5e+99,
+          -1.0783978666860256e+68,
+          -5e+99
+        ],
+        "bounds_mm": {
+          "min": [
+            -1e+100,
+            0.0,
+            -1e+100
+          ],
+          "max": [
+            1e+100,
+            0.0,
+            1e+100
+          ],
+          "size": [
+            2e+100,
+            0.0,
+            2e+100
+          ]
+        }
+      },
+      "parents": [
+        "Origin"
+      ],
+      "children": []
+    },
+    {
+      "name": "YZ_Plane",
+      "label": "YZ-plane",
+      "type_id": "App::Plane",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "quaternion_xyzw": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "angle_deg": 120.0,
+        "axis": [
+          0.57735,
+          0.57735,
+          0.57735
+        ]
+      },
+      "shape": {
+        "solid_count": 0,
+        "shell_count": 0,
+        "face_count": 1,
+        "edge_count": 0,
+        "volume_mm3": 0.0,
+        "area_mm2": 8e+100,
+        "center_of_mass_mm": [
+          -5.391989333430128e+67,
+          -5e+99,
+          -5e+99
+        ],
+        "bounds_mm": {
+          "min": [
+            0.0,
+            -1e+100,
+            -1e+100
+          ],
+          "max": [
+            0.0,
+            1e+100,
+            1e+100
+          ],
+          "size": [
+            0.0,
+            2e+100,
+            2e+100
+          ]
+        }
+      },
+      "parents": [
+        "Origin"
+      ],
+      "children": []
+    },
+    {
+      "name": "Origin001",
+      "label": "Origin001",
+      "type_id": "App::Point",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "angle_deg": 0.0,
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "shape": {
+        "error": "'Part.Vertex' object has no attribute 'CenterOfMass'"
+      },
+      "parents": [
+        "Origin"
+      ],
+      "children": []
+    },
+    {
+      "name": "ExactPlacements",
+      "label": "Validated placements from source joints",
+      "type_id": "App::DocumentObjectGroup",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": null,
+      "shape": {
+        "error": "'Part.Compound' object has no attribute 'CenterOfMass'"
+      },
+      "parents": [
+        "CoreAssembly"
+      ],
+      "children": [
+        "chassis_4mm",
+        "rear_tower_left",
+        "rear_tower_right",
+        "lipo_holder_flex",
+        "lipo_barrier_rear003",
+        "lipo_barrier_rear004"
+      ],
+      "group_members": [
+        "chassis_4mm",
+        "rear_tower_left",
+        "rear_tower_right",
+        "lipo_holder_flex",
+        "lipo_barrier_rear003",
+        "lipo_barrier_rear004"
+      ]
+    },
+    {
+      "name": "ProvisionalPlacements",
+      "label": "Provisional placements to validate",
+      "type_id": "App::DocumentObjectGroup",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": null,
+      "shape": {
+        "error": "'Part.Compound' object has no attribute 'CenterOfMass'"
+      },
+      "parents": [
+        "CoreAssembly"
+      ],
+      "children": [
+        "Body354",
+        "Body347"
+      ],
+      "group_members": [
+        "Body354",
+        "Body347"
+      ]
+    },
+    {
+      "name": "chassis_4mm",
+      "label": "chassis_4mm001",
+      "type_id": "PartDesign::Feature",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "angle_deg": 0.0,
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "shape": {
+        "solid_count": 1,
+        "shell_count": 1,
+        "face_count": 130,
+        "edge_count": 378,
+        "volume_mm3": 92589.733631,
+        "area_mm2": 53144.305118,
+        "center_of_mass_mm": [
+          8.668773,
+          -0.012984,
+          1.979468
+        ],
+        "bounds_mm": {
+          "min": [
+            -188.753463,
+            -45.004079,
+            0.0
+          ],
+          "max": [
+            172.719549,
+            45.004079,
+            4.0
+          ],
+          "size": [
+            361.473012,
+            90.008158,
+            4.0
+          ]
+        }
+      },
+      "parents": [
+        "CoreAssembly",
+        "ExactPlacements"
+      ],
+      "children": []
+    },
+    {
+      "name": "rear_tower_left",
+      "label": "rear_tower_left001",
+      "type_id": "PartDesign::Feature",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          151.719549,
+          -35.5,
+          24.0
+        ],
+        "quaternion_xyzw": [
+          0.707106781,
+          0.0,
+          0.0,
+          0.707106781
+        ],
+        "angle_deg": 90.0,
+        "axis": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "shape": {
+        "solid_count": 1,
+        "shell_count": 1,
+        "face_count": 54,
+        "edge_count": 120,
+        "volume_mm3": 26965.161987,
+        "area_mm2": 10208.351708,
+        "center_of_mass_mm": [
+          128.223187,
+          -40.003266,
+          24.081594
+        ],
+        "bounds_mm": {
+          "min": [
+            78.719549,
+            -44.5,
+            4.0
+          ],
+          "max": [
+            171.719549,
+            -35.5,
+            44.0
+          ],
+          "size": [
+            93.0,
+            9.0,
+            40.0
+          ]
+        }
+      },
+      "parents": [
+        "CoreAssembly",
+        "ExactPlacements"
+      ],
+      "children": []
+    },
+    {
+      "name": "rear_tower_right",
+      "label": "rear_tower_right001",
+      "type_id": "PartDesign::Feature",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          151.719549,
+          35.5,
+          24.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.707106781,
+          0.707106781,
+          0.0
+        ],
+        "angle_deg": 180.0,
+        "axis": [
+          0.0,
+          0.707107,
+          0.707107
+        ]
+      },
+      "shape": {
+        "solid_count": 1,
+        "shell_count": 1,
+        "face_count": 48,
+        "edge_count": 111,
+        "volume_mm3": 25581.830013,
+        "area_mm2": 11774.730567,
+        "center_of_mass_mm": [
+          128.699396,
+          39.96912,
+          26.483074
+        ],
+        "bounds_mm": {
+          "min": [
+            78.719549,
+            35.5,
+            4.0
+          ],
+          "max": [
+            171.719549,
+            44.5,
+            54.0
+          ],
+          "size": [
+            93.0,
+            9.0,
+            50.0
+          ]
+        }
+      },
+      "parents": [
+        "CoreAssembly",
+        "ExactPlacements"
+      ],
+      "children": []
+    },
+    {
+      "name": "lipo_holder_flex",
+      "label": "lipo_holder_flex001",
+      "type_id": "PartDesign::Feature",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          4.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "angle_deg": 0.0,
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "shape": {
+        "solid_count": 1,
+        "shell_count": 1,
+        "face_count": 13,
+        "edge_count": 33,
+        "volume_mm3": 34136.984143,
+        "area_mm2": 13133.69192,
+        "center_of_mass_mm": [
+          -4.071562,
+          0.0,
+          17.5
+        ],
+        "bounds_mm": {
+          "min": [
+            -85.0,
+            -4.0,
+            4.0
+          ],
+          "max": [
+            77.0,
+            4.0,
+            31.0
+          ],
+          "size": [
+            162.0,
+            8.0,
+            27.0
+          ]
+        }
+      },
+      "parents": [
+        "CoreAssembly",
+        "ExactPlacements"
+      ],
+      "children": []
+    },
+    {
+      "name": "lipo_barrier_rear003",
+      "label": "lipo_barrier_rear005",
+      "type_id": "PartDesign::Feature",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          -2.145143,
+          3.750261,
+          4.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "angle_deg": 0.0,
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "shape": {
+        "solid_count": 1,
+        "shell_count": 1,
+        "face_count": 24,
+        "edge_count": 70,
+        "volume_mm3": 10136.249407,
+        "area_mm2": 4621.505413,
+        "center_of_mass_mm": [
+          76.427015,
+          -35.077497,
+          17.5
+        ],
+        "bounds_mm": {
+          "min": [
+            70.0,
+            -55.0,
+            4.0
+          ],
+          "max": [
+            90.0,
+            -15.0,
+            31.0
+          ],
+          "size": [
+            20.0,
+            40.0,
+            27.0
+          ]
+        }
+      },
+      "parents": [
+        "CoreAssembly",
+        "ExactPlacements"
+      ],
+      "children": []
+    },
+    {
+      "name": "lipo_barrier_rear004",
+      "label": "lipo_barrier_rear006",
+      "type_id": "PartDesign::Feature",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          -2.145143,
+          -3.750261,
+          31.0
+        ],
+        "quaternion_xyzw": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "angle_deg": 180.0,
+        "axis": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "shape": {
+        "solid_count": 1,
+        "shell_count": 1,
+        "face_count": 24,
+        "edge_count": 70,
+        "volume_mm3": 10136.249407,
+        "area_mm2": 4621.505413,
+        "center_of_mass_mm": [
+          76.427015,
+          35.077497,
+          17.5
+        ],
+        "bounds_mm": {
+          "min": [
+            70.0,
+            15.0,
+            4.0
+          ],
+          "max": [
+            90.0,
+            55.0,
+            31.0
+          ],
+          "size": [
+            20.0,
+            40.0,
+            27.0
+          ]
+        }
+      },
+      "parents": [
+        "CoreAssembly",
+        "ExactPlacements"
+      ],
+      "children": []
+    },
+    {
+      "name": "Body354",
+      "label": "rear_upperdeck",
+      "type_id": "PartDesign::Feature",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          41.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "angle_deg": 0.0,
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "shape": {
+        "solid_count": 1,
+        "shell_count": 1,
+        "face_count": 48,
+        "edge_count": 126,
+        "volume_mm3": 13838.364344,
+        "area_mm2": 8130.796148,
+        "center_of_mass_mm": [
+          34.381785,
+          0.00468,
+          43.509986
+        ],
+        "bounds_mm": {
+          "min": [
+            -9.225128,
+            -43.9928,
+            31.0
+          ],
+          "max": [
+            90.1677,
+            44.0072,
+            47.0
+          ],
+          "size": [
+            99.392828,
+            88.0,
+            16.0
+          ]
+        }
+      },
+      "parents": [
+        "CoreAssembly",
+        "ProvisionalPlacements"
+      ],
+      "children": []
+    },
+    {
+      "name": "Body347",
+      "label": "front_upperdeck",
+      "type_id": "PartDesign::Feature",
+      "state": [
+        "Up-to-date"
+      ],
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          27.006226
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "angle_deg": 0.0,
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "shape": {
+        "solid_count": 1,
+        "shell_count": 1,
+        "face_count": 40,
+        "edge_count": 104,
+        "volume_mm3": 8269.620517,
+        "area_mm2": 5325.835946,
+        "center_of_mass_mm": [
+          -128.83111,
+          -0.0,
+          20.693363
+        ],
+        "bounds_mm": {
+          "min": [
+            -175.269,
+            -25.0,
+            4.0
+          ],
+          "max": [
+            -66.969948,
+            25.0,
+            33.006226
+          ],
+          "size": [
+            108.299052,
+            50.0,
+            29.006226
+          ]
+        }
+      },
+      "parents": [
+        "CoreAssembly",
+        "ProvisionalPlacements"
+      ],
+      "children": []
+    }
+  ]
+}

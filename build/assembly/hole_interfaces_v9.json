@@ -1,0 +1,2937 @@
+{
+  "assembly": "/home/dev/projects/rc_Car/build/assembly/rc_car_full_working_v9.FCStd",
+  "components": {
+    "chassis_4mm": {
+      "label": "chassis_4mm001",
+      "holes": [
+        {
+          "radiusMm": 0.7,
+          "diameterMm": 1.4,
+          "depthMm": 4.0,
+          "centerMm": [
+            -62.156452,
+            -38.544456,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 0.7,
+          "diameterMm": 1.4,
+          "depthMm": 4.0,
+          "centerMm": [
+            -62.156452,
+            38.544456,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 0.7,
+          "diameterMm": 1.4,
+          "depthMm": 4.0,
+          "centerMm": [
+            61.699666,
+            -39.314362,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-003"
+        },
+        {
+          "radiusMm": 0.7,
+          "diameterMm": 1.4,
+          "depthMm": 4.0,
+          "centerMm": [
+            61.708201,
+            39.314828,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-004"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -182.030451,
+            -8.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-005"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -182.030451,
+            8.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-006"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -170.280451,
+            -20.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-007"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -170.280451,
+            20.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-008"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -110.520193,
+            -8.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-009"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -110.520193,
+            8.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-010"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -100.809213,
+            -36.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-011"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -100.809213,
+            13.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-012"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -91.309213,
+            -36.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-013"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -91.309213,
+            13.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-014"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -80.0,
+            0.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-015"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -74.0,
+            -41.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-016"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -74.0,
+            -21.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-017"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -74.0,
+            21.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-018"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -74.0,
+            41.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-019"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -72.0,
+            0.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-020"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -60.0,
+            0.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-021"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            -30.0,
+            0.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-022"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            0.0,
+            0.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-023"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            30.0,
+            0.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-024"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            60.0,
+            0.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-025"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            74.0,
+            -41.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-026"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            74.0,
+            -21.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-027"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            74.0,
+            21.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-028"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            74.0,
+            41.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-029"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            80.0,
+            0.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-030"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            84.719549,
+            -40.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-031"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            84.719549,
+            40.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-032"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            94.719549,
+            -40.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-033"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            96.719549,
+            40.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-034"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            104.719549,
+            -40.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-035"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            131.719549,
+            40.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-036"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            136.719549,
+            -40.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-037"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            136.719549,
+            0.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-038"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            166.719549,
+            -40.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-039"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            166.719549,
+            0.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-040"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            166.719549,
+            40.0,
+            2.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-041"
+        }
+      ]
+    },
+    "rear_tower_left": {
+      "label": "rear_tower_left001",
+      "holes": [
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            94.719549,
+            -40.0,
+            9.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            104.719549,
+            -40.0,
+            9.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            136.719549,
+            -40.0,
+            9.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 8.0,
+          "centerMm": [
+            143.719549,
+            -40.0,
+            40.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-004"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 8.0,
+          "centerMm": [
+            159.719549,
+            -40.0,
+            40.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-005"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            166.719549,
+            -40.0,
+            9.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-006"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            166.719549,
+            -40.0,
+            28.0
+          ],
+          "axis": [
+            1.0,
+            0.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-007"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            166.719549,
+            -40.0,
+            36.0
+          ],
+          "axis": [
+            1.0,
+            0.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-008"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 6.0,
+          "centerMm": [
+            120.719549,
+            -41.5,
+            19.0
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-009"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 6.0,
+          "centerMm": [
+            120.719549,
+            -41.5,
+            39.0
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-010"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 6.0,
+          "centerMm": [
+            128.719549,
+            -41.5,
+            19.0
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-011"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            84.619549,
+            -40.0,
+            36.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-012"
+        }
+      ]
+    },
+    "rear_tower_right": {
+      "label": "rear_tower_right001",
+      "holes": [
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 8.0,
+          "centerMm": [
+            143.719549,
+            40.0,
+            40.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 8.0,
+          "centerMm": [
+            159.719549,
+            40.0,
+            40.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            166.719549,
+            40.0,
+            28.0
+          ],
+          "axis": [
+            1.0,
+            -0.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            166.719549,
+            40.0,
+            36.0
+          ],
+          "axis": [
+            1.0,
+            -0.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-004"
+        },
+        {
+          "radiusMm": 1.25,
+          "diameterMm": 2.5,
+          "depthMm": 8.0,
+          "centerMm": [
+            99.219549,
+            40.0,
+            50.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-005"
+        },
+        {
+          "radiusMm": 1.25,
+          "diameterMm": 2.5,
+          "depthMm": 8.0,
+          "centerMm": [
+            124.219549,
+            40.0,
+            50.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-006"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 11.0,
+          "centerMm": [
+            96.719549,
+            40.0,
+            9.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-007"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 11.0,
+          "centerMm": [
+            131.719549,
+            40.0,
+            9.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-008"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 11.0,
+          "centerMm": [
+            166.719549,
+            40.0,
+            9.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-009"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            84.619549,
+            40.0,
+            36.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-010"
+        }
+      ]
+    },
+    "lipo_holder_flex": {
+      "label": "lipo_holder_flex001",
+      "holes": [
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            -80.0,
+            0.0,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            -60.0,
+            0.0,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            -30.0,
+            0.0,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            0.0,
+            0.0,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-004"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            30.0,
+            0.0,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-005"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            60.0,
+            0.0,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-006"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            72.0,
+            0.0,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-007"
+        }
+      ]
+    },
+    "lipo_barrier_rear003": {
+      "label": "lipo_barrier_rear005",
+      "holes": [
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            74.0,
+            -41.0,
+            17.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            74.0,
+            -21.0,
+            17.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            84.8,
+            -40.0,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        }
+      ]
+    },
+    "lipo_barrier_rear004": {
+      "label": "lipo_barrier_rear006",
+      "holes": [
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            74.0,
+            21.0,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            74.0,
+            41.0,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            84.8,
+            40.0,
+            17.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        }
+      ]
+    },
+    "Body354": {
+      "label": "rear_upperdeck",
+      "holes": [
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 16.0,
+          "centerMm": [
+            0.0,
+            0.0,
+            39.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 6,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 16.0,
+          "centerMm": [
+            30.0,
+            0.0,
+            39.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 6,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 6.0,
+          "centerMm": [
+            85.6677,
+            -39.9928,
+            44.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-003"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 6.0,
+          "centerMm": [
+            85.6677,
+            40.0072,
+            44.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-004"
+        }
+      ]
+    },
+    "Body347": {
+      "label": "front_upperdeck",
+      "holes": [
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 8.0,
+          "centerMm": [
+            -170.269,
+            -20.0,
+            35.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 8.0,
+          "centerMm": [
+            -170.269,
+            20.0,
+            35.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 19.0,
+          "centerMm": [
+            -70.969948,
+            0.0,
+            50.506226
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        }
+      ]
+    },
+    "Body356": {
+      "label": "double_fan_support",
+      "holes": [
+        {
+          "radiusMm": 1.5,
+          "diameterMm": 3.0,
+          "depthMm": 5.0,
+          "centerMm": [
+            99.219549,
+            40.0,
+            56.5
+          ],
+          "axis": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.5,
+          "diameterMm": 3.0,
+          "depthMm": 5.0,
+          "centerMm": [
+            103.719549,
+            -42.0,
+            56.5
+          ],
+          "axis": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.5,
+          "diameterMm": 3.0,
+          "depthMm": 5.0,
+          "centerMm": [
+            103.719549,
+            -10.0,
+            56.5
+          ],
+          "axis": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        },
+        {
+          "radiusMm": 1.5,
+          "diameterMm": 3.0,
+          "depthMm": 5.0,
+          "centerMm": [
+            103.719549,
+            -0.5,
+            56.5
+          ],
+          "axis": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-004"
+        },
+        {
+          "radiusMm": 1.5,
+          "diameterMm": 3.0,
+          "depthMm": 5.0,
+          "centerMm": [
+            103.719549,
+            31.5,
+            56.5
+          ],
+          "axis": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-005"
+        },
+        {
+          "radiusMm": 1.5,
+          "diameterMm": 3.0,
+          "depthMm": 5.0,
+          "centerMm": [
+            124.219549,
+            40.0,
+            56.5
+          ],
+          "axis": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-006"
+        },
+        {
+          "radiusMm": 1.5,
+          "diameterMm": 3.0,
+          "depthMm": 5.0,
+          "centerMm": [
+            135.719549,
+            -42.0,
+            56.5
+          ],
+          "axis": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-007"
+        },
+        {
+          "radiusMm": 1.5,
+          "diameterMm": 3.0,
+          "depthMm": 5.0,
+          "centerMm": [
+            135.719549,
+            -10.0,
+            56.5
+          ],
+          "axis": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-008"
+        },
+        {
+          "radiusMm": 1.5,
+          "diameterMm": 3.0,
+          "depthMm": 5.0,
+          "centerMm": [
+            135.719549,
+            -0.5,
+            56.5
+          ],
+          "axis": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-009"
+        },
+        {
+          "radiusMm": 1.5,
+          "diameterMm": 3.0,
+          "depthMm": 5.0,
+          "centerMm": [
+            135.719549,
+            31.5,
+            56.5
+          ],
+          "axis": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-010"
+        }
+      ]
+    },
+    "Body172": {
+      "label": "shaft_rear",
+      "holes": []
+    },
+    "Body246": {
+      "label": "pulley_rear",
+      "holes": [
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 19.0,
+          "centerMm": [
+            151.719549,
+            -3.5,
+            29.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        }
+      ]
+    },
+    "Body253": {
+      "label": "shaft_front_hollow_petcf",
+      "holes": [
+        {
+          "radiusMm": 1.25,
+          "diameterMm": 2.5,
+          "depthMm": 10.7,
+          "centerMm": [
+            -83.874939,
+            -39.5,
+            45.55
+          ],
+          "axis": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.25,
+          "diameterMm": 2.5,
+          "depthMm": 10.7,
+          "centerMm": [
+            -83.874939,
+            39.5,
+            45.55
+          ],
+          "axis": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.5,
+          "diameterMm": 3.0,
+          "depthMm": 90.0,
+          "centerMm": [
+            -83.874939,
+            0.0,
+            45.3
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        }
+      ]
+    },
+    "Fusion006": {
+      "label": "pulley_front_capped",
+      "holes": [
+        {
+          "radiusMm": 1.25,
+          "diameterMm": 2.5,
+          "depthMm": 3.9,
+          "centerMm": [
+            -83.8768,
+            -10.5,
+            52.15
+          ],
+          "axis": [
+            -0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        }
+      ]
+    },
+    "Body255": {
+      "label": "tower_right",
+      "holes": [
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 6.0,
+          "centerMm": [
+            -186.269,
+            -35.0,
+            11.5
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 12.0,
+          "centerMm": [
+            -186.269,
+            -32.0,
+            26.5
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            -182.994,
+            -5.0,
+            26.5
+          ],
+          "axis": [
+            0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-003"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 6.0,
+          "centerMm": [
+            -161.269,
+            -35.0,
+            11.5
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-004"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 12.0,
+          "centerMm": [
+            -161.269,
+            -32.0,
+            26.5
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-005"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            -157.544,
+            -5.0,
+            26.5
+          ],
+          "axis": [
+            0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-006"
+        }
+      ]
+    },
+    "Body262": {
+      "label": "tower_left",
+      "holes": [
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 6.0,
+          "centerMm": [
+            -186.269,
+            5.0,
+            26.5
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 12.0,
+          "centerMm": [
+            -186.269,
+            8.0,
+            11.5
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            -182.994,
+            35.0,
+            11.5
+          ],
+          "axis": [
+            0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-003"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 6.0,
+          "centerMm": [
+            -161.269,
+            5.0,
+            26.5
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-004"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 12.0,
+          "centerMm": [
+            -161.269,
+            8.0,
+            11.5
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-005"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 10.0,
+          "centerMm": [
+            -157.544,
+            35.0,
+            11.5
+          ],
+          "axis": [
+            0.0,
+            1.0,
+            -0.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-006"
+        }
+      ]
+    },
+    "Body323": {
+      "label": "suspension_upper_reinforce",
+      "holes": [
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 5.0,
+          "centerMm": [
+            -183.019,
+            -30.0,
+            36.5
+          ],
+          "axis": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 5.0,
+          "centerMm": [
+            -183.019,
+            30.0,
+            36.5
+          ],
+          "axis": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 5.0,
+          "centerMm": [
+            -170.269,
+            -54.0,
+            36.5
+          ],
+          "axis": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 5.0,
+          "centerMm": [
+            -170.269,
+            54.0,
+            36.5
+          ],
+          "axis": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-004"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 5.0,
+          "centerMm": [
+            -157.519,
+            -30.0,
+            36.5
+          ],
+          "axis": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-005"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 5.0,
+          "centerMm": [
+            -157.519,
+            30.0,
+            36.5
+          ],
+          "axis": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-006"
+        }
+      ]
+    },
+    "lipo_left": {
+      "label": "LiPo left",
+      "holes": [
+        {
+          "radiusMm": 2.5,
+          "diameterMm": 5.0,
+          "depthMm": 8.0,
+          "centerMm": [
+            53.290005,
+            -42.409493,
+            25.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 2.5,
+          "diameterMm": 5.0,
+          "depthMm": 8.0,
+          "centerMm": [
+            53.290005,
+            -12.590507,
+            25.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        }
+      ]
+    },
+    "lipo_right": {
+      "label": "LiPo right",
+      "holes": [
+        {
+          "radiusMm": 2.5,
+          "diameterMm": 5.0,
+          "depthMm": 8.0,
+          "centerMm": [
+            53.290005,
+            12.590507,
+            25.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 2.5,
+          "diameterMm": 5.0,
+          "depthMm": 8.0,
+          "centerMm": [
+            53.290005,
+            42.409493,
+            25.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        }
+      ]
+    },
+    "wheel_rear_left": {
+      "label": "wheel_rear",
+      "holes": [
+        {
+          "radiusMm": 2.0,
+          "diameterMm": 4.0,
+          "depthMm": 62.0,
+          "centerMm": [
+            151.719549,
+            -78.9,
+            29.0
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        }
+      ]
+    },
+    "wheel_rear_right": {
+      "label": "wheel_rear001",
+      "holes": [
+        {
+          "radiusMm": 2.0,
+          "diameterMm": 4.0,
+          "depthMm": 62.0,
+          "centerMm": [
+            151.719549,
+            78.9,
+            29.0
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        }
+      ]
+    },
+    "wheel_front_left": {
+      "label": "wheel_front",
+      "holes": [
+        {
+          "radiusMm": 2.8853,
+          "diameterMm": 5.7706,
+          "depthMm": 37.0,
+          "centerMm": [
+            -170.269,
+            -91.4,
+            29.0
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        }
+      ]
+    },
+    "wheel_front_right": {
+      "label": "wheel_front001",
+      "holes": [
+        {
+          "radiusMm": 2.8853,
+          "diameterMm": 5.7706,
+          "depthMm": 37.0,
+          "centerMm": [
+            -170.269,
+            91.4,
+            29.0
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        }
+      ]
+    },
+    "motor_reference": {
+      "label": "motor",
+      "holes": [
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 5.0,
+          "centerMm": [
+            115.719549,
+            22.0,
+            17.75
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 5.0,
+          "centerMm": [
+            115.719549,
+            22.0,
+            40.25
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 2.5,
+          "diameterMm": 5.0,
+          "depthMm": 19.0,
+          "centerMm": [
+            115.719549,
+            34.0,
+            29.0
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        }
+      ]
+    },
+    "spur_49t_assembled": {
+      "label": "spur_49t",
+      "holes": [
+        {
+          "radiusMm": 1.2206,
+          "diameterMm": 2.4412,
+          "depthMm": 19.0,
+          "centerMm": [
+            151.719549,
+            31.0,
+            29.013793
+          ],
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        }
+      ]
+    },
+    "spur_holder_assembled": {
+      "label": "spur_holder",
+      "holes": [
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            141.705683,
+            21.0,
+            34.781508
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            151.719549,
+            21.0,
+            17.436984
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.4,
+          "diameterMm": 2.8,
+          "depthMm": 4.0,
+          "centerMm": [
+            161.733415,
+            21.0,
+            34.781508
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        }
+      ]
+    },
+    "pinion_assembled": {
+      "label": "pinion",
+      "holes": [
+        {
+          "radiusMm": 2.5,
+          "diameterMm": 5.0,
+          "depthMm": 18.0,
+          "centerMm": [
+            115.676313,
+            27.0,
+            29.0
+          ],
+          "axis": [
+            -0.0,
+            1.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        }
+      ]
+    },
+    "lipo_lateral_blocker_assembled": {
+      "label": "lipo_lateral_blocker",
+      "holes": []
+    },
+    "front_lipo_link_long_assembled": {
+      "label": "front_lipo_link_long",
+      "holes": [
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 14.0,
+          "centerMm": [
+            -74.0243,
+            -21.0,
+            11.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 14.0,
+          "centerMm": [
+            -74.0243,
+            21.0,
+            11.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 4.0,
+          "centerMm": [
+            -60.0243,
+            0.0,
+            6.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-003"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 4.0,
+          "centerMm": [
+            -30.0243,
+            0.0,
+            6.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-004"
+        }
+      ]
+    },
+    "lipo_barrier_front_right": {
+      "label": "lipo_barrier_front_10mm001",
+      "holes": [
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            -74.255364,
+            20.964546,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            -74.255364,
+            40.964546,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            -74.255364,
+            46.964546,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        }
+      ]
+    },
+    "lipo_barrier_front_left": {
+      "label": "lipo_barrier_front_10mm002",
+      "holes": [
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            -74.255364,
+            20.964546,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            -74.255364,
+            40.964546,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 27.0,
+          "centerMm": [
+            -74.255364,
+            46.964546,
+            17.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        }
+      ]
+    },
+    "bumper_holder_assembled": {
+      "label": "bumper_holder",
+      "holes": [
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 14.0,
+          "centerMm": [
+            -192.753463,
+            -20.0,
+            11.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 14.0,
+          "centerMm": [
+            -192.753463,
+            20.0,
+            11.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.75,
+          "diameterMm": 3.5,
+          "depthMm": 14.0,
+          "centerMm": [
+            -225.753463,
+            -30.0,
+            11.0
+          ],
+          "axis": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 5,
+          "id": "hole-003"
+        },
+        {
+          "radiusMm": 1.75,
+          "diameterMm": 3.5,
+          "depthMm": 14.0,
+          "centerMm": [
+            -225.753463,
+            30.0,
+            11.0
+          ],
+          "axis": [
+            0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 5,
+          "id": "hole-004"
+        }
+      ]
+    },
+    "bumper_assembled": {
+      "label": "bumper",
+      "holes": []
+    },
+    "bodyshell_rear_holder_assembled": {
+      "label": "bodyshell_rear_holder",
+      "holes": [
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 8.0,
+          "centerMm": [
+            176.719549,
+            -97.940426,
+            11.0
+          ],
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.2,
+          "diameterMm": 2.4,
+          "depthMm": 8.0,
+          "centerMm": [
+            176.719549,
+            97.940426,
+            11.0
+          ],
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 4.05,
+          "diameterMm": 8.1,
+          "depthMm": 8.4,
+          "centerMm": [
+            186.519527,
+            -40.0,
+            11.0
+          ],
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        },
+        {
+          "radiusMm": 4.05,
+          "diameterMm": 8.1,
+          "depthMm": 8.4,
+          "centerMm": [
+            186.519527,
+            40.0,
+            11.0
+          ],
+          "axis": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-004"
+        }
+      ]
+    },
+    "steering_bellcrank_left": {
+      "label": "boomerang_steering_block_sx",
+      "holes": [
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 5.0,
+          "centerMm": [
+            -121.0592,
+            -47.25,
+            6.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 5.0,
+          "centerMm": [
+            -113.0592,
+            -47.25,
+            6.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 6.0,
+          "centerMm": [
+            -100.8092,
+            -36.0,
+            10.0
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        }
+      ]
+    },
+    "steering_bellcrank_right": {
+      "label": "boomerang_steeribg_block_dx",
+      "holes": [
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 6.0,
+          "centerMm": [
+            -100.8092,
+            13.0,
+            10.0
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 5.0,
+          "centerMm": [
+            -88.5592,
+            1.75,
+            6.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.6,
+          "diameterMm": 3.2,
+          "depthMm": 5.0,
+          "centerMm": [
+            -80.5592,
+            1.75,
+            6.5
+          ],
+          "axis": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "edgeCount": 2,
+          "id": "hole-003"
+        }
+      ]
+    },
+    "esc_plate_rear_assembled": {
+      "label": "esc_plate_rear",
+      "holes": [
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 3.0,
+          "centerMm": [
+            60.0206,
+            0.0,
+            30.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-001"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 3.0,
+          "centerMm": [
+            74.156983,
+            -41.0438,
+            30.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-002"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 3.0,
+          "centerMm": [
+            74.156983,
+            -21.0438,
+            30.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-003"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 3.0,
+          "centerMm": [
+            74.156983,
+            20.9562,
+            30.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-004"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 3.0,
+          "centerMm": [
+            74.156983,
+            40.9562,
+            30.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-005"
+        },
+        {
+          "radiusMm": 1.7,
+          "diameterMm": 3.4,
+          "depthMm": 3.0,
+          "centerMm": [
+            80.0206,
+            0.0,
+            30.5
+          ],
+          "axis": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "edgeCount": 3,
+          "id": "hole-006"
+        }
+      ]
+    }
+  },
+  "totalHoles": 162
+}

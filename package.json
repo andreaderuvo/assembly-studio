@@ -1,0 +1,16 @@
+{
+  "name": "assembly-studio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "postinstall": "npm run vendor",
+    "vendor": "node tools/copy_three_vendor.mjs",
+    "start": "node --max-old-space-size=384 webapp/server.mjs",
+    "test": "node --test webapp/test/*.test.mjs",
+    "prepare:web": "python3 tools/prepare_web_assembly.py build/assembly/rc_car_full_working_v9.json webapp/public/assets/assembly/stl_manifest.json build/assembly/collisions_v9.json build/assembly/snap_interfaces_v9.json webapp/data/assembly.json"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  }
+}

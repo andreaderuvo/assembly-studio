@@ -1,0 +1,115 @@
+name,label,type,size_x_mm,size_y_mm,size_z_mm,volume_mm3,parents
+Body202,balestra_holder_down,PartDesign::Body,30.0,4.4,7.0,693.175319,Group
+Body285,balestra_holder_top,PartDesign::Body,22.0,5.6,7.0,707.274438,Group
+Body198,bodyshell_rear_holder,PartDesign::Body,220.0,18.0,14.0,21816.49228,Group010
+Body306,boomerang_steeribg_block_dx,PartDesign::Body,29.0,20.0,9.0,2170.105855,Group
+Body305,boomerang_steering_block_sx,PartDesign::Body,29.0,20.0,9.0,2170.105855,Group
+Body186,bumper,PartDesign::Body,260.0,44.0,8.0,38237.188332,Group010
+Body230,bumper_holder,PartDesign::Body,83.161336,45.0,14.0,19161.647562,Group010
+Body234,chassis_4mm,PartDesign::Body,361.473012,90.008158,4.0,92589.733631,Group007 | chassis_4mm
+chassis_4mm,chassis_4mm001,App::Link,361.473012,72.16897,60.125323,92589.733631,Assembly | GroundedJoint | Joint | Joint001 | Joint002 | Joint003 | Joint004
+Body099,collar_wheel_3.50mm,PartDesign::Body,16.0,16.0,3.5,301.251247,Group001
+Body279,collar_wheel_3mm,PartDesign::Body,16.0,16.0,3.0,258.215354,Group001
+Body356,double_fan_support,PartDesign::Body,90.5,48.0,5.0,10180.840219,Group001
+Body350,drive_shaft_plastic_cap,PartDesign::Body,13.5,10.5,6.0,390.212389,Group
+Body251,drive_train_petcf,PartDesign::Body,20.002596,19.002562,30.0,6155.362052,Fusion004
+Body348,drive_train_petcf001,PartDesign::Body,20.002596,19.002562,30.0,6143.516051,Fusion005
+Body351,drive_train_petcf002,PartDesign::Body,20.002596,19.002562,30.0,5763.444525,Fusion006
+Body338,esc_capacitor_plate,PartDesign::Body,14.5,12.0,35.0,2203.780965,Group001
+Body139,esc_holder_light,PartDesign::Body,130.0,55.0,3.0,14567.603414,Group014
+Body310,esc_holder_light_mobile,PartDesign::Body,74.0,55.0,3.0,10019.017673,Group014
+Body181,esc_holder_rear,PartDesign::Body,70.0,88.0,12.0,24570.282849,Group003
+Body320,esc_plate_rear,PartDesign::Body,49.0,110.0,3.0,13689.905487,Group002
+Body238,fan_support,PartDesign::Body,49.0,48.0,5.0,5641.76163,Group001
+Body228,front_belt_holder,PartDesign::Body,10.5,14.0,17.0,878.402835,Group006
+Body324,front_belt_tensioner_lower,PartDesign::Body,6.0,6.0,7.5,81.807073,Group006
+Body325,front_belt_tensioner_lower_plate,PartDesign::Body,14.0,14.0,2.5,304.341788,Group006
+Body317,front_belt_tensioner_new_3mm,PartDesign::Body,8.0,18.0,11.0,575.646159,Group006
+Body313,front_belt_tensioner_new_4mm,PartDesign::Body,8.0,18.0,12.0,699.9747,Group006
+Body329,front_lipo_link_long,PartDesign::Body,54.0,52.0,14.0,6887.036481,Group002
+Body308,front_spring,PartDesign::Body,69.0,24.0,4.0,3000.772672,Group001
+Body213,front_tire,PartDesign::Body,30.0,55.0,55.0,67881.963262,Group008
+Body347,front_upperdeck,PartDesign::Body,108.299052,50.0,29.006226,8269.620517,Group
+Body291,link_central_rear,PartDesign::Body,20.0,15.0,8.0,1257.989055,Group001
+Body086,lipo,PartDesign::Body,140.0,47.0,25.0,164185.840735,Group008
+Body236,lipo_barrier_dx,PartDesign::Body,168.8,40.0,27.0,34926.674388,Group014
+Body327,lipo_barrier_front_10.5mm,PartDesign::Body,21.0,40.0,27.0,7268.344499,Group014
+Body312,lipo_barrier_front_10mm,PartDesign::Body,21.0,40.0,27.0,7268.344499,Group014
+Body340,lipo_barrier_front_10mm001,PartDesign::Body,8.0,40.0,27.0,5921.05003,Group002
+Body326,lipo_barrier_front_11,PartDesign::Body,21.0,40.0,27.0,7268.344499,Group014
+Body315,lipo_barrier_rear,PartDesign::Body,46.0,40.0,27.0,13673.564633,Group014
+Body342,lipo_barrier_rear003,PartDesign::Body,20.0,40.0,27.0,10136.249407,Group002 | lipo_barrier_rear003 | lipo_barrier_rear004
+lipo_barrier_rear003,lipo_barrier_rear005,App::Link,20.0,44.958946,43.698684,10136.249407,Assembly | Joint001
+lipo_barrier_rear004,lipo_barrier_rear006,App::Link,20.0,44.958946,43.698684,10136.249407,Assembly | Joint
+Body237,lipo_barrier_sx,PartDesign::Body,176.8,40.0,27.0,36518.95766,Group014
+Body256,lipo_holder_flex,PartDesign::Body,162.0,8.0,27.0,34136.984143,Group002 | lipo_holder_flex
+lipo_holder_flex,lipo_holder_flex001,App::Link,162.0,23.296843,25.957396,34136.984143,Assembly | Joint004
+Body357,lipo_holder_lighter,PartDesign::Body,162.0,8.0,27.0,24841.550538,Group002
+Body341,lipo_lateral_blocker,PartDesign::Body,160.0,4.0,13.8,6680.173445,Group002
+Body002,lipo_link,PartDesign::Body,14.722749,50.0,5.0,2084.331243,Group002
+ThreadedRod001,M10x10-ThreadedRod,Part::FeaturePython,,,,,Body290 | BaseFeature001
+ThreadedRod,M12x10-ThreadedRod,Part::FeaturePython,,,,,
+Body311,mobile_lipo,PartDesign::Body,8.117942,8.117942,8.0,298.807062,Group014
+Body090,motor,PartDesign::Body,42.0,42.0,87.0,94521.569407,Group008
+Body133,pinion,PartDesign::Body,20.90224,20.973876,18.0,3045.572636,Group005
+Body300,pivot_ball_holder_lower,PartDesign::Body,28.2,16.0,11.0,2529.430666,Group
+Body358,pivot_ball_holder_lower_improved_steering,PartDesign::Body,28.2,14.0,11.0,2354.156793,Group
+Body301,pivot_ball_holder_upper_left,PartDesign::Body,36.2,16.0,12.0,3297.652942,Group
+Body359,pivot_ball_holder_upper_left_steering,PartDesign::Body,36.2,14.0,12.0,3133.15,Group
+Body297,pivot_ball_holder_upper_right,PartDesign::Body,36.2,16.0,12.0,3251.061932,Group
+Body360,pivot_ball_holder_upper_right_steering,PartDesign::Body,36.2,14.0,12.0,3083.983768,Group
+Body136,plate_wheel,PartDesign::Body,16.0,16.0,5.0,857.016004,Group001
+Body252,pulley_petcf,PartDesign::Body,30.0,30.0,11.0,3380.097461,Fusion004
+Body349,pulley_petcf001,PartDesign::Body,30.0,30.0,11.0,2932.160461,Fusion005
+Body352,pulley_petcf002,PartDesign::Body,30.0,30.0,11.0,3380.097461,Fusion006
+Body246,pulley_rear,PartDesign::Body,34.0,34.0,21.0,8203.793179,Group005
+Body336,rear_belt_tensioner_shaft,PartDesign::Body,7.0,7.0,4.4,57.399254,Group003
+Body337,rear_belt_tensioner_shim,PartDesign::Body,6.0,6.0,7.0,141.622997,Group003
+Body335,rear_belt_tensioner_support,PartDesign::Body,16.999921,28.051542,4.0,1341.70764,Group003
+Body355,rear_belt_tensioner_support_longer,PartDesign::Body,17.0,36.706411,4.0,1603.253963,Group003
+Body178,rear_body_holder,PartDesign::Body,8.0,80.0,8.0,3993.33095,Group010
+Body332,rear_tower_left,PartDesign::Body,93.0,40.0,9.0,26965.161987,Group003 | rear_tower_left
+rear_tower_left,rear_tower_left001,App::Link,93.0,32.307516,36.648418,26965.161987,Assembly | Joint002
+Body235,rear_tower_right,PartDesign::Body,93.0,50.0,9.0,25581.830013,Group003 | rear_tower_right
+rear_tower_right,rear_tower_right001,App::Link,93.0,38.64369,44.384884,25581.830013,Assembly | Joint003
+Body354,rear_upperdeck,PartDesign::Body,99.392828,71.8826,60.400212,13838.364344,Group003
+Body292,rear_wing,PartDesign::Body,47.824298,243.0,5.0,8686.264403,Group001
+Body162,servo_arms_nylon,PartDesign::Body,26.0,20.0,5.5,1941.808314,Group
+Body260,servo_holder_cable_longer,PartDesign::Body,17.5,20.0,8.0,1446.660846,Group
+Body259,servo_holder_longer,PartDesign::Body,17.5,20.0,8.0,1879.190727,Group
+Body225,shaft_carbon_fiber_filler,PartDesign::Body,9.0,9.0,11.0,490.936817,Group009
+Body253,shaft_front_hollow_petcf,PartDesign::Body,12.003721,11.6,90.0,9185.382538,Group005
+Body278,shaft_front_petcf,PartDesign::Body,12.10339,11.65,90.0,7943.250868,Group005
+Body172,shaft_rear,PartDesign::Body,11.5,11.504798,219.8,22531.419244,Group005
+Body214,shaft_rear_metal_backup,PartDesign::Body,11.5,11.504798,219.8,22531.419248,Group009
+Body319,shim_10mm,PartDesign::Body,8.0,8.0,10.0,406.44355,Group012
+Body174,shim_left_metal,PartDesign::Body,14.0,14.0,2.8,103.710257,Group012
+Body288,shim_M12x1,PartDesign::Body,16.595542,16.595542,1.0,101.317945,Group012
+Body130,shim_rear,PartDesign::Body,11.383822,13.5,11.383822,1516.973625,Group006
+Body223,shim_rear0_12_5mm,PartDesign::Body,11.383822,13.5,11.383822,1542.106366,Group012
+Body224,shim_rear0_13_5mm,PartDesign::Body,11.383822,14.5,11.383822,1637.074877,Group012
+Body177,shim_rear_metal,PartDesign::Body,11.383822,16.5,11.383822,1877.277383,Group012
+Body176,shim_right_metal,PartDesign::Body,14.0,14.0,1.4,51.855128,Group012
+Body171,spur_49t,PartDesign::Body,50.992737,50.966538,18.0,12021.351848,Group005
+Body229,spur_holder,PartDesign::Body,30.5,30.5,16.0,4309.095591,Group005
+Body289,steering_block_M10,PartDesign::Body,44.0,18.332335,47.0,12462.973165,Group
+Body290,stop_pivot_ball_M10,PartDesign::Body,13.105387,14.696617,11.39998,313.697139,Group
+Body168,stop_wheel,PartDesign::Body,9.1,25.0,9.105958,1517.297853,Group005
+Body299,suspension_lower,PartDesign::Body,,,,,Group
+Body296,suspension_upper,PartDesign::Body,33.0,54.5,3.0,4511.703927,Group
+Body323,suspension_upper_reinforce,PartDesign::Body,114.0,32.000001,5.0,11366.05042,Group
+Body,tower_bearing_plug,PartDesign::Body,20.1,19.5,12.0,2896.683358,Group
+Body180,tower_body,PartDesign::Body,8.659138,20.329569,30.0,1913.01452,Group010
+Body328,tower_body_left,PartDesign::Body,9.545085,20.329569,30.0,1921.108378,Group010
+Body321,tower_body_right,PartDesign::Body,9.545085,20.329569,30.0,1921.108856,Group010
+Body262,tower_left,PartDesign::Body,40.0,38.0,30.0,15752.835906,Group
+Body255,tower_right,PartDesign::Body,40.0,38.0,30.0,15752.835906,Group
+Body188,towers_holder,PartDesign::Body,94.0,12.0,3.0,3233.05315,Group010
+Body247,turnbuckle_4mm,PartDesign::Body,10.2,41.201286,5.0,1024.475251,Group001
+Body346,wheel_drive_shaft,PartDesign::Body,17.0,16.0,32.0,3585.905121,Group005
+Body068,wheel_front,PartDesign::Body,60.0,60.0,37.0,103647.347367,Group008
+Body060,wheel_rear,PartDesign::Body,70.0,70.0,62.0,237824.847062,Group008
+Body287,wheel_spring_holder_long,PartDesign::Body,9.5,9.5,8.0,241.478519,Group005
+Body353,wheel_spring_holder_short,PartDesign::Body,8.0,8.0,3.5,91.813045,Group005
+Body302,wheel_train_w_pin_nylon,PartDesign::Body,17.0,15.856847,32.5,3608.995938,Group014
+Body286,wheel_train_w_pin_short,PartDesign::Body,17.0,15.856847,33.0,3508.751533,Group014

@@ -1,0 +1,190 @@
+{
+  "source": "/home/dev/projects/rc_Car/pancar_18e.FCStd",
+  "assembly": "/home/dev/projects/rc_Car/build/assembly/rc_car_guided_assembly_v2.FCStd",
+  "normalization": {
+    "base_mm": [
+      -0.0,
+      -0.0,
+      -0.0
+    ],
+    "quaternion_xyzw": [
+      0.336417494,
+      -0.0,
+      -0.0,
+      0.941712945
+    ]
+  },
+  "components": [
+    {
+      "name": "chassis_4mm",
+      "label": "chassis_4mm001",
+      "status": "exact-source-joint",
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "name": "rear_tower_left",
+      "label": "rear_tower_left001",
+      "status": "exact-source-joint",
+      "placement": {
+        "base_mm": [
+          151.719549,
+          -35.5,
+          24.0
+        ],
+        "quaternion_xyzw": [
+          0.707106781,
+          0.0,
+          0.0,
+          0.707106781
+        ]
+      }
+    },
+    {
+      "name": "rear_tower_right",
+      "label": "rear_tower_right001",
+      "status": "exact-source-joint",
+      "placement": {
+        "base_mm": [
+          151.719549,
+          35.5,
+          24.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.707106781,
+          0.707106781,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "lipo_holder_flex",
+      "label": "lipo_holder_flex001",
+      "status": "exact-source-joint",
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          4.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "name": "lipo_barrier_rear003",
+      "label": "lipo_barrier_rear005",
+      "status": "exact-source-joint",
+      "placement": {
+        "base_mm": [
+          -2.145143,
+          3.750261,
+          4.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "name": "lipo_barrier_rear004",
+      "label": "lipo_barrier_rear006",
+      "status": "exact-source-joint",
+      "placement": {
+        "base_mm": [
+          -2.145143,
+          -3.750261,
+          31.0
+        ],
+        "quaternion_xyzw": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "Body354",
+      "label": "rear_upperdeck",
+      "status": "provisional-authored-placement",
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          41.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "name": "Body347",
+      "label": "front_upperdeck",
+      "status": "user-guided-above-lipo-divider",
+      "placement": {
+        "base_mm": [
+          0.0,
+          0.0,
+          54.006226
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "z_offset_mm": 41.006226,
+      "interface_evidence": "User-guided above central LiPo divider; 4 XY holes match near x=-170.28 mm"
+    },
+    {
+      "name": "Body356",
+      "label": "double_fan_support",
+      "status": "user-guided-above-rear-right-shoulder",
+      "placement": {
+        "base_mm": [
+          133.908957,
+          10.808747,
+          54.0
+        ],
+        "quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.707106781,
+          0.707106781
+        ]
+      },
+      "translation_mm": [
+        136.778296,
+        -9.439408,
+        54.0
+      ],
+      "guided_rotation_deg_z": 90.0,
+      "interface_evidence": "User-guided above right rear shoulder; rotated 90 deg around Z"
+    }
+  ]
+}

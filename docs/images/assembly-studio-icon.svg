@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title description">
+  <title id="title">Assembly Studio icon</title>
+  <desc id="description">A white wireframe assembly cube on a dark rounded square.</desc>
+  <rect x="16" y="16" width="480" height="480" rx="104" fill="#111315" stroke="#34383d" stroke-width="16"/>
+  <g fill="none" stroke="#f4f5f6" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M256 104 404 188v168L256 440 108 356V188l148-84Z"/>
+    <path d="m108 188 148 84 148-84M256 272v168"/>
+  </g>
+  <circle cx="256" cy="272" r="15" fill="#73d7ff"/>
+</svg>

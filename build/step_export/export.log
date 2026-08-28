@@ -1,0 +1,1234 @@
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+Looking for thread definitions in: /tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/share/Mod/PartDesign/Resources/Hole /home/dev/.local/share/FreeCAD/v1-1/PartDesign/Hole 
+PropertyPythonObject::Restore: blocked import of module 'FastenersCmd' during document restore. Only modules from FreeCAD or installed addons are permitted.
+/home/dev/projects/rc_Car/tools/export_step_components.py(49)<class 'ImportError'>: module not permitted: FastenersCmd
+/home/dev/projects/rc_Car/tools/export_step_components.py(49)<class 'ModuleNotFoundError'>: No module named 'freecad.gears'
+/home/dev/projects/rc_Car/tools/export_step_components.py(49)<class 'ModuleNotFoundError'>: No module named 'freecad.gears'
+PropertyPythonObject::Restore: blocked import of module 'FastenersCmd' during document restore. Only modules from FreeCAD or installed addons are permitted.
+/home/dev/projects/rc_Car/tools/export_step_components.py(49)<class 'ImportError'>: module not permitted: FastenersCmd
+/home/dev/projects/rc_Car/tools/export_step_components.py(49)<class 'ModuleNotFoundError'>: No module named 'freecad.gears'
+PropertyPythonObject::Restore: blocked import of module 'pygears.involute_tooth' during document restore. Only modules from FreeCAD or installed addons are permitted.
+/home/dev/projects/rc_Car/tools/export_step_components.py(49)<class 'ImportError'>: module not permitted: pygears.involute_tooth
+/home/dev/projects/rc_Car/tools/export_step_components.py(49)<class 'ModuleNotFoundError'>: No module named 'freecad.gears'
+PropertyPythonObject::Restore: blocked import of module 'pygears.involute_tooth' during document restore. Only modules from FreeCAD or installed addons are permitted.
+/home/dev/projects/rc_Car/tools/export_step_components.py(49)<class 'ImportError'>: module not permitted: pygears.involute_tooth
+/home/dev/projects/rc_Car/tools/export_step_components.py(49)<class 'ModuleNotFoundError'>: No module named 'freecad.gears'
+/home/dev/projects/rc_Car/tools/export_step_components.py(49)<class 'ModuleNotFoundError'>: No module named 'freecad.gears'
+AttachEngine3D::calculateAttachedPlacement: path curve second derivative is below 1e-14, cannot align X-axis.
+AttachEngine3D::calculateAttachedPlacement: path curve second derivative is below 1e-14, cannot align X-axis.
+AttachEngine3D::calculateAttachedPlacement: path curve second derivative is below 1e-14, cannot align X-axis.
+AttachEngine3D::calculateAttachedPlacement: path curve second derivative is below 1e-14, cannot align X-axis.
+FreeCAD 1.1.3, Libs: 1.1.3R20260725 (Git shallow)
+(C) 2001-2026 FreeCAD contributors
+FreeCAD is free and open-source software licensed under the terms of LGPL2+ license.
+
+Importing project files......
+						(0 %)							(1 %)							(2 %)							(3 %)							(4 %)							(5 %)							(6 %)							(7 %)							(8 %)							(9 %)							(10 %)							(11 %)							(12 %)							(13 %)							(14 %)							(15 %)							(16 %)							(17 %)							(18 %)							(19 %)							(20 %)							(21 %)							(22 %)							(23 %)							(24 %)							(25 %)							(26 %)							(27 %)							(28 %)							(29 %)							(30 %)							(31 %)							(32 %)							(33 %)							(34 %)							(35 %)							(36 %)							(37 %)							(38 %)							(39 %)							(40 %)							(41 %)							(42 %)							(43 %)							(44 %)							(45 %)							(46 %)							(47 %)							(48 %)							(49 %)							(50 %)							(51 %)							(52 %)							(53 %)							(54 %)							(55 %)							(56 %)							(57 %)							(58 %)							(59 %)							(60 %)							(61 %)							(62 %)							(63 %)							(64 %)							(65 %)							(66 %)							(67 %)							(68 %)							(69 %)							(70 %)							(71 %)							(72 %)							(73 %)							(74 %)							(75 %)							(76 %)							(77 %)							(78 %)							(79 %)							(80 %)							(81 %)							(82 %)							(83 %)							(84 %)							(85 %)							(86 %)							(87 %)							(88 %)							(89 %)							(90 %)							(91 %)							(92 %)							(93 %)							(94 %)							(95 %)							(96 %)							(97 %)							(98 %)							(99 %)							(100 %)									Postprocessing......
+						(100 %)									[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/assembly/wheel_rear__Body060.step(112 ents)  Write  Done[0m
+[1/117] wheel_rear
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/ungrouped/M12x10-ThreadedRod__ThreadedRod.step(2476 ents)  Write  Done[0m
+[2/117] M12x10-ThreadedRod
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/assembly/wheel_front__Body068.step(112 ents)  Write  Done[0m
+[3/117] wheel_front
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/assembly/lipo__Body086.step(260 ents)  Write  Done[0m
+[4/117] lipo
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/assembly/motor__Body090.step(208 ents)  Write  Done[0m
+[5/117] motor
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/ungrouped/Fusion__Fusion.step(93 ents)  Write  Done[0m
+[6/117] Fusion
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/ungrouped/Fusion001__Fusion001.step(126 ents)  Write  Done[0m
+[7/117] Fusion001
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/optionals/collar_wheel_3.50mm__Body099.step(112 ents)  Write  Done[0m
+[8/117] collar_wheel_3.50mm
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/ungrouped/Fillet006__Fillet006.step(270 ents)  Write  Done[0m
+[9/117] Fillet006
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/ungrouped/Fusion002__Fusion002.step(449 ents)  Write  Done[0m
+[10/117] Fusion002
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/assembly/dogbone__Fillet007.step(615 ents)  Write  Done[0m
+[11/117] dogbone
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/assembly/pivot_ball__Fusion003.step(83 ents)  Write  Done[0m
+[12/117] pivot_ball
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/belt/shim_rear__Body130.step(439 ents)  Write  Done[0m
+[13/117] shim_rear
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/transmission/pinion__Body133.step(6238 ents)  Write  Done[0m
+[14/117] pinion
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/optionals/plate_wheel__Body136.step(137 ents)  Write  Done[0m
+[15/117] plate_wheel
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/old/esc_holder_light__Body139.step(1046 ents)  Write  Done[0m
+[16/117] esc_holder_light
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/central/lipo_link__Body002.step(699 ents)  Write  Done[0m
+[17/117] lipo_link
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/servo_arms_nylon__Body162.step(691 ents)  Write  Done[0m
+[18/117] servo_arms_nylon
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/transmission/stop_wheel__Body168.step(248 ents)  Write  Done[0m
+[19/117] stop_wheel
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/transmission/spur_49t__Body171.step(13113 ents)  Write  Done[0m
+[20/117] spur_49t
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/transmission/shaft_rear__Body172.step(668 ents)  Write  Done[0m
+[21/117] shaft_rear
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/shims/shim_left_metal__Body174.step(112 ents)  Write  Done[0m
+[22/117] shim_left_metal
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/shims/shim_right_metal__Body176.step(112 ents)  Write  Done[0m
+[23/117] shim_right_metal
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/shims/shim_rear_metal__Body177.step(439 ents)  Write  Done[0m
+[24/117] shim_rear_metal
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/bodyshell/rear_body_holder__Body178.step(1339 ents)  Write  Done[0m
+[25/117] rear_body_holder
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/bodyshell/tower_body__Body180.step(904 ents)  Write  Done[0m
+[26/117] tower_body
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/rear/esc_holder_rear__Body181.step(1276 ents)  Write  Done[0m
+[27/117] esc_holder_rear
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/bodyshell/bumper__Body186.step(29181 ents)  Write  Done[0m
+[28/117] bumper
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/bodyshell/towers_holder__Body188.step(516 ents)  Write  Done[0m
+[29/117] towers_holder
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/bodyshell/bodyshell_rear_holder__Body198.step(1282 ents)  Write  Done[0m
+[30/117] bodyshell_rear_holder
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/balestra_holder_down__Body202.step(384 ents)  Write  Done[0m
+[31/117] balestra_holder_down
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/assembly/front_tire__Body213.step(112 ents)  Write  Done[0m
+[32/117] front_tire
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/backup/shaft_rear_metal_backup__Body214.step(668 ents)  Write  Done[0m
+[33/117] shaft_rear_metal_backup
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/shims/shim_rear0_12_5mm__Body223.step(439 ents)  Write  Done[0m
+[34/117] shim_rear0_12_5mm
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/shims/shim_rear0_13_5mm__Body224.step(439 ents)  Write  Done[0m
+[35/117] shim_rear0_13_5mm
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/backup/shaft_carbon_fiber_filler__Body225.step(251 ents)  Write  Done[0m
+[36/117] shaft_carbon_fiber_filler
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/belt/front_belt_holder__Body228.step(850 ents)  Write  Done[0m
+[37/117] front_belt_holder
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/transmission/spur_holder__Body229.step(868 ents)  Write  Done[0m
+[38/117] spur_holder
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/bodyshell/bumper_holder__Body230.step(1332 ents)  Write  Done[0m
+[39/117] bumper_holder
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/chassis/chassis_4mm__Body234.step(4558 ents)  Write  Done[0m
+[40/117] chassis_4mm
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/rear/rear_tower_right__Body235.step(1399 ents)  Write  Done[0m
+[41/117] rear_tower_right
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/optionals/fan_support__Body238.step(908 ents)  Write  Done[0m
+[42/117] fan_support
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/transmission/pulley_rear__Body246.step(4879 ents)  Write  Done[0m
+[43/117] pulley_rear
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/optionals/turnbuckle_4mm__Body247.step(920 ents)  Write  Done[0m
+[44/117] turnbuckle_4mm
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/ungrouped/drive_train_petcf__Body251.step(1084 ents)  Write  Done[0m
+[45/117] drive_train_petcf
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/ungrouped/pulley_petcf__Body252.step(4249 ents)  Write  Done[0m
+[46/117] pulley_petcf
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/old/pulley_front__Fusion004.step(5256 ents)  Write  Done[0m
+[47/117] pulley_front
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/transmission/shaft_front_hollow_petcf__Body253.step(3864 ents)  Write  Done[0m
+[48/117] shaft_front_hollow_petcf
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/tower_bearing_plug__Body.step(1137 ents)  Write  Done[0m
+[49/117] tower_bearing_plug
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/tower_right__Body255.step(1808 ents)  Write  Done[0m
+[50/117] tower_right
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/central/lipo_holder_flex__Body256.step(443 ents)  Write  Done[0m
+[51/117] lipo_holder_flex
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/servo_holder_longer__Body259.step(710 ents)  Write  Done[0m
+[52/117] servo_holder_longer
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/servo_holder_cable_longer__Body260.step(924 ents)  Write  Done[0m
+[53/117] servo_holder_cable_longer
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/tower_left__Body262.step(1808 ents)  Write  Done[0m
+[54/117] tower_left
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/transmission/shaft_front_petcf__Body278.step(1269 ents)  Write  Done[0m
+[55/117] shaft_front_petcf
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/optionals/collar_wheel_3mm__Body279.step(112 ents)  Write  Done[0m
+[56/117] collar_wheel_3mm
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/balestra_holder_top__Body285.step(384 ents)  Write  Done[0m
+[57/117] balestra_holder_top
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/old/wheel_train_w_pin_short__Body286.step(1531 ents)  Write  Done[0m
+[58/117] wheel_train_w_pin_short
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/transmission/wheel_spring_holder_long__Body287.step(118 ents)  Write  Done[0m
+[59/117] wheel_spring_holder_long
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/shims/shim_M12x1__Body288.step(112 ents)  Write  Done[0m
+[60/117] shim_M12x1
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/steering_block_M10__Body289.step(9924 ents)  Write  Done[0m
+[61/117] steering_block_M10
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/ungrouped/M10x10-ThreadedRod__ThreadedRod001.step(3002 ents)  Write  Done[0m
+[62/117] M10x10-ThreadedRod
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/stop_pivot_ball_M10__Body290.step(3140 ents)  Write  Done[0m
+[63/117] stop_pivot_ball_M10
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/optionals/link_central_rear__Body291.step(314 ents)  Write  Done[0m
+[64/117] link_central_rear
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/optionals/rear_wing__Body292.step(1752 ents)  Write  Done[0m
+[65/117] rear_wing
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/suspension_upper__Body296.step(608 ents)  Write  Done[0m
+[66/117] suspension_upper
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/pivot_ball_holder_upper_right__Body297.step(1410 ents)  Write  Done[0m
+[67/117] pivot_ball_holder_upper_right
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/suspension_lower__Body299.step(1621 ents)  Write  Done[0m
+[68/117] suspension_lower
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/pivot_ball_holder_lower__Body300.step(1215 ents)  Write  Done[0m
+[69/117] pivot_ball_holder_lower
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/pivot_ball_holder_upper_left__Body301.step(1410 ents)  Write  Done[0m
+[70/117] pivot_ball_holder_upper_left
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/old/wheel_train_w_pin_nylon__Body302.step(987 ents)  Write  Done[0m
+[71/117] wheel_train_w_pin_nylon
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/boomerang_steering_block_sx__Body305.step(654 ents)  Write  Done[0m
+[72/117] boomerang_steering_block_sx
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/boomerang_steeribg_block_dx__Body306.step(654 ents)  Write  Done[0m
+[73/117] boomerang_steeribg_block_dx
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/optionals/front_spring__Body308.step(1934 ents)  Write  Done[0m
+[74/117] front_spring
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/old/esc_holder_light_mobile__Body310.step(524 ents)  Write  Done[0m
+[75/117] esc_holder_light_mobile
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/old/mobile_lipo__Body311.step(396 ents)  Write  Done[0m
+[76/117] mobile_lipo
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/old/lipo_barrier_dx__Body236.step(629 ents)  Write  Done[0m
+[77/117] lipo_barrier_dx
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/old/lipo_barrier_sx__Body237.step(785 ents)  Write  Done[0m
+[78/117] lipo_barrier_sx
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/old/lipo_barrier_front_10mm__Body312.step(1151 ents)  Write  Done[0m
+[79/117] lipo_barrier_front_10mm
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/belt/front_belt_tensioner_new_4mm__Body313.step(659 ents)  Write  Done[0m
+[80/117] front_belt_tensioner_new_4mm
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/old/lipo_barrier_rear__Body315.step(485 ents)  Write  Done[0m
+[81/117] lipo_barrier_rear
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/belt/front_belt_tensioner_new_3mm__Body317.step(659 ents)  Write  Done[0m
+[82/117] front_belt_tensioner_new_3mm
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/shims/shim_10mm__Body319.step(112 ents)  Write  Done[0m
+[83/117] shim_10mm
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/central/esc_plate_rear__Body320.step(966 ents)  Write  Done[0m
+[84/117] esc_plate_rear
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/bodyshell/tower_body_right__Body321.step(1237 ents)  Write  Done[0m
+[85/117] tower_body_right
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/suspension_upper_reinforce__Body323.step(1496 ents)  Write  Done[0m
+[86/117] suspension_upper_reinforce
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/belt/front_belt_tensioner_lower__Body324.step(182 ents)  Write  Done[0m
+[87/117] front_belt_tensioner_lower
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/belt/front_belt_tensioner_lower_plate__Body325.step(157 ents)  Write  Done[0m
+[88/117] front_belt_tensioner_lower_plate
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/old/lipo_barrier_front_11__Body326.step(1151 ents)  Write  Done[0m
+[89/117] lipo_barrier_front_11
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/old/lipo_barrier_front_10.5mm__Body327.step(1151 ents)  Write  Done[0m
+[90/117] lipo_barrier_front_10.5mm
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/bodyshell/tower_body_left__Body328.step(1237 ents)  Write  Done[0m
+[91/117] tower_body_left
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/central/front_lipo_link_long__Body329.step(1435 ents)  Write  Done[0m
+[92/117] front_lipo_link_long
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/rear/rear_tower_left__Body332.step(1526 ents)  Write  Done[0m
+[93/117] rear_tower_left
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/rear/rear_belt_tensioner_support__Body335.step(802 ents)  Write  Done[0m
+[94/117] rear_belt_tensioner_support
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/rear/rear_belt_tensioner_shaft__Body336.step(182 ents)  Write  Done[0m
+[95/117] rear_belt_tensioner_shaft
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/rear/rear_belt_tensioner_shim__Body337.step(112 ents)  Write  Done[0m
+[96/117] rear_belt_tensioner_shim
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/optionals/esc_capacitor_plate__Body338.step(475 ents)  Write  Done[0m
+[97/117] esc_capacitor_plate
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/central/lipo_barrier_front_10mm001__Body340.step(1390 ents)  Write  Done[0m
+[98/117] lipo_barrier_front_10mm001
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/central/lipo_lateral_blocker__Body341.step(895 ents)  Write  Done[0m
+[99/117] lipo_lateral_blocker
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/central/lipo_barrier_rear003__Body342.step(1282 ents)  Write  Done[0m
+[100/117] lipo_barrier_rear003
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/transmission/wheel_drive_shaft__Body346.step(1232 ents)  Write  Done[0m
+[101/117] wheel_drive_shaft
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/front_upperdeck__Body347.step(1237 ents)  Write  Done[0m
+[102/117] front_upperdeck
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/ungrouped/drive_train_petcf001__Body348.step(1078 ents)  Write  Done[0m
+[103/117] drive_train_petcf001
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/ungrouped/pulley_petcf001__Body349.step(4282 ents)  Write  Done[0m
+[104/117] pulley_petcf001
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/old/pulley_front001__Fusion005.step(5358 ents)  Write  Done[0m
+[105/117] pulley_front001
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/drive_shaft_plastic_cap__Body350.step(712 ents)  Write  Done[0m
+[106/117] drive_shaft_plastic_cap
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/ungrouped/drive_train_petcf002__Body351.step(1084 ents)  Write  Done[0m
+[107/117] drive_train_petcf002
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/ungrouped/pulley_petcf002__Body352.step(4249 ents)  Write  Done[0m
+[108/117] pulley_petcf002
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/transmission/pulley_front_capped__Fusion006.step(5256 ents)  Write  Done[0m
+[109/117] pulley_front_capped
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/transmission/wheel_spring_holder_short__Body353.step(118 ents)  Write  Done[0m
+[110/117] wheel_spring_holder_short
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/rear/rear_upperdeck__Body354.step(1526 ents)  Write  Done[0m
+[111/117] rear_upperdeck
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/rear/rear_belt_tensioner_support_longer__Body355.step(971 ents)  Write  Done[0m
+[112/117] rear_belt_tensioner_support_longer
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/optionals/double_fan_support__Body356.step(1050 ents)  Write  Done[0m
+[113/117] double_fan_support
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/central/lipo_holder_lighter__Body357.step(1151 ents)  Write  Done[0m
+[114/117] lipo_holder_lighter
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/pivot_ball_holder_lower_improved_steering__Body358.step(971 ents)  Write  Done[0m
+[115/117] pivot_ball_holder_lower_improved_steering
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/pivot_ball_holder_upper_left_steering__Body359.step(1146 ents)  Write  Done[0m
+[116/117] pivot_ball_holder_upper_left_steering
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /home/dev/projects/rc_Car/build/step_export/step/front/pivot_ball_holder_upper_right_steering__Body360.step(1146 ents)  Write  Done[0m
+[117/117] pivot_ball_holder_upper_right_steering
+Exported 117 components; failures: 0
+	Command being timed: "/tmp/rc-car-freecad.jGIa5P/squashfs-root/usr/bin/freecadcmd tools/export_step_components.py --pass pancar_18e.FCStd build/step_export"
+	User time (seconds): 13.10
+	System time (seconds): 0.40
+	Percent of CPU this job got: 98%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:13.73
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 467848
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 337
+	Minor (reclaiming a frame) page faults: 93538
+	Voluntary context switches: 1098
+	Involuntary context switches: 985
+	Swaps: 0
+	File system inputs: 84208
+	File system outputs: 21328
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
