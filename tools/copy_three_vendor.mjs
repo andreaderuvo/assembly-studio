@@ -10,6 +10,7 @@ const files = [
   ["node_modules/three/examples/jsm/controls/OrbitControls.js", "OrbitControls.js"],
   ["node_modules/three/examples/jsm/controls/TransformControls.js", "TransformControls.js"],
   ["node_modules/three/examples/jsm/loaders/STLLoader.js", "STLLoader.js"],
+  ["node_modules/three/examples/jsm/utils/BufferGeometryUtils.js", "BufferGeometryUtils.js"],
 ];
 
 for (const [source, name] of files) {

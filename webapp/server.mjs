@@ -23,29 +23,71 @@ const FASTENER_STANDARDS = Object.freeze({
   ISO4762: {
     name: "Hex socket head cap screw",
     dimensions: {
-      3: { headDiameterMm: 5.5, headHeightMm: 3 },
-      4: { headDiameterMm: 7, headHeightMm: 4 },
-      5: { headDiameterMm: 8.5, headHeightMm: 5 },
+      3: { headDiameterMm: 5.5, headHeightMm: 3, socketAcrossFlatsMm: 2.5, socketDepthMm: 1.3 },
+      4: { headDiameterMm: 7, headHeightMm: 4, socketAcrossFlatsMm: 3, socketDepthMm: 2 },
+      5: { headDiameterMm: 8.5, headHeightMm: 5, socketAcrossFlatsMm: 4, socketDepthMm: 2.5 },
     },
   },
   ISO10642: {
     name: "Hex socket countersunk head screw",
     dimensions: {
-      3: { headDiameterMm: 6, headHeightMm: 1.7 },
-      4: { headDiameterMm: 8, headHeightMm: 2.3 },
-      5: { headDiameterMm: 10, headHeightMm: 2.8 },
+      3: { headDiameterMm: 6, headHeightMm: 1.7, socketAcrossFlatsMm: 2, socketDepthMm: .95 },
+      4: { headDiameterMm: 8, headHeightMm: 2.3, socketAcrossFlatsMm: 2.5, socketDepthMm: 1.45 },
+      5: { headDiameterMm: 10, headHeightMm: 2.8, socketAcrossFlatsMm: 3, socketDepthMm: 1.75 },
     },
   },
 });
 
 const BEARING_CATALOG = Object.freeze({
+  MR63: { innerDiameterMm: 3, outerDiameterMm: 6, widthMm: 2 },
+  MR74: { innerDiameterMm: 4, outerDiameterMm: 7, widthMm: 2 },
+  MR84: { innerDiameterMm: 4, outerDiameterMm: 8, widthMm: 3 },
+  MR85: { innerDiameterMm: 5, outerDiameterMm: 8, widthMm: 2.5 },
+  MR95: { innerDiameterMm: 5, outerDiameterMm: 9, widthMm: 3 },
+  MR104: { innerDiameterMm: 4, outerDiameterMm: 10, widthMm: 4 },
   MR105: { innerDiameterMm: 5, outerDiameterMm: 10, widthMm: 4 },
+  MR106: { innerDiameterMm: 6, outerDiameterMm: 10, widthMm: 3 },
+  MR115: { innerDiameterMm: 5, outerDiameterMm: 11, widthMm: 4 },
+  MR117: { innerDiameterMm: 7, outerDiameterMm: 11, widthMm: 3 },
+  MR126: { innerDiameterMm: 6, outerDiameterMm: 12, widthMm: 4 },
+  MR128: { innerDiameterMm: 8, outerDiameterMm: 12, widthMm: 3.5 },
+  MR137: { innerDiameterMm: 7, outerDiameterMm: 13, widthMm: 4 },
+  MR148: { innerDiameterMm: 8, outerDiameterMm: 14, widthMm: 4 },
+  605: { innerDiameterMm: 5, outerDiameterMm: 14, widthMm: 5 },
+  606: { innerDiameterMm: 6, outerDiameterMm: 17, widthMm: 6 },
+  607: { innerDiameterMm: 7, outerDiameterMm: 19, widthMm: 6 },
+  608: { innerDiameterMm: 8, outerDiameterMm: 22, widthMm: 7 },
+  6000: { innerDiameterMm: 10, outerDiameterMm: 26, widthMm: 8 },
+  6001: { innerDiameterMm: 12, outerDiameterMm: 28, widthMm: 8 },
+  6002: { innerDiameterMm: 15, outerDiameterMm: 32, widthMm: 9 },
+  6003: { innerDiameterMm: 17, outerDiameterMm: 35, widthMm: 10 },
+  6004: { innerDiameterMm: 20, outerDiameterMm: 42, widthMm: 12 },
+  6200: { innerDiameterMm: 10, outerDiameterMm: 30, widthMm: 9 },
+  6201: { innerDiameterMm: 12, outerDiameterMm: 32, widthMm: 10 },
+  6202: { innerDiameterMm: 15, outerDiameterMm: 35, widthMm: 11 },
+  6203: { innerDiameterMm: 17, outerDiameterMm: 40, widthMm: 12 },
+  6204: { innerDiameterMm: 20, outerDiameterMm: 47, widthMm: 14 },
   623: { innerDiameterMm: 3, outerDiameterMm: 10, widthMm: 4 },
   624: { innerDiameterMm: 4, outerDiameterMm: 13, widthMm: 5 },
   625: { innerDiameterMm: 5, outerDiameterMm: 16, widthMm: 5 },
   626: { innerDiameterMm: 6, outerDiameterMm: 19, widthMm: 6 },
+  627: { innerDiameterMm: 7, outerDiameterMm: 22, widthMm: 7 },
+  628: { innerDiameterMm: 8, outerDiameterMm: 24, widthMm: 8 },
+  629: { innerDiameterMm: 9, outerDiameterMm: 26, widthMm: 8 },
+  6800: { innerDiameterMm: 10, outerDiameterMm: 19, widthMm: 5 },
+  6801: { innerDiameterMm: 12, outerDiameterMm: 21, widthMm: 5 },
+  6802: { innerDiameterMm: 15, outerDiameterMm: 24, widthMm: 5 },
+  6803: { innerDiameterMm: 17, outerDiameterMm: 26, widthMm: 5 },
+  6804: { innerDiameterMm: 20, outerDiameterMm: 32, widthMm: 7 },
+  685: { innerDiameterMm: 5, outerDiameterMm: 11, widthMm: 3 },
+  686: { innerDiameterMm: 6, outerDiameterMm: 13, widthMm: 5 },
+  687: { innerDiameterMm: 7, outerDiameterMm: 14, widthMm: 5 },
   688: { innerDiameterMm: 8, outerDiameterMm: 16, widthMm: 5 },
-  608: { innerDiameterMm: 8, outerDiameterMm: 22, widthMm: 7 },
+  689: { innerDiameterMm: 9, outerDiameterMm: 17, widthMm: 5 },
+  6900: { innerDiameterMm: 10, outerDiameterMm: 22, widthMm: 6 },
+  6901: { innerDiameterMm: 12, outerDiameterMm: 24, widthMm: 6 },
+  6902: { innerDiameterMm: 15, outerDiameterMm: 28, widthMm: 7 },
+  6903: { innerDiameterMm: 17, outerDiameterMm: 30, widthMm: 7 },
 });
 
 const isGeneratedComponent = (component) => ["fastener", "bearing", "instance"].includes(component.kind);
@@ -281,6 +323,8 @@ function createFastenerComponent(state, operation) {
       lengthMm,
       headDiameterMm: dimensions.headDiameterMm,
       headHeightMm: dimensions.headHeightMm,
+      socketAcrossFlatsMm: dimensions.socketAcrossFlatsMm,
+      socketDepthMm: dimensions.socketDepthMm,
       target: {
         componentId: target.component.id,
         interfaceType: "hole",
@@ -298,8 +342,31 @@ function createFastenerComponent(state, operation) {
 
 function createBearingComponent(state, operation) {
   const series = String(operation.series || "608").toUpperCase();
-  const dimensions = BEARING_CATALOG[series];
-  if (!dimensions) throw new HttpError(400, `Unsupported bearing series: ${series}`);
+  const catalogDimensions = BEARING_CATALOG[series];
+  const dimensions = {
+    innerDiameterMm: Number(operation.innerDiameterMm ?? catalogDimensions?.innerDiameterMm),
+    outerDiameterMm: Number(operation.outerDiameterMm ?? catalogDimensions?.outerDiameterMm),
+    widthMm: Number(operation.widthMm ?? catalogDimensions?.widthMm),
+  };
+  if (!Object.values(dimensions).every(Number.isFinite)) {
+    throw new HttpError(400, `Bearing dimensions are required for series: ${series}`);
+  }
+  if (dimensions.innerDiameterMm < .5 || dimensions.innerDiameterMm > 100) {
+    throw new HttpError(400, "Bearing inner diameter must be between 0.5 and 100 mm");
+  }
+  if (dimensions.outerDiameterMm <= dimensions.innerDiameterMm + .5 || dimensions.outerDiameterMm > 250) {
+    throw new HttpError(400, "Bearing outer diameter must be larger than the bore and at most 250 mm");
+  }
+  if (dimensions.widthMm < .5 || dimensions.widthMm > 100) {
+    throw new HttpError(400, "Bearing width must be between 0.5 and 100 mm");
+  }
+  const closure = String(operation.closure || "zz").toLowerCase();
+  if (!["open", "zz", "2rs"].includes(closure)) {
+    throw new HttpError(400, "Bearing closure must be open, ZZ or 2RS");
+  }
+  const defaultSealColors = { open: "#c69b46", zz: "#c8cdd1", "2rs": "#202326" };
+  const sealColor = String(operation.sealColor || defaultSealColors[closure]).toLowerCase();
+  if (!/^#[0-9a-f]{6}$/.test(sealColor)) throw new HttpError(400, "Invalid bearing seal color");
   const target = snapInterface(state, operation.target);
   if (!["hole", "shaft"].includes(target.type)) {
     throw new HttpError(400, "Bearings can be inserted on hole or shaft magnets");
@@ -316,7 +383,7 @@ function createBearingComponent(state, operation) {
   const id = `bearing_${crypto.randomUUID().replaceAll("-", "_")}`;
   const radius = dimensions.outerDiameterMm / 2;
   const component = {
-    id, label: `${series} bearing`, status: "generated-bearing", kind: "bearing", meshUrl: null,
+    id, label: `${series}${closure === "open" ? " OPEN" : `-${closure.toUpperCase()}`} bearing`, status: "generated-bearing", kind: "bearing", meshUrl: null,
     triangles: 384,
     sizeMm: [dimensions.outerDiameterMm, dimensions.outerDiameterMm, dimensions.widthMm],
     baseBoundsMm: {
@@ -328,7 +395,7 @@ function createBearingComponent(state, operation) {
     baseTransform: { positionMm: jsonClone(positionMm), quaternionXyzw: jsonClone(quaternionXyzw) },
     visible: true, locked: false, color: "#9da3a6", appearance: "steel",
     groupId: ensureBearingsGroup(state),
-    bearing: { series, ...dimensions, target: { ...target.ref, [sideKey]: side } },
+    bearing: { series, ...dimensions, closure, sealColor, target: { ...target.ref, [sideKey]: side } },
     interfaces: { holes: [], planes: [], shafts: [], seats: [], edges: [], points: [], centers: [], midplanes: [] },
   };
   operation.componentId = id;
@@ -1173,6 +1240,11 @@ export function loadProjectIntoState(state, project) {
   for (const savedBearing of savedBearings) {
     const generated = createBearingComponent(state, {
       type: "add_bearing", target: savedBearing.bearing?.target, series: savedBearing.bearing?.series,
+      innerDiameterMm: savedBearing.bearing?.innerDiameterMm,
+      outerDiameterMm: savedBearing.bearing?.outerDiameterMm,
+      widthMm: savedBearing.bearing?.widthMm,
+      closure: savedBearing.bearing?.closure,
+      sealColor: savedBearing.bearing?.sealColor,
     });
     const requestedId = String(savedBearing.id || "");
     if (!/^bearing_[a-zA-Z0-9_-]{1,100}$/.test(requestedId)
@@ -1544,21 +1616,48 @@ function runProcess(command, args, options = {}) {
     let output = "";
     child.stdout.on("data", (chunk) => { output = (output + chunk).slice(-20000); });
     child.stderr.on("data", (chunk) => { output = (output + chunk).slice(-20000); });
-    const timer = setTimeout(() => child.kill("SIGKILL"), options.timeoutMs || 120000);
+    const timeoutMs = options.timeoutMs || 120000;
+    let timedOut = false;
+    const timer = setTimeout(() => {
+      timedOut = true;
+      child.kill("SIGKILL");
+    }, timeoutMs);
     child.on("error", reject);
     child.on("close", (code, signal) => {
       clearTimeout(timer);
       if (code === 0) resolve(output);
+      else if (timedOut) reject(new Error(
+        `${path.basename(command)} timed out after ${Math.round(timeoutMs / 1000)} seconds\n${output}`,
+      ));
       else reject(new Error(`${path.basename(command)} fallito (${code ?? signal})\n${output}`));
     });
   });
 }
 
+async function availableMemoryMb() {
+  try {
+    const meminfo = await fs.readFile("/proc/meminfo", "utf8");
+    const match = meminfo.match(/^MemAvailable:\s+(\d+)\s+kB$/m);
+    return match ? Math.floor(Number(match[1]) / 1024) : null;
+  } catch {
+    return null;
+  }
+}
+
 async function buildFreeCad(runExactValidation, exportStep = false) {
-  const state = await readState();
-  const revision = state.revision;
   const freecadcmd = await findFreeCadCmd();
   if (!freecadcmd) throw new HttpError(503, "freecadcmd was not found; configure FREECADCMD");
+  const freeMemoryMb = await availableMemoryMb();
+  const minimumMemoryMb = Math.max(256, Number(process.env.FREECAD_MIN_AVAILABLE_MB || 640));
+  if (freeMemoryMb != null && freeMemoryMb < minimumMemoryMb) {
+    throw new HttpError(
+      503,
+      `FreeCAD export postponed: ${freeMemoryMb} MiB available, ${minimumMemoryMb} MiB required to avoid OOM`,
+      "freecad_low_memory",
+    );
+  }
+  const state = await readState();
+  const revision = state.revision;
   await fs.mkdir(BUILD_DIR, { recursive: true });
   const stateSnapshot = path.join(BUILD_DIR, `assembly-r${revision}.json`);
   const outputModel = path.join(BUILD_DIR, `rc_car_assembly-r${revision}.FCStd`);
@@ -1571,7 +1670,10 @@ async function buildFreeCad(runExactValidation, exportStep = false) {
     "tools/apply_web_assembly_state.py", "--pass", state.baseAssembly, stateSnapshot, outputModel,
   ];
   if (outputStep) applyArgs.push(outputStep);
-  const applyLog = await runProcess(freecadcmd, applyArgs);
+  const applyLog = await runProcess(freecadcmd, applyArgs, {
+    timeoutMs: 300000,
+    env: { MALLOC_ARENA_MAX: "2" },
+  });
   let exact = null;
   let collisionLog = "";
   if (runExactValidation) {
@@ -1671,12 +1773,17 @@ async function sendFile(response, root, requestPath, download = false, headOnly 
 async function route(request, response) {
   const url = new URL(request.url, `http://${request.headers.host || "localhost"}`);
   if (request.method === "GET" && url.pathname === "/api/health") {
+    const freecadAvailableMemoryMb = await availableMemoryMb();
     return sendJson(response, 200, {
       ok: true,
       aiConfigured: Boolean(process.env.OPENAI_API_KEY),
       model: process.env.OPENAI_MODEL || "gpt-5.4",
       freecadConfigured: Boolean(await findFreeCadCmd()),
+      freecadAvailableMemoryMb,
     });
+  }
+  if (request.method === "GET" && url.pathname === "/api/catalog/bearings") {
+    return sendJson(response, 200, BEARING_CATALOG);
   }
   if (request.method === "GET" && url.pathname === "/api/assembly") {
     return sendJson(response, 200, clientState(await readState()));

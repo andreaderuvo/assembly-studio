@@ -62,6 +62,23 @@ def fastener_shape(component):
         )
         shape = shank.fuse(head)
 
+    socket_across_flats = float(spec.get("socketAcrossFlatsMm", diameter * 0.75))
+    socket_depth = min(float(spec.get("socketDepthMm", head_height * 0.45)), head_height * 0.9)
+    socket_radius = socket_across_flats / math.sqrt(3.0)
+    socket_top = 0.0 if standard == "ISO10642" else head_height
+    socket_bottom = socket_top - socket_depth
+    socket_points = [
+        App.Vector(
+            socket_radius * math.cos(math.radians(60.0 * index + 30.0)),
+            socket_radius * math.sin(math.radians(60.0 * index + 30.0)),
+            socket_bottom,
+        )
+        for index in range(6)
+    ]
+    socket_wire = Part.makePolygon(socket_points + [socket_points[0]])
+    socket_tool = Part.Face(socket_wire).extrude(App.Vector(0, 0, socket_depth + 0.01))
+    shape = shape.cut(socket_tool)
+
     center = shape.BoundBox.Center
     shape.translate(-center)
     return shape
@@ -166,16 +183,25 @@ def main():
             obj.addProperty("App::PropertyLength", "InnerDiameter", "Bearing")
             obj.addProperty("App::PropertyLength", "OuterDiameter", "Bearing")
             obj.addProperty("App::PropertyLength", "BearingWidth", "Bearing")
+            obj.addProperty("App::PropertyString", "Closure", "Bearing")
+            obj.addProperty("App::PropertyString", "SealColor", "Bearing")
             spec = component["bearing"]
             obj.Series = str(spec["series"])
             obj.InnerDiameter = float(spec["innerDiameterMm"])
             obj.OuterDiameter = float(spec["outerDiameterMm"])
             obj.BearingWidth = float(spec["widthMm"])
+            obj.Closure = str(spec.get("closure", "zz")).upper()
+            obj.SealColor = str(spec.get("sealColor", "#c8cdd1"))
             obj.Shape = place_shape(bearing_shape(component), component["transform"])
             try:
                 color = rgb_color(component.get("color"))
                 if color is not None:
                     obj.ViewObject.ShapeColor = color
+                    seal_color = rgb_color(spec.get("sealColor")) or color
+                    obj.ViewObject.DiffuseColor = [
+                        seal_color if type(face.Surface).__name__ == "Plane" else color
+                        for face in obj.Shape.Faces
+                    ]
             except Exception:
                 pass
             changed += 1

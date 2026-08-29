@@ -321,12 +321,16 @@
           <p id="bearingTargetLabel"></p>
         </div>
         <div class="fastener-fields">
-          <label><span data-i18n="bearing.series">Series</span><select id="bearingSeries">
-            <option value="MR105">MR105 · 5×10×4</option><option value="623">623 · 3×10×4</option>
-            <option value="624">624 · 4×13×5</option><option value="625">625 · 5×16×5</option>
-            <option value="626">626 · 6×19×6</option><option value="688">688 · 8×16×5</option>
-            <option value="608">608 · 8×22×7</option>
+          <label><span data-i18n="bearing.series">Series</span><select id="bearingSeries"></select></label>
+          <label><span data-i18n="bearing.closure">Closure</span><select id="bearingClosure">
+            <option value="open" data-i18n="bearing.open">Open</option>
+            <option value="zz" data-i18n="bearing.zz" selected>ZZ · steel shields</option>
+            <option value="2rs" data-i18n="bearing.2rs">2RS · rubber seals</option>
           </select></label>
+          <label><span data-i18n="bearing.inner">Bore</span><input id="bearingInnerDiameter" type="number" min="0.5" max="100" step="0.1"><small>mm</small></label>
+          <label><span data-i18n="bearing.outer">Outer diameter</span><input id="bearingOuterDiameter" type="number" min="1.1" max="250" step="0.1"><small>mm</small></label>
+          <label><span data-i18n="bearing.width">Width</span><input id="bearingWidth" type="number" min="0.5" max="100" step="0.1"><small>mm</small></label>
+          <label class="bearing-color-field"><span data-i18n="bearing.sealColor">Shield / seal color</span><input id="bearingSealColor" type="color" value="#c8cdd1"></label>
         </div>
         <div class="dialog-actions">
           <button class="button ghost" value="cancel" data-i18n="common.cancel">Cancel</button>
@@ -410,7 +414,10 @@
           <label class="scene-color-field"><span data-i18n="scene.background">Background</span><input id="sceneBackgroundColor" type="color" value="#0b1117"><output id="sceneBackgroundValue">#0B1117</output></label>
           <label class="fastener-check"><input id="sceneGridVisible" type="checkbox" checked><span data-i18n="scene.grid">Show grid</span></label>
           <label class="fastener-check"><input id="sceneAxesVisible" type="checkbox" checked><span data-i18n="scene.axes">Show axes</span></label>
-          <label class="fastener-check"><input id="sceneLightingEnabled" type="checkbox" checked><span data-i18n="scene.lighting">Lights and reflections</span></label>
+          <label class="fastener-check"><input id="sceneLightingEnabled" type="checkbox" checked><span data-i18n="scene.lighting">Soft lighting</span></label>
+          <label class="fastener-check"><input id="sceneReflectionsEnabled" type="checkbox" checked><span data-i18n="scene.reflections">Material reflections</span></label>
+          <label class="scene-range-field"><span data-i18n="scene.lightIntensity">Light intensity</span><div><input id="sceneLightIntensity" type="range" min="0" max="160" step="5" value="80"><output id="sceneLightIntensityValue">80%</output></div></label>
+          <label class="scene-range-field"><span data-i18n="scene.reflectionIntensity">Reflection intensity</span><div><input id="sceneReflectionIntensity" type="range" min="0" max="100" step="5" value="35"><output id="sceneReflectionIntensityValue">35%</output></div></label>
         </div>
         <div class="dialog-actions">
           <button class="button ghost" value="cancel" data-i18n="common.cancel">Cancel</button>

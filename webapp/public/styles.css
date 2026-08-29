@@ -352,6 +352,10 @@ kbd { border-color: #444; color: #999; }
 .scene-color-field input[type="color"] { width: 44px; height: 31px; padding: 2px; border: 1px solid #353535; border-radius: 4px; background: #171717; cursor: pointer; }
 .scene-color-field output { color: #aaa; font-family: monospace; font-size: 10px; }
 .scene-settings-fields .fastener-check { display: flex; align-items: center; align-self: end; min-height: 31px; }
+.scene-range-field { grid-column: 1 / -1; }
+.scene-range-field div { display: grid; grid-template-columns: 1fr 44px; align-items: center; gap: 9px; }
+.scene-range-field input[type="range"] { width: 100%; accent-color: #d9d9d9; }
+.scene-range-field output { color: #b8b8b8; font-family: monospace; font-size: 10px; text-align: right; }
 
 .anchor-browser { margin: 12px 0; border: 1px solid #303030; border-radius: 5px; background: #111; overflow: hidden; }
 .anchor-browser-heading { margin: 0; padding: 8px 9px 5px; }
@@ -381,7 +385,8 @@ kbd { border-color: #444; color: #999; }
 .anchor-tree-empty { margin: 0; padding: 13px 9px; color: #747474; font-size: 10px; }
 .fastener-fields { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 4px; }
 .fastener-fields label { position: relative; display: grid; gap: 5px; color: #888; font-size: 9px; }
-.fastener-fields select, .fastener-fields input[type="number"] { width: 100%; height: 31px; padding: 0 8px; border: 1px solid #333; border-radius: 5px; outline: 0; color: #ddd; background: #191919; font-size: 10px; }
+.fastener-fields select, .fastener-fields input[type="number"], .fastener-fields input[type="color"] { width: 100%; height: 31px; padding: 0 8px; border: 1px solid #333; border-radius: 5px; outline: 0; color: #ddd; background: #191919; font-size: 10px; }
+.fastener-fields input[type="color"] { padding: 3px; cursor: pointer; }
 .fastener-fields select:focus, .fastener-fields input:focus { border-color: #777; }
 .fastener-fields small { position: absolute; right: 8px; bottom: 8px; color: #666; }
 .fastener-fields .fastener-check { grid-column: 1 / -1; display: flex; grid-template-columns: none; align-items: center; gap: 7px; padding-top: 3px; color: #aaa; }

@@ -46,7 +46,9 @@ image exports.
   settings.
 - Up to 500 persistent undo/redo operations by default.
 - Reusable component catalog with independent instances.
-- Parametric fasteners and bearings.
+- Parametric socket-head fasteners with modeled hex drives.
+- A 49-size bearing catalog plus custom dimensions, with distinct Open, ZZ,
+  and 2RS colors.
 - Quick AABB interference checks in the browser workflow.
 - Optional exact collision checks through isolated FreeCAD workers.
 - FCStd, STEP, PNG, SVG, and portable project exports.
@@ -89,14 +91,20 @@ The image exporter provides repeatable orthographic-style viewpoints and PNG
 or SVG output up to 4K. **Fit model to width** uses the selected view direction
 and fills the output width automatically.
 
-Scene lighting and reflections can be disabled from **Scene appearance**. In
-that mode, components use flat unlit colors, avoiding artificial highlights in
-technical images.
+Scene lighting and material reflections are independent in **Scene
+appearance**, with separate intensity controls. Disabling both uses flat unlit
+colors and avoids artificial highlights in technical images and PNG exports.
 
 ## AI integration
 
 AI integration is a work in progress. Assembly Studio is fully usable in manual
 mode, and no API key or credential is included in this repository.
+
+Assembly-instruction generation is also planned work; the **AI off** badge only
+reports assistant availability and does not currently mean "AI manual." A
+reliable instruction generator will derive ordered steps from confirmed mates,
+fasteners, and captured assembly stages rather than guessing from the final
+model alone.
 
 ## Typical workflow
 

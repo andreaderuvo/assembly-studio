@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "/vendor/OrbitControls.js";
 import { TransformControls } from "/vendor/TransformControls.js";
 import { STLLoader } from "/vendor/STLLoader.js";
+import { mergeGeometries } from "/vendor/BufferGeometryUtils.js";
 import {
   availableLocales, currentLocale, downloadLocaleTemplate, importLocaleFile,
   initI18n, setLocale, t,
@@ -22,8 +23,10 @@ camera.position.set(430, -390, 300);
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.NeutralToneMapping;
+renderer.toneMappingExposure = 1;
+// Editor meshes do not cast shadows, so a shadow map only wastes GPU memory.
+renderer.shadowMap.enabled = false;
 viewport.prepend(renderer.domElement);
 
 const environmentCanvas = document.createElement("canvas");
@@ -34,9 +37,9 @@ const environmentGradient = environmentContext.createLinearGradient(0, 0, 0, 256
 // Keep reflections broad and neutral. The previous environment contained two
 // bright rectangular "softboxes"; on metal parts they looked like headlights,
 // especially in high-resolution PNG exports.
-environmentGradient.addColorStop(0, "#c4c9cd");
-environmentGradient.addColorStop(.42, "#8f979d");
-environmentGradient.addColorStop(1, "#687178");
+environmentGradient.addColorStop(0, "#b8bdc1");
+environmentGradient.addColorStop(.42, "#7f868b");
+environmentGradient.addColorStop(1, "#4e555a");
 environmentContext.fillStyle = environmentGradient;
 environmentContext.fillRect(0, 0, 512, 256);
 const environmentTexture = new THREE.CanvasTexture(environmentCanvas);
@@ -56,13 +59,13 @@ transform.setTranslationSnap(0.5);
 transform.setRotationSnap(THREE.MathUtils.degToRad(5));
 transform.setSize(0.8);
 
-const hemisphereLight = new THREE.HemisphereLight(0xdbe8ef, 0x343a40, 1.35);
+const lightLevels = { hemisphere: .9, key: .8, fill: .32 };
+const hemisphereLight = new THREE.HemisphereLight(0xdbe8ef, 0x343a40, lightLevels.hemisphere);
 scene.add(hemisphereLight);
-const keyLight = new THREE.DirectionalLight(0xffffff, 1.25);
+const keyLight = new THREE.DirectionalLight(0xffffff, lightLevels.key);
 keyLight.position.set(-220, -180, 420);
-keyLight.castShadow = true;
 scene.add(keyLight);
-const fillLight = new THREE.DirectionalLight(0xb8cad8, .65);
+const fillLight = new THREE.DirectionalLight(0xc4d0d8, lightLevels.fill);
 fillLight.position.set(250, 180, 160);
 scene.add(fillLight);
 
@@ -317,8 +320,14 @@ const scenePresets = {
   studio: "#6d7278",
 };
 let sceneAppearance = {
-  preset: "dark", background: scenePresets.dark, grid: true, axes: true, lighting: true,
+  preset: "dark", background: scenePresets.dark, grid: true, axes: true,
+  lighting: true, reflections: true, lightIntensity: .8, reflectionIntensity: .35,
 };
+
+function sceneLevel(value, fallback, maximum = 2) {
+  const number = Number(value);
+  return Number.isFinite(number) ? THREE.MathUtils.clamp(number, 0, maximum) : fallback;
+}
 
 function applySceneAppearance(settings, persist = true) {
   const background = /^#[0-9a-f]{6}$/i.test(settings.background || "")
@@ -329,19 +338,26 @@ function applySceneAppearance(settings, persist = true) {
     grid: settings.grid !== false,
     axes: settings.axes !== false,
     lighting: settings.lighting !== false,
+    reflections: settings.reflections !== false,
+    lightIntensity: sceneLevel(settings.lightIntensity, .8),
+    reflectionIntensity: sceneLevel(settings.reflectionIntensity, .35),
   };
   scene.background.set(background);
   scene.fog.color.set(background);
-  scene.environment = sceneAppearance.lighting ? environmentTexture : null;
+  scene.environment = sceneAppearance.reflections ? environmentTexture : null;
   hemisphereLight.visible = sceneAppearance.lighting;
   keyLight.visible = sceneAppearance.lighting;
   fillLight.visible = sceneAppearance.lighting;
+  hemisphereLight.intensity = lightLevels.hemisphere * sceneAppearance.lightIntensity;
+  keyLight.intensity = lightLevels.key * sceneAppearance.lightIntensity;
+  fillLight.intensity = lightLevels.fill * sceneAppearance.lightIntensity;
   scene.traverse((object) => {
     const materials = Array.isArray(object.material) ? object.material : [object.material];
     for (const material of materials) {
       if (!material?.isMeshStandardMaterial) continue;
       material.emissive.copy(sceneAppearance.lighting ? new THREE.Color(0) : material.color);
       material.emissiveIntensity = sceneAppearance.lighting ? 0 : 1;
+      material.envMapIntensity = sceneAppearance.reflectionIntensity;
       material.needsUpdate = true;
     }
   });
@@ -373,6 +389,7 @@ const thumbnailTasks = new Map();
 const ghosts = [];
 const holeMarkers = [];
 let state = null;
+let bearingCatalog = {};
 let selectedId = null;
 let proposal = null;
 let dragStartTransform = null;
@@ -654,8 +671,10 @@ function materialFor(item) {
   return new THREE.MeshStandardMaterial({
     color,
     ...materialProfile(item),
+    vertexColors: item.kind === "bearing" || item.kind === "fastener",
     emissive: sceneAppearance.lighting ? 0x000000 : color,
     emissiveIntensity: sceneAppearance.lighting ? 0 : 1,
+    envMapIntensity: sceneAppearance.reflectionIntensity,
     transparent: opacity < .999,
     opacity,
     depthWrite: opacity >= .999,
@@ -693,24 +712,103 @@ function fastenerGeometry(spec) {
   if (geometry !== lathe) lathe.dispose();
   geometry.rotateX(Math.PI / 2);
   geometry.computeVertexNormals();
-  return geometry;
+  const bodyColors = new Float32Array(geometry.getAttribute("position").count * 3).fill(1);
+  geometry.setAttribute("color", new THREE.BufferAttribute(bodyColors, 3));
+
+  // A shallow dark hexagonal insert makes the drive recess unambiguous in the
+  // WebGL view. The exported CAD solid below contains the actual cut cavity.
+  const fallbackAcrossFlats = ({ 3: 2.5, 4: 3, 5: 4 })[diameter] || diameter * .75;
+  const acrossFlats = Number(spec.socketAcrossFlatsMm || fallbackAcrossFlats);
+  const socketRadius = acrossFlats / Math.sqrt(3);
+  const topZ = spec.standard === "ISO10642" ? 0 : headHeight;
+  const socketMarkerIndexed = new THREE.CylinderGeometry(socketRadius, socketRadius, .06, 6, 1, false);
+  const socketMarker = socketMarkerIndexed.toNonIndexed();
+  socketMarkerIndexed.dispose();
+  socketMarker.rotateX(Math.PI / 2);
+  socketMarker.translate(0, 0, topZ + .015);
+  const socketColor = new THREE.Color(.08, .09, .1);
+  const socketColors = new Float32Array(socketMarker.getAttribute("position").count * 3);
+  for (let index = 0; index < socketMarker.getAttribute("position").count; index += 1) {
+    socketColors[index * 3] = socketColor.r;
+    socketColors[index * 3 + 1] = socketColor.g;
+    socketColors[index * 3 + 2] = socketColor.b;
+  }
+  socketMarker.setAttribute("color", new THREE.BufferAttribute(socketColors, 3));
+  const merged = mergeGeometries([geometry, socketMarker], false);
+  geometry.dispose();
+  socketMarker.dispose();
+  merged.computeVertexNormals();
+  return merged;
 }
 
-function bearingGeometry(spec) {
+function bearingRelativeColor(target, base) {
+  const targetColor = new THREE.Color(target);
+  const baseColor = new THREE.Color(base);
+  return new THREE.Color(
+    THREE.MathUtils.clamp(targetColor.r / Math.max(baseColor.r, .01), 0, 1),
+    THREE.MathUtils.clamp(targetColor.g / Math.max(baseColor.g, .01), 0, 1),
+    THREE.MathUtils.clamp(targetColor.b / Math.max(baseColor.b, .01), 0, 1),
+  );
+}
+
+function colorBearingGeometry(geometry, spec, raceColor) {
+  const positions = geometry.getAttribute("position");
+  const colors = new Float32Array(positions.count * 3);
+  const inner = Number(spec.innerDiameterMm) / 2;
+  const outer = Number(spec.outerDiameterMm) / 2;
+  const half = Number(spec.widthMm) / 2;
+  const raceWidth = Math.min(Math.max((outer - inner) * .24, .18), (outer - inner) * .42);
+  const closureInner = inner + raceWidth;
+  const closureOuter = outer - raceWidth;
+  const faceTolerance = Math.max(.04, Number(spec.widthMm) * .025);
+  const closure = spec.closure || "zz";
+  const closureColor = bearingRelativeColor(
+    spec.sealColor || ({ open: "#c69b46", zz: "#c8cdd1", "2rs": "#202326" })[closure],
+    raceColor,
+  );
+  const openBallColor = bearingRelativeColor("#dce1e4", raceColor);
+  const raceVertexColor = new THREE.Color(1, 1, 1);
+  for (let index = 0; index < positions.count; index += 1) {
+    const x = positions.getX(index); const y = positions.getY(index); const z = positions.getZ(index);
+    const radius = Math.hypot(x, y);
+    const closureFace = Math.abs(Math.abs(z) - half) <= faceTolerance
+      && radius >= closureInner - .02 && radius <= closureOuter + .02;
+    let color = raceVertexColor;
+    if (closureFace) {
+      if (closure === "open") {
+        const sector = Math.floor(((Math.atan2(y, x) + Math.PI) / (Math.PI * 2)) * 20);
+        color = sector % 2 ? closureColor : openBallColor;
+      } else color = closureColor;
+    }
+    colors[index * 3] = color.r;
+    colors[index * 3 + 1] = color.g;
+    colors[index * 3 + 2] = color.b;
+  }
+  geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  geometry.getAttribute("color").needsUpdate = true;
+}
+
+function bearingGeometry(spec, raceColor = "#9da3a6") {
   const inner = Number(spec.innerDiameterMm) / 2;
   const outer = Number(spec.outerDiameterMm) / 2;
   const half = Number(spec.widthMm) / 2;
   const bevel = Math.min(.35, (outer - inner) * .16, half * .2);
+  const raceWidth = Math.min(Math.max((outer - inner) * .24, .18), (outer - inner) * .42);
   const profile = [
-    new THREE.Vector2(inner + bevel, -half), new THREE.Vector2(outer - bevel, -half),
+    new THREE.Vector2(inner + bevel, -half), new THREE.Vector2(inner + raceWidth, -half),
+    new THREE.Vector2(outer - raceWidth, -half), new THREE.Vector2(outer - bevel, -half),
     new THREE.Vector2(outer, -half + bevel), new THREE.Vector2(outer, half - bevel),
-    new THREE.Vector2(outer - bevel, half), new THREE.Vector2(inner + bevel, half),
+    new THREE.Vector2(outer - bevel, half), new THREE.Vector2(outer - raceWidth, half),
+    new THREE.Vector2(inner + raceWidth, half), new THREE.Vector2(inner + bevel, half),
     new THREE.Vector2(inner, half - bevel), new THREE.Vector2(inner, -half + bevel),
     new THREE.Vector2(inner + bevel, -half),
   ];
-  const geometry = new THREE.LatheGeometry(profile, 48);
+  const lathe = new THREE.LatheGeometry(profile, 64);
+  const geometry = lathe.index ? lathe.toNonIndexed() : lathe;
+  if (geometry !== lathe) lathe.dispose();
   geometry.rotateX(Math.PI / 2);
   geometry.computeVertexNormals();
+  colorBearingGeometry(geometry, spec, raceColor);
   return geometry;
 }
 
@@ -734,7 +832,7 @@ function ensureProceduralUv(geometry) {
 async function loadComponent(item) {
   const geometry = item.kind === "fastener"
     ? fastenerGeometry(item.fastener)
-    : item.kind === "bearing" ? bearingGeometry(item.bearing) : await loader.loadAsync(item.meshUrl);
+    : item.kind === "bearing" ? bearingGeometry(item.bearing, item.color) : await loader.loadAsync(item.meshUrl);
   // STL files exported by FreeCAD already contain facet normals. Rebuilding
   // them on the main browser thread was one of the largest startup costs.
   if (!geometry.getAttribute("normal")) geometry.computeVertexNormals();
@@ -766,7 +864,7 @@ async function ensureThumbnail(item) {
   const task = (async () => {
     const geometry = item.kind === "fastener"
       ? fastenerGeometry(item.fastener)
-      : item.kind === "bearing" ? bearingGeometry(item.bearing) : await loader.loadAsync(item.meshUrl);
+      : item.kind === "bearing" ? bearingGeometry(item.bearing, item.color) : await loader.loadAsync(item.meshUrl);
     const thumbnail = geometryThumbnail(geometry, item.color);
     geometry.dispose();
     thumbnails.set(item.id, thumbnail);
@@ -794,6 +892,7 @@ function geometryThumbnail(geometry, color) {
   canvas.height = 84;
   const context = canvas.getContext("2d");
   const positions = geometry.getAttribute("position");
+  const vertexColors = geometry.getAttribute("color");
   const triangleCount = Math.floor(positions.count / 3);
   const stride = Math.max(1, Math.ceil(triangleCount / 760));
   const triangles = [];
@@ -816,6 +915,11 @@ function geometryThumbnail(geometry, color) {
       projected: points.map(project),
       depth: points.reduce((sum, point) => sum + point.x + point.y + point.z * .65, 0) / 3,
       shade: .48 + Math.abs(normal.dot(lightDirection)) * .52,
+      vertexColor: vertexColors ? new THREE.Color(
+        (vertexColors.getX(base) + vertexColors.getX(base + 1) + vertexColors.getX(base + 2)) / 3,
+        (vertexColors.getY(base) + vertexColors.getY(base + 1) + vertexColors.getY(base + 2)) / 3,
+        (vertexColors.getZ(base) + vertexColors.getZ(base + 1) + vertexColors.getZ(base + 2)) / 3,
+      ) : null,
     });
   }
   triangles.sort((first, second) => first.depth - second.depth);
@@ -835,7 +939,7 @@ function geometryThumbnail(geometry, color) {
   const baseColor = new THREE.Color(color);
   context.lineWidth = .65;
   for (const triangle of triangles) {
-    const shaded = baseColor.clone().multiplyScalar(triangle.shade);
+    const shaded = baseColor.clone().multiply(triangle.vertexColor || new THREE.Color(1, 1, 1)).multiplyScalar(triangle.shade);
     const minimum = baseColor.r + baseColor.g + baseColor.b < .09 ? .055 : 0;
     shaded.r = Math.max(shaded.r, minimum); shaded.g = Math.max(shaded.g, minimum); shaded.b = Math.max(shaded.b, minimum);
     context.fillStyle = `#${shaded.getHexString()}`;
@@ -902,6 +1006,7 @@ function syncMesh(item) {
   const mesh = meshes.get(item.id);
   if (!mesh) return;
   if (mesh.userData.displayColor !== item.color) {
+    if (item.kind === "bearing") colorBearingGeometry(mesh.geometry, item.bearing, item.color);
     mesh.material.color.copy(visualColor(item));
     if (!sceneAppearance.lighting) mesh.material.emissive.copy(mesh.material.color);
     mesh.userData.displayColor = item.color;
@@ -1026,7 +1131,7 @@ function componentStlFilename(item) {
     return `${item.fastener.standard} · M${item.fastener.diameterMm}×${item.fastener.lengthMm} · generated`;
   }
   if (item.kind === "bearing") {
-    return `${item.bearing.series} · ${item.bearing.innerDiameterMm}×${item.bearing.outerDiameterMm}×${item.bearing.widthMm} mm · generated`;
+    return `${item.bearing.series} ${String(item.bearing.closure || "zz").toUpperCase()} · ${item.bearing.innerDiameterMm}×${item.bearing.outerDiameterMm}×${item.bearing.widthMm} mm · generated`;
   }
   const filename = String(item.meshUrl || "").split("/").pop() || "";
   try { return decodeURIComponent(filename); } catch { return filename; }
@@ -1777,15 +1882,47 @@ async function insertFastener() {
   finally { setBusy(button, false); }
 }
 
+function renderBearingCatalog() {
+  const select = $("#bearingSeries");
+  select.replaceChildren();
+  const entries = Object.entries(bearingCatalog).sort(([, first], [, second]) =>
+    first.innerDiameterMm - second.innerDiameterMm
+    || first.outerDiameterMm - second.outerDiameterMm
+    || first.widthMm - second.widthMm);
+  for (const [series, dimensions] of entries) {
+    const option = document.createElement("option");
+    option.value = series;
+    option.textContent = `${series} · ${dimensions.innerDiameterMm}×${dimensions.outerDiameterMm}×${dimensions.widthMm}`;
+    select.append(option);
+  }
+  const custom = document.createElement("option");
+  custom.value = "CUSTOM";
+  custom.textContent = t("bearing.custom");
+  select.append(custom);
+}
+
+function syncBearingDimensions() {
+  const dimensions = bearingCatalog[$("#bearingSeries").value];
+  if (!dimensions) return;
+  $("#bearingInnerDiameter").value = dimensions.innerDiameterMm;
+  $("#bearingOuterDiameter").value = dimensions.outerDiameterMm;
+  $("#bearingWidth").value = dimensions.widthMm;
+}
+
+function syncBearingClosureColor() {
+  const colors = { open: "#c69b46", zz: "#c8cdd1", "2rs": "#202326" };
+  $("#bearingSealColor").value = colors[$("#bearingClosure").value];
+}
+
 function openBearingDialog() {
   if (!sourceHoleRef || !["hole", "shaft"].includes(sourceHoleRef.interfaceType)) return;
   const anchor = snapItem(sourceHoleRef);
   if (!anchor) return;
   const diameter = sourceHoleRef.interfaceType === "hole" ? anchor.diameterMm : anchor.diameterMm;
-  const options = [...$("#bearingSeries").options];
-  const dimensions = { MR105: 5, 623: 3, 624: 4, 625: 5, 626: 6, 688: 8, 608: 8 };
-  options.sort((a, b) => Math.abs(dimensions[a.value] - diameter) - Math.abs(dimensions[b.value] - diameter));
-  $("#bearingSeries").value = options[0].value;
+  const [closestSeries] = Object.entries(bearingCatalog).sort(([, first], [, second]) =>
+    Math.abs(first.innerDiameterMm - diameter) - Math.abs(second.innerDiameterMm - diameter))[0] || ["CUSTOM"];
+  $("#bearingSeries").value = closestSeries;
+  syncBearingDimensions();
   $("#bearingTargetLabel").textContent = t("bearing.target", {
     part: component(sourceHoleRef.componentId).label, anchor: sourceHoleRef.interfaceId,
     diameter: Number(diameter || 0).toFixed(2),
@@ -1801,6 +1938,11 @@ async function insertBearing() {
   try {
     const result = await applyOperations([{
       type: "add_bearing", target, series: $("#bearingSeries").value,
+      innerDiameterMm: Number($("#bearingInnerDiameter").value),
+      outerDiameterMm: Number($("#bearingOuterDiameter").value),
+      widthMm: Number($("#bearingWidth").value),
+      closure: $("#bearingClosure").value,
+      sealColor: $("#bearingSealColor").value,
     }], "bearing");
     const bearingId = result.affected[0];
     $("#bearingDialog").close("inserted");
@@ -2733,6 +2875,11 @@ function openSceneSettings() {
   $("#sceneGridVisible").checked = sceneAppearance.grid;
   $("#sceneAxesVisible").checked = sceneAppearance.axes;
   $("#sceneLightingEnabled").checked = sceneAppearance.lighting;
+  $("#sceneReflectionsEnabled").checked = sceneAppearance.reflections;
+  $("#sceneLightIntensity").value = Math.round(sceneAppearance.lightIntensity * 100);
+  $("#sceneLightIntensityValue").textContent = `${Math.round(sceneAppearance.lightIntensity * 100)}%`;
+  $("#sceneReflectionIntensity").value = Math.round(sceneAppearance.reflectionIntensity * 100);
+  $("#sceneReflectionIntensityValue").textContent = `${Math.round(sceneAppearance.reflectionIntensity * 100)}%`;
   $("#sceneSettingsDialog").showModal();
 }
 
@@ -2743,6 +2890,9 @@ function saveSceneSettings() {
     grid: $("#sceneGridVisible").checked,
     axes: $("#sceneAxesVisible").checked,
     lighting: $("#sceneLightingEnabled").checked,
+    reflections: $("#sceneReflectionsEnabled").checked,
+    lightIntensity: Number($("#sceneLightIntensity").value) / 100,
+    reflectionIntensity: Number($("#sceneReflectionIntensity").value) / 100,
   });
   $("#sceneSettingsDialog").close("applied");
   toast(t("scene.saved"));
@@ -2765,6 +2915,7 @@ function wireEvents() {
   });
   window.addEventListener("i18n:changed", () => {
     renderLocaleOptions();
+    if (Object.keys(bearingCatalog).length) renderBearingCatalog();
     if (!state) return;
     renderComponentList($("#componentSearch").value);
     if (selectedId) selectComponent(selectedId, false);
@@ -2860,6 +3011,8 @@ function wireEvents() {
   $("#viewTop").addEventListener("click", () => fitView(new THREE.Vector3(0, 0, 1)));
   $("#viewFront").addEventListener("click", () => fitView(new THREE.Vector3(-1, 0, .05)));
   $("#sceneSettingsButton").addEventListener("click", openSceneSettings);
+  $("#bearingSeries").addEventListener("change", syncBearingDimensions);
+  $("#bearingClosure").addEventListener("change", syncBearingClosureColor);
   $("#scenePreset").addEventListener("change", (event) => {
     const color = scenePresets[event.target.value];
     if (!color) return;
@@ -2869,6 +3022,12 @@ function wireEvents() {
   $("#sceneBackgroundColor").addEventListener("input", (event) => {
     $("#scenePreset").value = "custom";
     $("#sceneBackgroundValue").value = event.target.value.toUpperCase();
+  });
+  $("#sceneLightIntensity").addEventListener("input", (event) => {
+    $("#sceneLightIntensityValue").textContent = `${event.target.value}%`;
+  });
+  $("#sceneReflectionIntensity").addEventListener("input", (event) => {
+    $("#sceneReflectionIntensityValue").textContent = `${event.target.value}%`;
   });
   $("#applySceneSettings").addEventListener("click", saveSceneSettings);
   $("#undoButton").addEventListener("click", () => navigateHistory("undo"));
@@ -3260,8 +3419,12 @@ async function init() {
   resize();
   animate();
   try {
-    const [assembly, health] = await Promise.all([api("/api/assembly"), api("/api/health")]);
+    const [assembly, health, bearings] = await Promise.all([
+      api("/api/assembly"), api("/api/health"), api("/api/catalog/bearings"),
+    ]);
     state = assembly;
+    bearingCatalog = bearings;
+    renderBearingCatalog();
     $("#aiBadge").textContent = health.aiConfigured ? `AI ${health.model}` : t("health.aiManual");
     $("#aiBadge").className = `badge ${health.aiConfigured ? "ok" : "warn"}`;
     $("#freecadBadge").textContent = health.freecadConfigured ? t("health.freecadReady") : t("health.freecadMissing");

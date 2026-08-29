@@ -213,6 +213,8 @@ test("una vite parametrica viene inserita sull'apertura esterna del foro", () =>
   assert.equal(screw.kind, "fastener");
   assert.equal(screw.fastener.standard, "ISO4762");
   assert.equal(screw.fastener.diameterMm, 3);
+  assert.equal(screw.fastener.socketAcrossFlatsMm, 2.5);
+  assert.equal(screw.fastener.socketDepthMm, 1.3);
   assert.deepEqual(screw.transform.positionMm, [10, 20, 26.5]);
   assert.equal(state.groups.find((group) => group.id === screw.groupId).name, "Fasteners");
 });
@@ -469,7 +471,35 @@ test("un cuscinetto parametrico viene inserito sull'estremità di un asse", () =
   const bearing = state.components.find((item) => item.id === id);
   assert.equal(bearing.kind, "bearing");
   assert.equal(bearing.bearing.innerDiameterMm, 5);
+  assert.equal(bearing.bearing.closure, "zz");
+  assert.equal(bearing.bearing.sealColor, "#c8cdd1");
   assert.deepEqual(bearing.transform.positionMm, [0, 0, 12]);
+});
+
+test("un cuscinetto accetta dimensioni, chiusura e colore personalizzati", () => {
+  const shaft = component("shaft", [0, 0, 0], [7, 7, 20]);
+  shaft.interfaces = { shafts: [{
+    id: "axis", localCenterMm: [0, 0, 0], localAxis: [0, 0, 1],
+    diameterMm: 7, radiusMm: 3.5, lengthMm: 20,
+  }] };
+  const state = { components: [shaft], groups: [], mates: [], joints: [] };
+  const target = { componentId: "shaft", interfaceType: "shaft", interfaceId: "axis", endpointSide: 1 };
+  const id = applyOperation(state, {
+    type: "add_bearing", series: "CUSTOM", target,
+    innerDiameterMm: 7, outerDiameterMm: 15, widthMm: 5,
+    closure: "2rs", sealColor: "#b3262d",
+  });
+  const bearing = state.components.find((item) => item.id === id);
+  assert.equal(bearing.label, "CUSTOM-2RS bearing");
+  assert.deepEqual(
+    [bearing.bearing.innerDiameterMm, bearing.bearing.outerDiameterMm, bearing.bearing.widthMm],
+    [7, 15, 5],
+  );
+  assert.equal(bearing.bearing.sealColor, "#b3262d");
+  assert.throws(() => applyOperation(state, {
+    type: "add_bearing", series: "CUSTOM", target,
+    innerDiameterMm: 8, outerDiameterMm: 8.4, widthMm: 3,
+  }));
 });
 
 test("materiali visivi e progetto portatile sono validati e ripristinati", () => {
