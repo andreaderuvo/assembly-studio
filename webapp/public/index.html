@@ -409,6 +409,7 @@
             <option value="dark" data-i18n="scene.dark">Dark</option>
             <option value="light" data-i18n="scene.light">Light</option>
             <option value="studio" data-i18n="scene.studio">Neutral studio</option>
+            <option value="technical" data-i18n="scene.technical">Technical · dark parts</option>
             <option value="custom" data-i18n="scene.custom">Custom</option>
           </select></label>
           <label class="scene-color-field"><span data-i18n="scene.background">Background</span><input id="sceneBackgroundColor" type="color" value="#0b1117"><output id="sceneBackgroundValue">#0B1117</output></label>
@@ -418,9 +419,11 @@
           <label class="fastener-check"><input id="sceneReflectionsEnabled" type="checkbox" checked><span data-i18n="scene.reflections">Material reflections</span></label>
           <label class="scene-range-field"><span data-i18n="scene.lightIntensity">Light intensity</span><div><input id="sceneLightIntensity" type="range" min="0" max="160" step="5" value="80"><output id="sceneLightIntensityValue">80%</output></div></label>
           <label class="scene-range-field"><span data-i18n="scene.reflectionIntensity">Reflection intensity</span><div><input id="sceneReflectionIntensity" type="range" min="0" max="100" step="5" value="35"><output id="sceneReflectionIntensityValue">35%</output></div></label>
+          <label class="scene-range-field"><span data-i18n="scene.darkLift">Dark-part lift</span><div><input id="sceneDarkLift" type="range" min="0" max="50" step="2" value="24"><output id="sceneDarkLiftValue">24%</output></div></label>
         </div>
         <div class="dialog-actions">
           <button class="button ghost" value="cancel" data-i18n="common.cancel">Cancel</button>
+          <button id="resetSceneSettings" class="button ghost" type="button" data-i18n="scene.reset">Reset to defaults</button>
           <button id="applySceneSettings" class="button primary" type="button" data-i18n="scene.apply">Apply</button>
         </div>
       </form>

@@ -49,6 +49,8 @@ image exports.
 - Parametric socket-head fasteners with modeled hex drives.
 - A 49-size bearing catalog plus custom dimensions, with distinct Open, ZZ,
   and 2RS colors.
+- Automatic bearing size matching from a selected shaft, housing, or coaxial
+  shaft-and-housing pair.
 - Quick AABB interference checks in the browser workflow.
 - Optional exact collision checks through isolated FreeCAD workers.
 - FCStd, STEP, PNG, SVG, and portable project exports.
@@ -92,8 +94,12 @@ or SVG output up to 4K. **Fit model to width** uses the selected view direction
 and fills the output width automatically.
 
 Scene lighting and material reflections are independent in **Scene
-appearance**, with separate intensity controls. Disabling both uses flat unlit
-colors and avoids artificial highlights in technical images and PNG exports.
+appearance**, with separate intensity controls and live preview. The
+**Technical** preset and **Dark-part lift** keep black components readable
+without changing their stored colors. Cancel restores the previous appearance;
+Reset previews the defaults until Apply is pressed. Disabling both lighting and
+reflections uses flat unlit colors and avoids artificial highlights in technical
+images and PNG exports.
 
 ## AI integration
 

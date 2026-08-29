@@ -318,11 +318,19 @@ const scenePresets = {
   dark: "#0b1117",
   light: "#e8e8e8",
   studio: "#6d7278",
+  technical: "#d9dcdf",
 };
-let sceneAppearance = {
-  preset: "dark", background: scenePresets.dark, grid: true, axes: true,
-  lighting: true, reflections: true, lightIntensity: .8, reflectionIntensity: .35,
+const scenePresetSettings = {
+  dark: { background: scenePresets.dark, lighting: true, reflections: true, lightIntensity: .8, reflectionIntensity: .3, darkLift: .16 },
+  light: { background: scenePresets.light, lighting: true, reflections: true, lightIntensity: .95, reflectionIntensity: .18, darkLift: .18 },
+  studio: { background: scenePresets.studio, lighting: true, reflections: true, lightIntensity: .9, reflectionIntensity: .22, darkLift: .24 },
+  technical: { background: scenePresets.technical, lighting: true, reflections: false, lightIntensity: 1.05, reflectionIntensity: 0, darkLift: .32 },
 };
+const defaultSceneAppearance = Object.freeze({
+  preset: "studio", ...scenePresetSettings.studio, grid: true, axes: true,
+});
+let sceneAppearance = { ...defaultSceneAppearance };
+let sceneAppearanceBeforeDialog = null;
 
 function sceneLevel(value, fallback, maximum = 2) {
   const number = Number(value);
@@ -331,7 +339,7 @@ function sceneLevel(value, fallback, maximum = 2) {
 
 function applySceneAppearance(settings, persist = true) {
   const background = /^#[0-9a-f]{6}$/i.test(settings.background || "")
-    ? settings.background.toLowerCase() : scenePresets.dark;
+    ? settings.background.toLowerCase() : defaultSceneAppearance.background;
   sceneAppearance = {
     preset: Object.hasOwn(scenePresets, settings.preset) ? settings.preset : "custom",
     background,
@@ -339,8 +347,9 @@ function applySceneAppearance(settings, persist = true) {
     axes: settings.axes !== false,
     lighting: settings.lighting !== false,
     reflections: settings.reflections !== false,
-    lightIntensity: sceneLevel(settings.lightIntensity, .8),
-    reflectionIntensity: sceneLevel(settings.reflectionIntensity, .35),
+    lightIntensity: sceneLevel(settings.lightIntensity, defaultSceneAppearance.lightIntensity),
+    reflectionIntensity: sceneLevel(settings.reflectionIntensity, defaultSceneAppearance.reflectionIntensity),
+    darkLift: sceneLevel(settings.darkLift, defaultSceneAppearance.darkLift, .6),
   };
   scene.background.set(background);
   scene.fog.color.set(background);
@@ -355,6 +364,12 @@ function applySceneAppearance(settings, persist = true) {
     const materials = Array.isArray(object.material) ? object.material : [object.material];
     for (const material of materials) {
       if (!material?.isMeshStandardMaterial) continue;
+      if (material.userData.sourceColor) {
+        material.color.copy(visualColor({
+          color: material.userData.sourceColor,
+          appearance: material.userData.sourceAppearance,
+        }));
+      }
       material.emissive.copy(sceneAppearance.lighting ? new THREE.Color(0) : material.color);
       material.emissiveIntensity = sceneAppearance.lighting ? 0 : 1;
       material.envMapIntensity = sceneAppearance.reflectionIntensity;
@@ -656,7 +671,10 @@ function materialProfile(item) {
 
 function visualColor(item) {
   const color = new THREE.Color(item.color);
-  if (item.appearance === "carbon" && color.r + color.g + color.b < .08) return new THREE.Color("#202428");
+  if (item.appearance === "carbon" && color.r + color.g + color.b < .08) color.set("#202428");
+  const luminance = color.r * .2126 + color.g * .7152 + color.b * .0722;
+  const darkness = 1 - THREE.MathUtils.smoothstep(luminance, .08, .52);
+  color.lerp(new THREE.Color(1, 1, 1), sceneAppearance.darkLift * darkness);
   return color;
 }
 
@@ -668,7 +686,7 @@ function effectiveOpacity(item) {
 function materialFor(item) {
   const opacity = effectiveOpacity(item);
   const color = visualColor(item);
-  return new THREE.MeshStandardMaterial({
+  const material = new THREE.MeshStandardMaterial({
     color,
     ...materialProfile(item),
     vertexColors: item.kind === "bearing" || item.kind === "fastener",
@@ -679,6 +697,9 @@ function materialFor(item) {
     opacity,
     depthWrite: opacity >= .999,
   });
+  material.userData.sourceColor = item.color;
+  material.userData.sourceAppearance = item.appearance || "default";
+  return material;
 }
 
 function fastenerGeometry(spec) {
@@ -1007,6 +1028,7 @@ function syncMesh(item) {
   if (!mesh) return;
   if (mesh.userData.displayColor !== item.color) {
     if (item.kind === "bearing") colorBearingGeometry(mesh.geometry, item.bearing, item.color);
+    mesh.material.userData.sourceColor = item.color;
     mesh.material.color.copy(visualColor(item));
     if (!sceneAppearance.lighting) mesh.material.emissive.copy(mesh.material.color);
     mesh.userData.displayColor = item.color;
@@ -1022,6 +1044,8 @@ function syncMesh(item) {
     mesh.material.roughness = profile.roughness;
     mesh.material.map = profile.map || null;
     mesh.material.roughnessMap = profile.roughnessMap || null;
+    mesh.material.userData.sourceAppearance = appearance;
+    mesh.material.color.copy(visualColor(item));
     mesh.material.needsUpdate = true;
     mesh.userData.displayAppearance = appearance;
   }
@@ -1914,19 +1938,55 @@ function syncBearingClosureColor() {
   $("#bearingSealColor").value = colors[$("#bearingClosure").value];
 }
 
+function coaxialShaftDiameterForHole(ref) {
+  const targetWorld = holeWorldData(ref);
+  const targetHole = snapItem(ref);
+  if (!targetWorld || !targetHole) return null;
+  let best = null;
+  for (const candidate of state.components.filter((item) => item.visible)) {
+    const mesh = meshes.get(candidate.id);
+    if (!mesh) continue;
+    for (const shaft of candidate.interfaces?.shafts || []) {
+      const center = new THREE.Vector3(...shaft.localCenterMm).applyQuaternion(mesh.quaternion).add(mesh.position);
+      const axis = new THREE.Vector3(...shaft.localAxis).applyQuaternion(mesh.quaternion).normalize();
+      const alignment = Math.abs(axis.dot(targetWorld.axis));
+      if (alignment < .992) continue;
+      const delta = targetWorld.center.clone().sub(center);
+      const axialDistance = Math.abs(delta.dot(axis));
+      const radialDistance = delta.clone().addScaledVector(axis, -delta.dot(axis)).length();
+      const axialLimit = Number(shaft.lengthMm || 0) / 2 + Number(targetHole.depthMm || 0) / 2 + 5;
+      if (radialDistance > Math.max(.6, Number(targetHole.radiusMm || 0) * .2) || axialDistance > axialLimit) continue;
+      const score = radialDistance + (1 - alignment) * 20 + axialDistance * .01;
+      if (!best || score < best.score) best = { score, diameterMm: Number(shaft.diameterMm) };
+    }
+  }
+  return best?.diameterMm || null;
+}
+
 function openBearingDialog() {
   if (!sourceHoleRef || !["hole", "shaft"].includes(sourceHoleRef.interfaceType)) return;
   const anchor = snapItem(sourceHoleRef);
   if (!anchor) return;
-  const diameter = sourceHoleRef.interfaceType === "hole" ? anchor.diameterMm : anchor.diameterMm;
+  const diameter = Number(anchor.diameterMm);
+  const inferredShaftDiameter = sourceHoleRef.interfaceType === "hole"
+    ? coaxialShaftDiameterForHole(sourceHoleRef) : diameter;
+  const score = (dimensions) => sourceHoleRef.interfaceType === "shaft"
+    ? Math.abs(dimensions.innerDiameterMm - diameter)
+    : Math.abs(dimensions.outerDiameterMm - diameter)
+      + (inferredShaftDiameter == null ? 0 : Math.abs(dimensions.innerDiameterMm - inferredShaftDiameter) * 1.25);
   const [closestSeries] = Object.entries(bearingCatalog).sort(([, first], [, second]) =>
-    Math.abs(first.innerDiameterMm - diameter) - Math.abs(second.innerDiameterMm - diameter))[0] || ["CUSTOM"];
+    score(first) - score(second))[0] || ["CUSTOM"];
   $("#bearingSeries").value = closestSeries;
   syncBearingDimensions();
-  $("#bearingTargetLabel").textContent = t("bearing.target", {
+  const targetDescription = t("bearing.target", {
     part: component(sourceHoleRef.componentId).label, anchor: sourceHoleRef.interfaceId,
     diameter: Number(diameter || 0).toFixed(2),
   });
+  $("#bearingTargetLabel").textContent = `${targetDescription} · ${t(
+    inferredShaftDiameter != null && sourceHoleRef.interfaceType === "hole"
+      ? "bearing.autoHoleShaft" : sourceHoleRef.interfaceType === "hole" ? "bearing.autoHole" : "bearing.autoShaft",
+    { series: closestSeries },
+  )}`;
   $("#bearingDialog").showModal();
 }
 
@@ -2868,23 +2928,24 @@ async function loadProject() {
   }
 }
 
-function openSceneSettings() {
-  $("#scenePreset").value = sceneAppearance.preset;
-  $("#sceneBackgroundColor").value = sceneAppearance.background;
-  $("#sceneBackgroundValue").value = sceneAppearance.background.toUpperCase();
-  $("#sceneGridVisible").checked = sceneAppearance.grid;
-  $("#sceneAxesVisible").checked = sceneAppearance.axes;
-  $("#sceneLightingEnabled").checked = sceneAppearance.lighting;
-  $("#sceneReflectionsEnabled").checked = sceneAppearance.reflections;
-  $("#sceneLightIntensity").value = Math.round(sceneAppearance.lightIntensity * 100);
-  $("#sceneLightIntensityValue").textContent = `${Math.round(sceneAppearance.lightIntensity * 100)}%`;
-  $("#sceneReflectionIntensity").value = Math.round(sceneAppearance.reflectionIntensity * 100);
-  $("#sceneReflectionIntensityValue").textContent = `${Math.round(sceneAppearance.reflectionIntensity * 100)}%`;
-  $("#sceneSettingsDialog").showModal();
+function writeSceneSettingsControls(settings) {
+  $("#scenePreset").value = settings.preset;
+  $("#sceneBackgroundColor").value = settings.background;
+  $("#sceneBackgroundValue").value = settings.background.toUpperCase();
+  $("#sceneGridVisible").checked = settings.grid;
+  $("#sceneAxesVisible").checked = settings.axes;
+  $("#sceneLightingEnabled").checked = settings.lighting;
+  $("#sceneReflectionsEnabled").checked = settings.reflections;
+  $("#sceneLightIntensity").value = Math.round(settings.lightIntensity * 100);
+  $("#sceneLightIntensityValue").textContent = `${Math.round(settings.lightIntensity * 100)}%`;
+  $("#sceneReflectionIntensity").value = Math.round(settings.reflectionIntensity * 100);
+  $("#sceneReflectionIntensityValue").textContent = `${Math.round(settings.reflectionIntensity * 100)}%`;
+  $("#sceneDarkLift").value = Math.round(settings.darkLift * 100);
+  $("#sceneDarkLiftValue").textContent = `${Math.round(settings.darkLift * 100)}%`;
 }
 
-function saveSceneSettings() {
-  applySceneAppearance({
+function sceneSettingsFromControls() {
+  return {
     preset: $("#scenePreset").value,
     background: $("#sceneBackgroundColor").value,
     grid: $("#sceneGridVisible").checked,
@@ -2893,9 +2954,32 @@ function saveSceneSettings() {
     reflections: $("#sceneReflectionsEnabled").checked,
     lightIntensity: Number($("#sceneLightIntensity").value) / 100,
     reflectionIntensity: Number($("#sceneReflectionIntensity").value) / 100,
-  });
+    darkLift: Number($("#sceneDarkLift").value) / 100,
+  };
+}
+
+function previewSceneSettings(custom = false) {
+  if (custom) $("#scenePreset").value = "custom";
+  applySceneAppearance(sceneSettingsFromControls(), false);
+}
+
+function openSceneSettings() {
+  sceneAppearanceBeforeDialog = jsonTransform(sceneAppearance);
+  writeSceneSettingsControls(sceneAppearance);
+  $("#sceneSettingsDialog").showModal();
+}
+
+function saveSceneSettings() {
+  const settings = sceneSettingsFromControls();
+  sceneAppearanceBeforeDialog = null;
+  applySceneAppearance(settings);
   $("#sceneSettingsDialog").close("applied");
   toast(t("scene.saved"));
+}
+
+function resetSceneSettings() {
+  writeSceneSettingsControls(defaultSceneAppearance);
+  previewSceneSettings();
 }
 
 function wireEvents() {
@@ -3014,22 +3098,40 @@ function wireEvents() {
   $("#bearingSeries").addEventListener("change", syncBearingDimensions);
   $("#bearingClosure").addEventListener("change", syncBearingClosureColor);
   $("#scenePreset").addEventListener("change", (event) => {
-    const color = scenePresets[event.target.value];
-    if (!color) return;
-    $("#sceneBackgroundColor").value = color;
-    $("#sceneBackgroundValue").value = color.toUpperCase();
+    const preset = scenePresetSettings[event.target.value];
+    if (!preset) return;
+    writeSceneSettingsControls({
+      ...sceneSettingsFromControls(), ...preset, preset: event.target.value,
+    });
+    previewSceneSettings();
   });
   $("#sceneBackgroundColor").addEventListener("input", (event) => {
     $("#scenePreset").value = "custom";
     $("#sceneBackgroundValue").value = event.target.value.toUpperCase();
+    previewSceneSettings();
   });
   $("#sceneLightIntensity").addEventListener("input", (event) => {
     $("#sceneLightIntensityValue").textContent = `${event.target.value}%`;
+    previewSceneSettings(true);
   });
   $("#sceneReflectionIntensity").addEventListener("input", (event) => {
     $("#sceneReflectionIntensityValue").textContent = `${event.target.value}%`;
+    previewSceneSettings(true);
   });
+  $("#sceneDarkLift").addEventListener("input", (event) => {
+    $("#sceneDarkLiftValue").textContent = `${event.target.value}%`;
+    previewSceneSettings(true);
+  });
+  for (const id of ["#sceneGridVisible", "#sceneAxesVisible", "#sceneLightingEnabled", "#sceneReflectionsEnabled"]) {
+    $(id).addEventListener("change", () => previewSceneSettings(true));
+  }
+  $("#resetSceneSettings").addEventListener("click", resetSceneSettings);
   $("#applySceneSettings").addEventListener("click", saveSceneSettings);
+  $("#sceneSettingsDialog").addEventListener("close", () => {
+    if (!sceneAppearanceBeforeDialog) return;
+    applySceneAppearance(sceneAppearanceBeforeDialog, false);
+    sceneAppearanceBeforeDialog = null;
+  });
   $("#undoButton").addEventListener("click", () => navigateHistory("undo"));
   $("#redoButton").addEventListener("click", () => navigateHistory("redo"));
   $("#clearAssemblyButton").addEventListener("click", requestClearAssembly);
