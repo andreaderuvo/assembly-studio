@@ -200,15 +200,59 @@ def turnbuckle_shape(component):
     spec = component["turnbuckle"]
     center_distance = float(spec["centerDistanceMm"])
     end_radius = float(spec["endDiameterMm"]) / 2.0
-    rod_length = max(1.0, center_distance - float(spec["endDiameterMm"]) * 0.65)
-    rod = Part.makeCylinder(
-        float(spec["rodDiameterMm"]) / 2.0,
-        rod_length,
-        App.Vector(0, 0, -rod_length / 2.0),
+    rod_diameter = float(spec["rodDiameterMm"])
+    eye_hole = float(spec.get("eyeHoleDiameterMm", max(2.0, rod_diameter * 0.75)))
+    rod_end_length = float(spec.get("rodEndLengthMm", max(end_radius * 2.7, 8.0)))
+    adjuster_length = min(
+        float(spec.get("adjusterLengthMm", max(rod_diameter * 3.2, 10.0))),
+        center_distance * 0.36,
     )
-    first = Part.makeSphere(end_radius, App.Vector(0, 0, -center_distance / 2.0))
-    second = Part.makeSphere(end_radius, App.Vector(0, 0, center_distance / 2.0))
-    return rod.fuse(first).fuse(second)
+    hex_af = float(spec.get("hexAcrossFlatsMm", max(rod_diameter * 1.65, 6.0)))
+    torus_major = (end_radius + eye_hole / 2.0) / 2.0
+    torus_tube = max(0.35, (end_radius - eye_hole / 2.0) / 2.0)
+    neck_length = max(1.0, min(rod_end_length - end_radius, center_distance * 0.2))
+    thread_length = max(1.0, (center_distance - adjuster_length - end_radius * 2.0 - neck_length * 2.0) / 2.0)
+    parts = []
+    for sign in (-1, 1):
+        eye_z = sign * center_distance / 2.0
+        parts.append(Part.makeTorus(torus_major, torus_tube, App.Vector(0, 0, eye_z), App.Vector(0, 1, 0)))
+        overlap = min(torus_tube * 0.65, 0.8)
+        joined_neck_length = neck_length + overlap
+        neck_z = sign * (center_distance / 2.0 - end_radius - neck_length / 2.0 + overlap / 2.0)
+        parts.append(Part.makeCylinder(rod_diameter * 0.72, joined_neck_length, App.Vector(0, 0, neck_z - joined_neck_length / 2.0), App.Vector(0, 0, 1)))
+        thread_z = sign * (adjuster_length / 2.0 + thread_length / 2.0)
+        parts.append(Part.makeCylinder(rod_diameter / 2.0, thread_length, App.Vector(0, 0, thread_z - thread_length / 2.0), App.Vector(0, 0, 1)))
+
+    circumradius = hex_af / math.sqrt(3.0)
+    points = [
+        App.Vector(circumradius * math.cos(math.radians(60 * index)), circumradius * math.sin(math.radians(60 * index)), -adjuster_length / 2.0)
+        for index in range(6)
+    ]
+    points.append(points[0])
+    adjuster = Part.Face(Part.makePolygon(points)).extrude(App.Vector(0, 0, adjuster_length))
+    shape = parts[0]
+    for part in parts[1:]:
+        shape = shape.fuse(part)
+    return shape.fuse(adjuster)
+
+
+def driveshaft_shape(component):
+    spec = component["driveshaft"]
+    center_distance = float(spec["centerDistanceMm"])
+    shaft_radius = float(spec["shaftDiameterMm"]) / 2.0
+    head_radius = float(spec["headDiameterMm"]) / 2.0
+    pin_radius = float(spec["pinDiameterMm"]) / 2.0
+    pin_length = float(spec["pinLengthMm"])
+    body_length = max(1.0, center_distance - head_radius * 1.4)
+    shape = Part.makeCylinder(shaft_radius, body_length, App.Vector(0, 0, -body_length / 2.0))
+    for sign in (-1, 1):
+        z_value = sign * center_distance / 2.0
+        shape = shape.fuse(Part.makeSphere(head_radius, App.Vector(0, 0, z_value)))
+        pin = Part.makeCylinder(
+            pin_radius, pin_length, App.Vector(-pin_length / 2.0, 0, z_value), App.Vector(1, 0, 0)
+        )
+        shape = shape.fuse(pin)
+    return shape
 
 
 def place_shape(shape, transform):
@@ -324,7 +368,7 @@ def main():
                 pass
             changed += 1
             continue
-        if component.get("kind") in ("catalog", "turnbuckle"):
+        if component.get("kind") in ("catalog", "turnbuckle", "driveshaft"):
             if not bool(component.get("visible", True)):
                 continue
             obj = doc.addObject("Part::Feature", component["id"])
@@ -335,12 +379,20 @@ def main():
                 obj.CatalogId = str(component["catalog"]["id"])
                 obj.Scale = str(component["catalog"].get("scale", ""))
                 shape = catalog_shape(component)
-            else:
+            elif component.get("kind") == "turnbuckle":
                 obj.addProperty("App::PropertyLength", "CenterDistance", "Turnbuckle")
                 obj.addProperty("App::PropertyLength", "RodDiameter", "Turnbuckle")
                 obj.CenterDistance = float(component["turnbuckle"]["centerDistanceMm"])
                 obj.RodDiameter = float(component["turnbuckle"]["rodDiameterMm"])
                 shape = turnbuckle_shape(component)
+            else:
+                obj.addProperty("App::PropertyLength", "CenterDistance", "Driveshaft")
+                obj.addProperty("App::PropertyLength", "ShaftDiameter", "Driveshaft")
+                obj.addProperty("App::PropertyLength", "PinDiameter", "Driveshaft")
+                obj.CenterDistance = float(component["driveshaft"]["centerDistanceMm"])
+                obj.ShaftDiameter = float(component["driveshaft"]["shaftDiameterMm"])
+                obj.PinDiameter = float(component["driveshaft"]["pinDiameterMm"])
+                shape = driveshaft_shape(component)
             obj.Shape = place_shape(shape, component["transform"])
             try:
                 color = rgb_color(component.get("color"))

@@ -58,8 +58,12 @@ image exports.
   insertion. Servo models include mounting flanges, four through-holes, and
   selectable mounting anchors.
 - Automatic steering turnbuckles generated at the measured center distance
-  between two selected holes.
+  between two selected holes, with plastic rod ends and editable center
+  adjustment, plus automatic pinned driveshafts using the same two-hole flow.
 - Direct lock/unlock controls and a two-row task-oriented toolbar.
+
+The catalog scope and acceptance criteria are tracked in
+[RC On-Road Catalog](docs/RC_ON_ROAD_CATALOG.md).
 - Quick AABB interference checks in the browser workflow.
 - Optional exact collision checks through isolated FreeCAD workers.
 - FCStd, STEP, PNG, SVG, and portable project exports.

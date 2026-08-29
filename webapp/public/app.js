@@ -427,6 +427,8 @@ let throughMode = false;
 let throughSelections = [];
 let turnbuckleMode = false;
 let turnbuckleSelections = [];
+let driveshaftMode = false;
+let driveshaftSelections = [];
 const snapFocusedComponentIds = new Set();
 let historyBusy = false;
 let snapRotationBusy = false;
@@ -695,7 +697,7 @@ function materialFor(item) {
   const material = new THREE.MeshStandardMaterial({
     color,
     ...materialProfile(item),
-    vertexColors: item.kind === "bearing" || item.kind === "fastener",
+    vertexColors: ["bearing", "fastener", "turnbuckle", "driveshaft"].includes(item.kind),
     emissive: sceneAppearance.lighting ? 0x000000 : color,
     emissiveIntensity: sceneAppearance.lighting ? 0 : 1,
     envMapIntensity: sceneAppearance.reflectionIntensity,
@@ -881,6 +883,19 @@ function mergeOwnedGeometries(parts) {
   return merged;
 }
 
+function colorGeometry(geometry, color) {
+  const value = new THREE.Color(color);
+  const positions = geometry.getAttribute("position");
+  const colors = new Float32Array(positions.count * 3);
+  for (let index = 0; index < positions.count; index += 1) {
+    colors[index * 3] = value.r;
+    colors[index * 3 + 1] = value.g;
+    colors[index * 3 + 2] = value.b;
+  }
+  geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  return geometry;
+}
+
 function catalogGeometry(spec) {
   const shape = spec.shape;
   if (shape.type === "box") return new THREE.BoxGeometry(shape.widthMm, shape.depthMm, shape.heightMm);
@@ -949,14 +964,60 @@ function catalogGeometry(spec) {
 }
 
 function turnbuckleGeometry(spec) {
-  const rodLength = Math.max(1, spec.centerDistanceMm - spec.endDiameterMm * .65);
-  const rod = new THREE.CylinderGeometry(spec.rodDiameterMm / 2, spec.rodDiameterMm / 2, rodLength, 6);
-  rod.rotateX(Math.PI / 2);
-  const first = new THREE.SphereGeometry(spec.endDiameterMm / 2, 18, 12);
-  first.translate(0, 0, -spec.centerDistanceMm / 2);
-  const second = new THREE.SphereGeometry(spec.endDiameterMm / 2, 18, 12);
-  second.translate(0, 0, spec.centerDistanceMm / 2);
-  return mergeOwnedGeometries([rod, first, second]);
+  const eyeHoleDiameterMm = spec.eyeHoleDiameterMm || Math.max(2, spec.rodDiameterMm * .75);
+  const rodEndLengthMm = spec.rodEndLengthMm || Math.max(spec.endDiameterMm * 1.35, 8);
+  const adjusterLengthMm = spec.adjusterLengthMm || Math.max(spec.rodDiameterMm * 3.2, 10);
+  const hexAcrossFlatsMm = spec.hexAcrossFlatsMm || Math.max(spec.rodDiameterMm * 1.65, 6);
+  const endRadius = spec.endDiameterMm / 2;
+  const holeRadius = eyeHoleDiameterMm / 2;
+  const torusMajor = (endRadius + holeRadius) / 2;
+  const torusTube = Math.max(.35, (endRadius - holeRadius) / 2);
+  const adjusterLength = Math.min(adjusterLengthMm, spec.centerDistanceMm * .36);
+  const neckLength = Math.max(1, Math.min(rodEndLengthMm - endRadius, spec.centerDistanceMm * .2));
+  const threadedLength = Math.max(1, (spec.centerDistanceMm - adjusterLength - endRadius * 2 - neckLength * 2) / 2);
+  const parts = [];
+  for (const sign of [-1, 1]) {
+    const eye = new THREE.TorusGeometry(torusMajor, torusTube, 12, 28);
+    eye.rotateX(Math.PI / 2);
+    eye.translate(0, 0, sign * spec.centerDistanceMm / 2);
+    parts.push(colorGeometry(eye, "#1f2224"));
+    const neck = new THREE.CylinderGeometry(spec.rodDiameterMm * .78, spec.rodDiameterMm * .62, neckLength, 16);
+    neck.rotateX(Math.PI / 2);
+    neck.translate(0, 0, sign * (spec.centerDistanceMm / 2 - endRadius - neckLength / 2));
+    parts.push(colorGeometry(neck, "#1f2224"));
+    const thread = new THREE.CylinderGeometry(spec.rodDiameterMm / 2, spec.rodDiameterMm / 2, threadedLength, 16);
+    thread.rotateX(Math.PI / 2);
+    thread.translate(0, 0, sign * (adjusterLength / 2 + threadedLength / 2));
+    parts.push(colorGeometry(thread, "#777d81"));
+    const jamNut = new THREE.CylinderGeometry(hexAcrossFlatsMm / Math.sqrt(3), hexAcrossFlatsMm / Math.sqrt(3), Math.min(2.2, adjusterLength * .16), 6);
+    jamNut.rotateX(Math.PI / 2);
+    jamNut.translate(0, 0, sign * (adjusterLength / 2 + Math.min(1.1, adjusterLength * .08)));
+    parts.push(colorGeometry(jamNut, "#aeb3b6"));
+  }
+  const adjuster = new THREE.CylinderGeometry(
+    hexAcrossFlatsMm / Math.sqrt(3), hexAcrossFlatsMm / Math.sqrt(3), adjusterLength, 6,
+  );
+  adjuster.rotateX(Math.PI / 2);
+  parts.push(colorGeometry(adjuster, "#c4c8ca"));
+  return mergeOwnedGeometries(parts);
+}
+
+function driveshaftGeometry(spec) {
+  const bodyLength = Math.max(1, spec.centerDistanceMm - spec.headDiameterMm * .7);
+  const shaft = new THREE.CylinderGeometry(spec.shaftDiameterMm / 2, spec.shaftDiameterMm / 2, bodyLength, 20);
+  shaft.rotateX(Math.PI / 2);
+  const parts = [colorGeometry(shaft, "#aeb3b6")];
+  for (const sign of [-1, 1]) {
+    const head = new THREE.SphereGeometry(spec.headDiameterMm / 2, 20, 14);
+    head.scale(1, .78, 1);
+    head.translate(0, 0, sign * spec.centerDistanceMm / 2);
+    parts.push(colorGeometry(head, "#8b9297"));
+    const pin = new THREE.CylinderGeometry(spec.pinDiameterMm / 2, spec.pinDiameterMm / 2, spec.pinLengthMm, 14);
+    pin.rotateZ(Math.PI / 2);
+    pin.translate(0, 0, sign * spec.centerDistanceMm / 2);
+    parts.push(colorGeometry(pin, "#d2d5d7"));
+  }
+  return mergeOwnedGeometries(parts);
 }
 
 function proceduralGeometrySignature(item) {
@@ -964,6 +1025,7 @@ function proceduralGeometrySignature(item) {
   if (item.kind === "bearing") return `bearing:${JSON.stringify(item.bearing)}:${item.color}`;
   if (item.kind === "catalog") return `catalog:${JSON.stringify(item.catalog)}`;
   if (item.kind === "turnbuckle") return `turnbuckle:${JSON.stringify(item.turnbuckle)}`;
+  if (item.kind === "driveshaft") return `driveshaft:${JSON.stringify(item.driveshaft)}`;
   return null;
 }
 
@@ -972,7 +1034,8 @@ function createComponentGeometry(item) {
     ? fastenerGeometry(item.fastener)
     : item.kind === "bearing" ? bearingGeometry(item.bearing, item.color)
       : item.kind === "catalog" ? catalogGeometry(item.catalog)
-        : item.kind === "turnbuckle" ? turnbuckleGeometry(item.turnbuckle) : null;
+        : item.kind === "turnbuckle" ? turnbuckleGeometry(item.turnbuckle)
+          : item.kind === "driveshaft" ? driveshaftGeometry(item.driveshaft) : null;
 }
 
 function prepareComponentGeometry(geometry) {
@@ -1318,7 +1381,11 @@ function componentStlFilename(item) {
     return `${item.bearing.series} ${String(item.bearing.closure || "zz").toUpperCase()} · ${item.bearing.innerDiameterMm}×${item.bearing.outerDiameterMm}×${item.bearing.widthMm} mm · generated`;
   }
   if (item.kind === "catalog") return `${item.catalog.id} · ${item.catalog.scale} · generated`;
-  if (item.kind === "turnbuckle") return `Turnbuckle · ${item.turnbuckle.centerDistanceMm.toFixed(1)} mm · generated`;
+  if (item.kind === "turnbuckle") {
+    const adjustment = item.turnbuckle.adjustmentMm || 0;
+    return `Turnbuckle · ${item.turnbuckle.centerDistanceMm.toFixed(1)} mm · ${adjustment >= 0 ? "+" : ""}${adjustment.toFixed(1)} mm`;
+  }
+  if (item.kind === "driveshaft") return `Driveshaft · ${item.driveshaft.centerDistanceMm.toFixed(1)} mm · generated`;
   const filename = String(item.meshUrl || "").split("/").pop() || "";
   try { return decodeURIComponent(filename); } catch { return filename; }
 }
@@ -1553,6 +1620,11 @@ function anchorTreeRole(ref) {
     if (ref.interfaceType !== "hole") return "incompatible";
     if (!turnbuckleSelections.length) return "pick";
     return sameSnapRef(ref, turnbuckleSelections[0]) ? "source" : "target";
+  }
+  if (mateMode && driveshaftMode) {
+    if (ref.interfaceType !== "hole") return "incompatible";
+    if (!driveshaftSelections.length) return "pick";
+    return sameSnapRef(ref, driveshaftSelections[0]) ? "source" : "target";
   }
   if (mateMode && throughMode) {
     const stage = throughSelections.length;
@@ -1885,6 +1957,17 @@ function renderMateMarkers() {
     }
     return;
   }
+  if (driveshaftMode) {
+    for (const item of focusedItems) {
+      for (const ref of snapRefsFor(item)) {
+        if (ref.interfaceType !== "hole") continue;
+        const role = driveshaftSelections.some((selected) => sameSnapRef(selected, ref))
+          ? "source" : driveshaftSelections.length ? "target" : "pick";
+        addSnapMarker(ref, role);
+      }
+    }
+    return;
+  }
   if (throughMode) {
     const stage = throughSelections.length;
     for (const item of focusedItems) {
@@ -2026,6 +2109,8 @@ function startMateMode() {
   throughSelections = [];
   turnbuckleMode = false;
   turnbuckleSelections = [];
+  driveshaftMode = false;
+  driveshaftSelections = [];
   snapFocusedComponentIds.clear();
   if (selectedId && component(selectedId)?.visible) snapFocusedComponentIds.add(selectedId);
   pendingMate = null;
@@ -2212,15 +2297,52 @@ function bearingSpecFromEditor(item) {
   };
 }
 
+function turnbuckleSpecFromEditor(item) {
+  const rodDiameterMm = Number($("#editTurnbuckleRodDiameter").value);
+  const eyeHoleDiameterMm = Number($("#editTurnbuckleEyeDiameter").value);
+  const adjustmentMm = Number($("#editTurnbuckleAdjustment").value);
+  const anchorDistanceMm = item.turnbuckle.anchorDistanceMm
+    ?? item.turnbuckle.centerDistanceMm - (item.turnbuckle.adjustmentMm || 0);
+  const centerDistanceMm = anchorDistanceMm + adjustmentMm;
+  const endDiameterMm = Math.max(rodDiameterMm * 2.2, eyeHoleDiameterMm + rodDiameterMm * 1.3);
+  return {
+    ...item.turnbuckle, anchorDistanceMm, centerDistanceMm, adjustmentMm, rodDiameterMm, eyeHoleDiameterMm,
+    endDiameterMm,
+    rodEndLengthMm: Math.min(Math.max(endDiameterMm * 1.35, 8), centerDistanceMm * .3),
+    adjusterLengthMm: Math.min(Math.max(rodDiameterMm * 3.2, 10), centerDistanceMm * .32),
+    hexAcrossFlatsMm: Math.max(rodDiameterMm * 1.65, 6),
+  };
+}
+
+function driveshaftSpecFromEditor(item) {
+  const shaftDiameterMm = Number($("#editDriveshaftDiameter").value);
+  const pinDiameterMm = Number($("#editDriveshaftPinDiameter").value);
+  const headDiameterMm = Math.max(shaftDiameterMm * 1.65, pinDiameterMm * 2.4);
+  return {
+    ...item.driveshaft, shaftDiameterMm, pinDiameterMm, headDiameterMm, pinLengthMm: headDiameterMm * 1.45,
+  };
+}
+
+function parametricSpecFromEditor(item) {
+  if (item.kind === "fastener") return fastenerSpecFromEditor(item);
+  if (item.kind === "bearing") return bearingSpecFromEditor(item);
+  if (item.kind === "turnbuckle") return turnbuckleSpecFromEditor(item);
+  if (item.kind === "driveshaft") return driveshaftSpecFromEditor(item);
+  return null;
+}
+
 function previewParametricEdit() {
   const item = selectedId && component(selectedId);
   const mesh = item && meshes.get(item.id);
-  if (!mesh || !["fastener", "bearing"].includes(item.kind)) return;
-  const spec = item.kind === "fastener" ? fastenerSpecFromEditor(item) : bearingSpecFromEditor(item);
+  if (!mesh || !["fastener", "bearing", "turnbuckle", "driveshaft"].includes(item.kind)) return;
+  const spec = parametricSpecFromEditor(item);
   if (!spec || Object.values(spec).some((value) => typeof value === "number" && !Number.isFinite(value))) return;
   if (item.kind === "fastener" && (spec.lengthMm < 4 || spec.lengthMm > 80)) return;
   if (item.kind === "bearing" && (spec.innerDiameterMm < .5
     || spec.outerDiameterMm <= spec.innerDiameterMm + .5 || spec.widthMm < .5)) return;
+  if (item.kind === "turnbuckle" && (spec.centerDistanceMm < 12 || spec.adjustmentMm < -10
+    || spec.adjustmentMm > 10 || spec.rodDiameterMm < 1.5 || spec.eyeHoleDiameterMm < 1.5)) return;
+  if (item.kind === "driveshaft" && (spec.shaftDiameterMm < 2 || spec.pinDiameterMm < 1)) return;
   const previewItem = { ...item, [item.kind]: spec };
   const geometry = prepareComponentGeometry(createComponentGeometry(previewItem));
   mesh.geometry.dispose();
@@ -2229,10 +2351,12 @@ function previewParametricEdit() {
 }
 
 function populateParametricEditor(item) {
-  const visible = ["fastener", "bearing"].includes(item.kind);
+  const visible = ["fastener", "bearing", "turnbuckle", "driveshaft"].includes(item.kind);
   $("#parametricEditor").classList.toggle("hidden", !visible);
   $("#fastenerEditor").classList.toggle("hidden", item.kind !== "fastener");
   $("#bearingEditor").classList.toggle("hidden", item.kind !== "bearing");
+  $("#turnbuckleEditor").classList.toggle("hidden", item.kind !== "turnbuckle");
+  $("#driveshaftEditor").classList.toggle("hidden", item.kind !== "driveshaft");
   if (!visible) return;
   $("#applyParametricEdit").disabled = item.locked || !item.visible;
   if (item.kind === "fastener") {
@@ -2240,23 +2364,32 @@ function populateParametricEditor(item) {
     $("#editFastenerDiameter").value = String(item.fastener.diameterMm);
     $("#editFastenerLength").value = item.fastener.lengthMm;
     $("#editFastenerFlip").checked = Boolean(item.fastener.flipped);
-  } else {
+  } else if (item.kind === "bearing") {
     $("#editBearingSeries").value = bearingCatalog[item.bearing.series] ? item.bearing.series : "CUSTOM";
     $("#editBearingClosure").value = item.bearing.closure;
     $("#editBearingInner").value = item.bearing.innerDiameterMm;
     $("#editBearingOuter").value = item.bearing.outerDiameterMm;
     $("#editBearingWidth").value = item.bearing.widthMm;
     $("#editBearingSealColor").value = item.bearing.sealColor;
+  } else if (item.kind === "turnbuckle") {
+    $("#editTurnbuckleAdjustment").value = item.turnbuckle.adjustmentMm || 0;
+    $("#editTurnbuckleRodDiameter").value = item.turnbuckle.rodDiameterMm;
+    $("#editTurnbuckleEyeDiameter").value = item.turnbuckle.eyeHoleDiameterMm || Math.max(2, item.turnbuckle.rodDiameterMm * .75);
+  } else {
+    $("#editDriveshaftDiameter").value = item.driveshaft.shaftDiameterMm;
+    $("#editDriveshaftPinDiameter").value = item.driveshaft.pinDiameterMm;
   }
 }
 
 async function applyParametricEdit() {
   const item = selectedId && component(selectedId);
-  if (!item || !["fastener", "bearing"].includes(item.kind)) return;
+  if (!item || !["fastener", "bearing", "turnbuckle", "driveshaft"].includes(item.kind)) return;
   const fastenerSpec = item.kind === "fastener" ? fastenerSpecFromEditor(item) : null;
-  const operation = item.kind === "fastener"
-    ? { type: "update_fastener", componentId: item.id, ...fastenerSpec, flip: fastenerSpec.flipped }
-    : { type: "update_bearing", componentId: item.id, ...bearingSpecFromEditor(item) };
+  let operation;
+  if (item.kind === "fastener") operation = { type: "update_fastener", componentId: item.id, ...fastenerSpec, flip: fastenerSpec.flipped };
+  else if (item.kind === "bearing") operation = { type: "update_bearing", componentId: item.id, ...bearingSpecFromEditor(item) };
+  else if (item.kind === "turnbuckle") operation = { type: "update_turnbuckle", componentId: item.id, ...turnbuckleSpecFromEditor(item) };
+  else operation = { type: "update_driveshaft", componentId: item.id, ...driveshaftSpecFromEditor(item) };
   const button = $("#applyParametricEdit");
   setBusy(button, true, t("parametric.applying"));
   try {
@@ -2393,10 +2526,13 @@ function cancelMateMode() {
   throughSelections = [];
   turnbuckleMode = false;
   turnbuckleSelections = [];
+  driveshaftMode = false;
+  driveshaftSelections = [];
   snapFocusedComponentIds.clear();
   $("#patternToggle").classList.remove("active");
   $("#throughToggle").classList.remove("active");
   $("#turnbuckleToggle").classList.remove("active");
+  $("#driveshaftToggle").classList.remove("active");
   clearHoleMarkers();
   clearGhosts();
   $("#mateMode").classList.remove("active");
@@ -2414,6 +2550,10 @@ async function chooseHoleMarker(marker, additive = false) {
   const ref = marker.userData.snapRef || marker.userData.holeRef;
   if (turnbuckleMode) {
     await chooseTurnbuckleMarker(ref);
+    return;
+  }
+  if (driveshaftMode) {
+    await chooseDriveshaftMarker(ref);
     return;
   }
   if (throughMode) {
@@ -2525,6 +2665,43 @@ async function chooseTurnbuckleMarker(ref) {
     turnbuckleSelections = [];
     sourceHoleRef = null;
     $("#mateStatus").textContent = t("turnbuckle.pickFirst");
+    renderMateMarkers();
+    toast(error.message, "error");
+  } finally { setBusy(button, false); }
+}
+
+async function chooseDriveshaftMarker(ref) {
+  if (ref.interfaceType !== "hole") {
+    toast(t("driveshaft.holesOnly"), "error");
+    return;
+  }
+  if (!driveshaftSelections.length) {
+    driveshaftSelections = [{ ...ref }];
+    sourceHoleRef = ref;
+    $("#mateStatus").textContent = t("driveshaft.pickSecond");
+    renderMateMarkers();
+    if (selectedId) renderAnchorTree(component(selectedId));
+    return;
+  }
+  if (sameSnapRef(ref, driveshaftSelections[0])) {
+    toast(t("driveshaft.differentHole"), "error");
+    return;
+  }
+  const button = $("#driveshaftToggle");
+  setBusy(button, true, t("driveshaft.creating"));
+  try {
+    const result = await applyOperations([{
+      type: "add_driveshaft", first: driveshaftSelections[0], second: { ...ref },
+    }], "driveshaft");
+    const id = result.affected[0];
+    cancelMateMode();
+    selectComponent(id);
+    setTransformMode("translate");
+    toast(t("driveshaft.created", { length: component(id).driveshaft.centerDistanceMm.toFixed(1) }));
+  } catch (error) {
+    driveshaftSelections = [];
+    sourceHoleRef = null;
+    $("#mateStatus").textContent = t("driveshaft.pickFirst");
     renderMateMarkers();
     toast(error.message, "error");
   } finally { setBusy(button, false); }
@@ -3302,6 +3479,7 @@ function portableProject() {
         ...(item.kind === "bearing" ? { bearing: jsonTransform(item.bearing) } : {}),
         ...(item.kind === "catalog" ? { catalog: jsonTransform(item.catalog) } : {}),
         ...(item.kind === "turnbuckle" ? { turnbuckle: jsonTransform(item.turnbuckle) } : {}),
+        ...(item.kind === "driveshaft" ? { driveshaft: jsonTransform(item.driveshaft) } : {}),
       })),
       groups: jsonTransform(state.groups || []),
       workspace: jsonTransform(state.workspace || {}),
@@ -3494,6 +3672,8 @@ function wireEvents() {
   for (const id of [
     "editFastenerStandard", "editFastenerDiameter", "editFastenerLength", "editFastenerFlip",
     "editBearingInner", "editBearingOuter", "editBearingWidth", "editBearingSealColor",
+    "editTurnbuckleAdjustment", "editTurnbuckleRodDiameter", "editTurnbuckleEyeDiameter",
+    "editDriveshaftDiameter", "editDriveshaftPinDiameter",
   ]) $("#" + id).addEventListener("input", previewParametricEdit);
   $("#editBearingClosure").addEventListener("change", () => {
     const colors = { open: "#c69b46", zz: "#c8cdd1", "2rs": "#202326" };
@@ -3524,12 +3704,15 @@ function wireEvents() {
     throughSelections = [];
     turnbuckleMode = false;
     turnbuckleSelections = [];
+    driveshaftMode = false;
+    driveshaftSelections = [];
     patternSelections = [];
     sourceHoleRef = null;
     fastenerTargetRefs = [];
     $("#patternToggle").classList.toggle("active", patternMode);
     $("#throughToggle").classList.remove("active");
     $("#turnbuckleToggle").classList.remove("active");
+    $("#driveshaftToggle").classList.remove("active");
     if (patternMode) {
       $("#snapFilter").value = "hole";
       syncPlaneMateOptions();
@@ -3547,11 +3730,14 @@ function wireEvents() {
     patternSelections = [];
     turnbuckleMode = false;
     turnbuckleSelections = [];
+    driveshaftMode = false;
+    driveshaftSelections = [];
     sourceHoleRef = null;
     fastenerTargetRefs = [];
     $("#throughToggle").classList.toggle("active", throughMode);
     $("#patternToggle").classList.remove("active");
     $("#turnbuckleToggle").classList.remove("active");
+    $("#driveshaftToggle").classList.remove("active");
     if (throughMode) {
       $("#snapFilter").value = "shaft";
       syncPlaneMateOptions();
@@ -3565,6 +3751,8 @@ function wireEvents() {
     if (!mateMode) startMateMode();
     turnbuckleMode = !turnbuckleMode;
     turnbuckleSelections = [];
+    driveshaftMode = false;
+    driveshaftSelections = [];
     patternMode = false;
     patternSelections = [];
     throughMode = false;
@@ -3574,10 +3762,34 @@ function wireEvents() {
     $("#turnbuckleToggle").classList.toggle("active", turnbuckleMode);
     $("#patternToggle").classList.remove("active");
     $("#throughToggle").classList.remove("active");
+    $("#driveshaftToggle").classList.remove("active");
     if (turnbuckleMode) {
       $("#snapFilter").value = "hole";
       syncPlaneMateOptions();
       $("#mateStatus").textContent = t("turnbuckle.pickFirst");
+    } else $("#mateStatus").textContent = t("mate.pickFirst");
+    renderMateMarkers();
+  });
+  $("#driveshaftToggle").addEventListener("click", () => {
+    if (!mateMode) startMateMode();
+    driveshaftMode = !driveshaftMode;
+    driveshaftSelections = [];
+    patternMode = false;
+    patternSelections = [];
+    throughMode = false;
+    throughSelections = [];
+    turnbuckleMode = false;
+    turnbuckleSelections = [];
+    sourceHoleRef = null;
+    fastenerTargetRefs = [];
+    $("#driveshaftToggle").classList.toggle("active", driveshaftMode);
+    $("#patternToggle").classList.remove("active");
+    $("#throughToggle").classList.remove("active");
+    $("#turnbuckleToggle").classList.remove("active");
+    if (driveshaftMode) {
+      $("#snapFilter").value = "hole";
+      syncPlaneMateOptions();
+      $("#mateStatus").textContent = t("driveshaft.pickFirst");
     } else $("#mateStatus").textContent = t("mate.pickFirst");
     renderMateMarkers();
   });

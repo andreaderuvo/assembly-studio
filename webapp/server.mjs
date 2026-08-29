@@ -136,7 +136,7 @@ const RC_COMPONENT_CATALOG = Object.freeze([
   { id: "battery-4s-1-8", category: "power", scale: "1/8", label: "4S hardcase LiPo", description: "1/8 hardcase LiPo envelope", shape: { type: "box", widthMm: 139, depthMm: 47, heightMm: 48 } },
 ]);
 
-const isGeneratedComponent = (component) => ["fastener", "bearing", "instance", "catalog", "turnbuckle"].includes(component.kind);
+const isGeneratedComponent = (component) => ["fastener", "bearing", "instance", "catalog", "turnbuckle", "driveshaft"].includes(component.kind);
 
 let mutationQueue = Promise.resolve();
 
@@ -596,15 +596,28 @@ function createTurnbuckleComponent(state, operation) {
   const start = openingPoint(first);
   const end = openingPoint(second);
   const direction = end.map((value, axis) => value - start[axis]);
-  const centerDistanceMm = Math.hypot(...direction);
-  if (centerDistanceMm < 4 || centerDistanceMm > 300) {
-    throw new HttpError(400, "Turnbuckle hole distance must be between 4 and 300 mm");
+  const anchorDistanceMm = Math.hypot(...direction);
+  if (anchorDistanceMm < 12 || anchorDistanceMm > 300) {
+    throw new HttpError(400, "Turnbuckle hole distance must be between 12 and 300 mm");
   }
   const rodDiameterMm = Number(operation.rodDiameterMm || 4);
   if (!Number.isFinite(rodDiameterMm) || rodDiameterMm < 1.5 || rodDiameterMm > 12) {
     throw new HttpError(400, "Turnbuckle rod diameter must be between 1.5 and 12 mm");
   }
-  const endDiameterMm = Math.max(rodDiameterMm * 1.8, first.item.diameterMm * 1.5, second.item.diameterMm * 1.5);
+  const eyeHoleDiameterMm = Number(operation.eyeHoleDiameterMm || Math.max(first.item.diameterMm, second.item.diameterMm));
+  if (!Number.isFinite(eyeHoleDiameterMm) || eyeHoleDiameterMm < 1.5 || eyeHoleDiameterMm > 12) {
+    throw new HttpError(400, "Turnbuckle eye diameter must be between 1.5 and 12 mm");
+  }
+  const adjustmentMm = Number(operation.adjustmentMm || 0);
+  if (!Number.isFinite(adjustmentMm) || adjustmentMm < -10 || adjustmentMm > 10) {
+    throw new HttpError(400, "Turnbuckle adjustment must be between -10 and 10 mm");
+  }
+  const centerDistanceMm = anchorDistanceMm + adjustmentMm;
+  if (centerDistanceMm < 12) throw new HttpError(400, "Adjusted turnbuckle length is too short");
+  const endDiameterMm = Math.max(rodDiameterMm * 2.2, eyeHoleDiameterMm + rodDiameterMm * 1.3);
+  const rodEndLengthMm = Math.min(Math.max(endDiameterMm * 1.35, 8), centerDistanceMm * .3);
+  const adjusterLengthMm = Math.min(Math.max(rodDiameterMm * 3.2, 10), centerDistanceMm * .32);
+  const hexAcrossFlatsMm = Math.max(rodDiameterMm * 1.65, 6);
   const positionMm = start.map((value, axis) => (value + end[axis]) / 2);
   const quaternionXyzw = quaternionBetweenVectors([0, 0, 1], direction);
   const id = `turnbuckle_${crypto.randomUUID().replaceAll("-", "_")}`;
@@ -618,10 +631,11 @@ function createTurnbuckleComponent(state, operation) {
     },
     transform: { positionMm, quaternionXyzw },
     baseTransform: { positionMm: jsonClone(positionMm), quaternionXyzw: jsonClone(quaternionXyzw) },
-    visible: true, locked: false, color: "#717980", appearance: "steel",
+    visible: true, locked: false, color: "#a4aaae", appearance: "steel",
     groupId: ensureGeneratedGroup(state, "Steering links", "steering-links"),
     turnbuckle: {
-      centerDistanceMm, rodDiameterMm, endDiameterMm,
+      anchorDistanceMm, centerDistanceMm, adjustmentMm, rodDiameterMm, eyeHoleDiameterMm,
+      endDiameterMm, rodEndLengthMm, adjusterLengthMm, hexAcrossFlatsMm,
       first: jsonClone(first.ref), second: jsonClone(second.ref),
     },
     interfaces: { holes: [], planes: [], shafts: [], seats: [], edges: [], points: [], centers: [], midplanes: [] },
@@ -629,6 +643,89 @@ function createTurnbuckleComponent(state, operation) {
   operation.componentId = id;
   state.components.push(component);
   return component;
+}
+
+function updateTurnbuckleComponent(state, operation) {
+  const existing = componentById(state, String(operation.componentId || ""));
+  if (existing.kind !== "turnbuckle") throw new HttpError(400, "Selected component is not a turnbuckle");
+  if (existing.locked) throw new HttpError(409, `${existing.label} is locked as a reference`);
+  const generated = createTurnbuckleComponent(state, {
+    type: "add_turnbuckle",
+    first: jsonClone(existing.turnbuckle.first), second: jsonClone(existing.turnbuckle.second),
+    rodDiameterMm: operation.rodDiameterMm,
+    eyeHoleDiameterMm: operation.eyeHoleDiameterMm,
+    adjustmentMm: operation.adjustmentMm,
+  });
+  generated.transform = jsonClone(existing.transform);
+  generated.baseTransform = jsonClone(existing.baseTransform);
+  operation.componentId = existing.id;
+  return replaceParametricComponent(state, existing, generated);
+}
+
+function createDriveshaftComponent(state, operation) {
+  const first = snapInterface(state, operation.first);
+  const second = snapInterface(state, operation.second);
+  if (first.type !== "hole" || second.type !== "hole") throw new HttpError(400, "Driveshafts require two hole magnets");
+  const openingPoint = (target) => {
+    const side = [-1, 1].includes(Number(target.ref.openingSide)) ? Number(target.ref.openingSide) : 1;
+    const local = target.item.localCenterMm.map(
+      (value, axis) => value + target.item.localAxis[axis] * target.item.depthMm * .5 * side,
+    );
+    return transformedPoint(target.component, local);
+  };
+  const start = openingPoint(first);
+  const end = openingPoint(second);
+  const direction = end.map((value, axis) => value - start[axis]);
+  const centerDistanceMm = Math.hypot(...direction);
+  if (centerDistanceMm < 10 || centerDistanceMm > 300) throw new HttpError(400, "Driveshaft length must be between 10 and 300 mm");
+  const shaftDiameterMm = Number(operation.shaftDiameterMm || 5);
+  const pinDiameterMm = Number(operation.pinDiameterMm || Math.max(1.5, shaftDiameterMm * .36));
+  if (!Number.isFinite(shaftDiameterMm) || shaftDiameterMm < 2 || shaftDiameterMm > 16) {
+    throw new HttpError(400, "Driveshaft diameter must be between 2 and 16 mm");
+  }
+  if (!Number.isFinite(pinDiameterMm) || pinDiameterMm < 1 || pinDiameterMm > 8) {
+    throw new HttpError(400, "Driveshaft pin diameter must be between 1 and 8 mm");
+  }
+  const headDiameterMm = Math.max(shaftDiameterMm * 1.65, pinDiameterMm * 2.4);
+  const pinLengthMm = headDiameterMm * 1.45;
+  const positionMm = start.map((value, axis) => (value + end[axis]) / 2);
+  const quaternionXyzw = quaternionBetweenVectors([0, 0, 1], direction);
+  const id = `driveshaft_${crypto.randomUUID().replaceAll("-", "_")}`;
+  const component = {
+    id, label: `Driveshaft ${centerDistanceMm.toFixed(1)} mm`, status: "generated-driveshaft", kind: "driveshaft", meshUrl: null,
+    triangles: 384, sizeMm: [pinLengthMm, headDiameterMm, centerDistanceMm + headDiameterMm],
+    baseBoundsMm: {
+      min: positionMm.map((value, axis) => value - [pinLengthMm / 2, headDiameterMm / 2, (centerDistanceMm + headDiameterMm) / 2][axis]),
+      max: positionMm.map((value, axis) => value + [pinLengthMm / 2, headDiameterMm / 2, (centerDistanceMm + headDiameterMm) / 2][axis]),
+      center: jsonClone(positionMm),
+    },
+    transform: { positionMm, quaternionXyzw },
+    baseTransform: { positionMm: jsonClone(positionMm), quaternionXyzw: jsonClone(quaternionXyzw) },
+    visible: true, locked: false, color: "#8f969b", appearance: "steel",
+    groupId: ensureGeneratedGroup(state, "Drivetrain", "drivetrain"),
+    driveshaft: {
+      centerDistanceMm, shaftDiameterMm, pinDiameterMm, pinLengthMm, headDiameterMm,
+      first: jsonClone(first.ref), second: jsonClone(second.ref),
+    },
+    interfaces: { holes: [], planes: [], shafts: [], seats: [], edges: [], points: [], centers: [], midplanes: [] },
+  };
+  operation.componentId = id;
+  state.components.push(component);
+  return component;
+}
+
+function updateDriveshaftComponent(state, operation) {
+  const existing = componentById(state, String(operation.componentId || ""));
+  if (existing.kind !== "driveshaft") throw new HttpError(400, "Selected component is not a driveshaft");
+  if (existing.locked) throw new HttpError(409, `${existing.label} is locked as a reference`);
+  const generated = createDriveshaftComponent(state, {
+    type: "add_driveshaft", first: jsonClone(existing.driveshaft.first), second: jsonClone(existing.driveshaft.second),
+    shaftDiameterMm: operation.shaftDiameterMm, pinDiameterMm: operation.pinDiameterMm,
+  });
+  generated.transform = jsonClone(existing.transform);
+  generated.baseTransform = jsonClone(existing.baseTransform);
+  operation.componentId = existing.id;
+  return replaceParametricComponent(state, existing, generated);
 }
 
 function createComponentInstance(state, operation) {
@@ -1211,6 +1308,15 @@ export function applyOperation(state, operation) {
   if (operation.type === "add_turnbuckle") {
     return createTurnbuckleComponent(state, operation).id;
   }
+  if (operation.type === "update_turnbuckle") {
+    return updateTurnbuckleComponent(state, operation).id;
+  }
+  if (operation.type === "add_driveshaft") {
+    return createDriveshaftComponent(state, operation).id;
+  }
+  if (operation.type === "update_driveshaft") {
+    return updateDriveshaftComponent(state, operation).id;
+  }
   if (operation.type === "lock_component") {
     const item = componentById(state, String(operation.componentId || ""));
     if (typeof operation.locked !== "boolean") throw new HttpError(400, "Locked state must be boolean");
@@ -1502,12 +1608,14 @@ export function loadProjectIntoState(state, project) {
   const savedInstances = [];
   const savedCatalogComponents = [];
   const savedTurnbuckles = [];
+  const savedDriveshafts = [];
   for (const item of saved.components) {
     if (item?.kind === "fastener") { savedFasteners.push(item); continue; }
     if (item?.kind === "bearing") { savedBearings.push(item); continue; }
     if (item?.kind === "instance") { savedInstances.push(item); continue; }
     if (item?.kind === "catalog") { savedCatalogComponents.push(item); continue; }
     if (item?.kind === "turnbuckle") { savedTurnbuckles.push(item); continue; }
+    if (item?.kind === "driveshaft") { savedDriveshafts.push(item); continue; }
     const component = currentById.get(String(item?.id || ""));
     if (!component) continue;
     component.transform = {
@@ -1630,8 +1738,21 @@ export function loadProjectIntoState(state, project) {
       first: savedTurnbuckle.turnbuckle?.first,
       second: savedTurnbuckle.turnbuckle?.second,
       rodDiameterMm: savedTurnbuckle.turnbuckle?.rodDiameterMm,
+      eyeHoleDiameterMm: savedTurnbuckle.turnbuckle?.eyeHoleDiameterMm,
+      adjustmentMm: savedTurnbuckle.turnbuckle?.adjustmentMm,
     });
     restoreGeneratedPresentation(generated, savedTurnbuckle, /^turnbuckle_[a-zA-Z0-9_-]{1,120}$/, "turnbuckle");
+  }
+
+  for (const savedDriveshaft of savedDriveshafts) {
+    const generated = createDriveshaftComponent(state, {
+      type: "add_driveshaft",
+      first: savedDriveshaft.driveshaft?.first,
+      second: savedDriveshaft.driveshaft?.second,
+      shaftDiameterMm: savedDriveshaft.driveshaft?.shaftDiameterMm,
+      pinDiameterMm: savedDriveshaft.driveshaft?.pinDiameterMm,
+    });
+    restoreGeneratedPresentation(generated, savedDriveshaft, /^driveshaft_[a-zA-Z0-9_-]{1,120}$/, "driveshaft");
   }
 
   for (const savedInstance of savedInstances) {
@@ -1854,7 +1975,8 @@ async function commitOperations(operations, source = "human", metadata = null) {
           "visibility", "color", "material", "opacity", "rename_component", "assign_group",
           "create_group", "rename_group", "delete_group",
           "rename_ungrouped", "add_fastener", "add_bearing", "update_fastener", "update_bearing",
-          "add_catalog_component", "add_turnbuckle", "duplicate_component", "lock_component",
+          "add_catalog_component", "add_turnbuckle", "update_turnbuckle",
+          "add_driveshaft", "update_driveshaft", "duplicate_component", "lock_component",
         ].includes(item.type))
         .map((item) => item.componentId),
     );

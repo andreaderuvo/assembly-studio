@@ -326,7 +326,26 @@ test("catalogo RC e turnbuckle automatico generano componenti leggeri e parametr
   const link = state.components.find((item) => item.id === linkId);
   assert.equal(link.kind, "turnbuckle");
   assert.equal(link.turnbuckle.centerDistanceMm, 30);
+  assert.equal(link.turnbuckle.adjustmentMm, 0);
+  assert.equal(link.turnbuckle.eyeHoleDiameterMm, 3);
   assert.deepEqual(link.transform.positionMm, [15, 0, 1]);
+  applyOperation(state, {
+    type: "update_turnbuckle", componentId: linkId,
+    adjustmentMm: 2.5, rodDiameterMm: 3, eyeHoleDiameterMm: 3.2,
+  });
+  assert.equal(link.turnbuckle.centerDistanceMm, 32.5);
+  assert.equal(link.turnbuckle.rodDiameterMm, 3);
+
+  const driveshaftId = applyOperation(state, {
+    type: "add_driveshaft",
+    first: { componentId: "first", interfaceType: "hole", interfaceId: "link", openingSide: 1 },
+    second: { componentId: "second", interfaceType: "hole", interfaceId: "link", openingSide: 1 },
+    shaftDiameterMm: 5, pinDiameterMm: 2,
+  });
+  const driveshaft = state.components.find((item) => item.id === driveshaftId);
+  assert.equal(driveshaft.kind, "driveshaft");
+  assert.equal(driveshaft.driveshaft.centerDistanceMm, 30);
+  assert.equal(driveshaft.driveshaft.pinDiameterMm, 2);
 
   const restored = { components: JSON.parse(JSON.stringify([first, second])), groups: [], workspace: {} };
   loadProjectIntoState(restored, {
@@ -338,6 +357,8 @@ test("catalogo RC e turnbuckle automatico generano componenti leggeri e parametr
   });
   assert.equal(restored.components.filter((item) => item.kind === "catalog").length, 2);
   assert.equal(restored.components.filter((item) => item.kind === "turnbuckle").length, 1);
+  assert.equal(restored.components.filter((item) => item.kind === "driveshaft").length, 1);
+  assert.equal(restored.components.find((item) => item.kind === "turnbuckle").turnbuckle.adjustmentMm, 2.5);
 });
 
 test("broad phase AABB individua solo sovrapposizioni", () => {
