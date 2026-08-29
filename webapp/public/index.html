@@ -64,6 +64,7 @@
 
       <main class="workspace">
         <div class="toolbar" role="toolbar" aria-label="Assembly tools" data-i18n-aria-label="toolbar.label">
+          <div class="toolbar-row toolbar-row-main">
           <div class="tool-group">
             <button id="selectMode" class="tool active" title="Select" data-i18n-title="toolbar.selectTitle"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 3 14 9-7 2-3 7L5 3Z"/></svg><span data-i18n="toolbar.select">Select</span></button>
             <button id="translateMode" class="tool" title="Move (W)" data-i18n-title="toolbar.moveTitle"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M12 3l-3 3m3-3 3 3M21 12l-3-3m3 3-3 3M12 21l-3-3m3 3 3-3M3 12l3-3m-3 3 3 3"/></svg><span data-i18n="toolbar.move">Move</span> <kbd>W</kbd></button>
@@ -82,6 +83,10 @@
           <button id="magnetToggle" class="tool magnet" title="Show hole magnets" data-i18n-title="toolbar.snapTitle"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v8a6 6 0 0 0 12 0V3M6 7h4M14 7h4"/></svg><span data-i18n="snap.off">Snap</span></button>
           <button id="undoButton" class="tool" title="Undo (Ctrl+Z)" data-i18n-title="toolbar.undoTitle"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7 4 12l5 5M4 12h9a6 6 0 0 1 6 6"/></svg><span data-i18n="toolbar.undo">Undo</span></button>
           <button id="redoButton" class="tool" title="Redo (Ctrl+Shift+Z)" data-i18n-title="toolbar.redoTitle"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 7 5 5-5 5m5-5h-9a6 6 0 0 0-6 6"/></svg><span data-i18n="toolbar.redo">Redo</span></button>
+          </div>
+          <div class="toolbar-row toolbar-row-secondary">
+          <span class="toolbar-row-label" data-i18n="toolbar.project">Project</span>
+          <button id="libraryButton" class="tool primary" type="button" data-i18n="library.button">RC Library</button>
           <button id="saveProjectButton" class="tool" data-i18n="toolbar.saveProject">Save</button>
           <button id="loadProjectButton" class="tool" data-i18n="toolbar.loadProject">Load</button>
           <input id="projectFileInput" class="hidden" type="file" accept="application/json,.json">
@@ -91,6 +96,7 @@
           <button id="exportButton" class="tool accent" data-i18n="toolbar.export">Export FCStd</button>
           <button id="exportStepButton" class="tool accent" data-i18n="toolbar.exportStep">Export STEP</button>
           <button id="exportImageButton" class="tool" data-i18n="toolbar.exportImage">Export image</button>
+          </div>
         </div>
         <div id="viewport" class="viewport" tabindex="0">
           <canvas id="viewCubeCanvas" class="view-cube" width="232" height="232" role="button" tabindex="0" aria-label="View cube" data-i18n-aria-label="viewCube.label" data-i18n-title="viewCube.help"></canvas>
@@ -122,6 +128,27 @@
               <label><span data-i18n="selection.group">Group</span><select id="componentGroup"></select></label>
               <button id="saveComponentProperties" class="button ghost" type="button" data-i18n="selection.saveDetails">Save details</button>
             </div>
+            <section id="parametricEditor" class="parametric-editor hidden">
+              <div class="field-heading"><strong data-i18n="parametric.title">Parametric component</strong><span data-i18n="parametric.live">Live preview</span></div>
+              <div id="fastenerEditor" class="parametric-fields hidden">
+                <label><span data-i18n="fastener.standard">Standard</span><select id="editFastenerStandard"><option value="ISO4762">ISO 4762 · Socket cap</option><option value="ISO7380">ISO 7380-1 · Button head</option><option value="ISO10642">ISO 10642 · Countersunk</option><option value="ISO4017">ISO 4017 · Hex bolt</option></select></label>
+                <label><span data-i18n="fastener.size">Metric size</span><select id="editFastenerDiameter"><option value="2">M2</option><option value="2.5">M2.5</option><option value="3">M3</option><option value="4">M4</option><option value="5">M5</option><option value="6">M6</option><option value="8">M8</option></select></label>
+                <label><span data-i18n="fastener.length">Length</span><input id="editFastenerLength" type="number" min="4" max="80" step="1"><small>mm</small></label>
+                <label class="fastener-check"><input id="editFastenerFlip" type="checkbox"><span data-i18n="fastener.flip">Insert from the opposite side</span></label>
+              </div>
+              <div id="bearingEditor" class="parametric-fields hidden">
+                <label><span data-i18n="bearing.series">Series</span><select id="editBearingSeries"></select></label>
+                <label><span data-i18n="bearing.closure">Closure</span><select id="editBearingClosure"><option value="open" data-i18n="bearing.open">Open</option><option value="zz" data-i18n="bearing.zz">ZZ</option><option value="2rs" data-i18n="bearing.2rs">2RS</option></select></label>
+                <label><span data-i18n="bearing.inner">Bore</span><input id="editBearingInner" type="number" min="0.5" max="100" step="0.1"><small>mm</small></label>
+                <label><span data-i18n="bearing.outer">Outer diameter</span><input id="editBearingOuter" type="number" min="1" max="250" step="0.1"><small>mm</small></label>
+                <label><span data-i18n="bearing.width">Width</span><input id="editBearingWidth" type="number" min="0.5" max="100" step="0.1"><small>mm</small></label>
+                <label><span data-i18n="bearing.sealColor">Shield / seal color</span><input id="editBearingSealColor" type="color"></label>
+              </div>
+              <div class="parametric-actions">
+                <button id="resetParametricEdit" class="button ghost" type="button" data-i18n="parametric.reset">Reset preview</button>
+                <button id="applyParametricEdit" class="button primary" type="button" data-i18n="parametric.apply">Apply changes</button>
+              </div>
+            </section>
             <section class="anchor-browser" aria-labelledby="anchorTreeTitle">
               <div class="field-heading anchor-browser-heading">
                 <span id="anchorTreeTitle" data-i18n="anchors.title">Anchors</span>
@@ -175,6 +202,7 @@
             </div>
             <div class="inspector-actions">
               <button id="applyTransform" class="button primary" data-i18n="selection.applyPosition">Apply position</button>
+              <button id="toggleComponentLock" class="button ghost" type="button" data-i18n="selection.lock">Lock in place</button>
               <button id="resetComponent" class="button ghost" data-i18n="selection.resetPart">Reset part</button>
               <button id="duplicateComponent" class="button ghost" type="button" data-i18n="selection.duplicate">Duplicate part</button>
             </div>
@@ -207,6 +235,7 @@
             </div>
             <button id="patternToggle" class="button ghost pattern-toggle" data-i18n="pattern.button">2-hole pattern</button>
             <button id="throughToggle" class="button ghost pattern-toggle" data-i18n="through.button">Shaft through 2 holes</button>
+            <button id="turnbuckleToggle" class="button ghost pattern-toggle" data-i18n="turnbuckle.button">Auto turnbuckle</button>
             <div id="mateSummary" class="mate-summary hidden"></div>
             <div class="inspector-actions">
               <button id="addFastenerFromHole" class="button primary hidden" type="button" data-i18n="fastener.add">Add fastener</button>
@@ -302,14 +331,31 @@
           <p id="fastenerTargetLabel"></p>
         </div>
         <div class="fastener-fields">
-          <label><span data-i18n="fastener.standard">Standard</span><select id="fastenerStandard"><option value="ISO4762">ISO 4762 · Socket cap</option><option value="ISO7380">ISO 7380-1 · Button head</option><option value="ISO10642">ISO 10642 · Countersunk</option></select></label>
-          <label><span data-i18n="fastener.size">Metric size</span><select id="fastenerDiameter"><option value="3">M3</option><option value="4">M4</option><option value="5">M5</option></select></label>
+          <label><span data-i18n="fastener.standard">Standard</span><select id="fastenerStandard"><option value="ISO4762">ISO 4762 · Socket cap</option><option value="ISO7380">ISO 7380-1 · Button head</option><option value="ISO10642">ISO 10642 · Countersunk</option><option value="ISO4017">ISO 4017 · Hex bolt</option></select></label>
+          <label><span data-i18n="fastener.size">Metric size</span><select id="fastenerDiameter"><option value="2">M2</option><option value="2.5">M2.5</option><option value="3">M3</option><option value="4">M4</option><option value="5">M5</option><option value="6">M6</option><option value="8">M8</option></select></label>
           <label><span data-i18n="fastener.length">Length</span><input id="fastenerLength" type="number" min="4" max="80" step="1" value="12"><small>mm</small></label>
           <label class="fastener-check"><input id="fastenerFlip" type="checkbox"><span data-i18n="fastener.flip">Insert from the opposite side</span></label>
         </div>
         <div class="dialog-actions">
           <button class="button ghost" value="cancel" data-i18n="common.cancel">Cancel</button>
           <button id="confirmFastener" class="button primary" type="button" data-i18n="fastener.insert">Insert</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="libraryDialog" class="native-dialog library-dialog" aria-labelledby="libraryDialogTitle">
+      <form method="dialog">
+        <div class="dialog-icon"><svg class="flat-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM4 10h16M10 5v14"/></svg></div>
+        <div class="dialog-copy">
+          <h2 id="libraryDialogTitle" data-i18n="library.title">RC on-road component library</h2>
+          <p data-i18n="library.help">Choose a lightweight parametric envelope, then position and mate it in the scene.</p>
+        </div>
+        <div class="library-filters">
+          <label><span data-i18n="library.scale">Scale</span><select id="libraryScale"><option value="all" data-i18n="library.allScales">All scales</option><option value="1/8">1/8</option><option value="1/10">1/10</option></select></label>
+          <label><span data-i18n="library.category">Category</span><select id="libraryCategory"><option value="all" data-i18n="library.allCategories">All categories</option><option value="motors" data-i18n="library.motors">Motors</option><option value="electronics" data-i18n="library.electronics">Electronics</option><option value="steering" data-i18n="library.steering">Steering</option><option value="power" data-i18n="library.power">Power</option></select></label>
+        </div>
+        <div id="libraryItems" class="library-items"></div>
+        <div class="dialog-actions">
+          <button class="button ghost" value="cancel" data-i18n="common.close">Close</button>
         </div>
       </form>
     </dialog>

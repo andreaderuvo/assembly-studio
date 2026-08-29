@@ -23,25 +23,49 @@ const FASTENER_STANDARDS = Object.freeze({
   ISO4762: {
     name: "Hex socket head cap screw",
     dimensions: {
+      2: { headDiameterMm: 3.8, headHeightMm: 2, socketAcrossFlatsMm: 1.5, socketDepthMm: 1 },
+      2.5: { headDiameterMm: 4.5, headHeightMm: 2.5, socketAcrossFlatsMm: 2, socketDepthMm: 1.1 },
       3: { headDiameterMm: 5.5, headHeightMm: 3, socketAcrossFlatsMm: 2.5, socketDepthMm: 1.3 },
       4: { headDiameterMm: 7, headHeightMm: 4, socketAcrossFlatsMm: 3, socketDepthMm: 2 },
       5: { headDiameterMm: 8.5, headHeightMm: 5, socketAcrossFlatsMm: 4, socketDepthMm: 2.5 },
+      6: { headDiameterMm: 10, headHeightMm: 6, socketAcrossFlatsMm: 5, socketDepthMm: 3 },
+      8: { headDiameterMm: 13, headHeightMm: 8, socketAcrossFlatsMm: 6, socketDepthMm: 4 },
     },
   },
   ISO10642: {
     name: "Hex socket countersunk head screw",
     dimensions: {
+      2: { headDiameterMm: 4, headHeightMm: 1.2, socketAcrossFlatsMm: 1.3, socketDepthMm: .65 },
+      2.5: { headDiameterMm: 5, headHeightMm: 1.5, socketAcrossFlatsMm: 1.5, socketDepthMm: .8 },
       3: { headDiameterMm: 6, headHeightMm: 1.7, socketAcrossFlatsMm: 2, socketDepthMm: .95 },
       4: { headDiameterMm: 8, headHeightMm: 2.3, socketAcrossFlatsMm: 2.5, socketDepthMm: 1.45 },
       5: { headDiameterMm: 10, headHeightMm: 2.8, socketAcrossFlatsMm: 3, socketDepthMm: 1.75 },
+      6: { headDiameterMm: 12, headHeightMm: 3.3, socketAcrossFlatsMm: 4, socketDepthMm: 2.1 },
+      8: { headDiameterMm: 16, headHeightMm: 4.4, socketAcrossFlatsMm: 5, socketDepthMm: 2.8 },
     },
   },
   ISO7380: {
     name: "Hex socket button head screw (ISO 7380-1)",
     dimensions: {
+      2: { headDiameterMm: 3.5, headHeightMm: 1.3, socketAcrossFlatsMm: 1.3, socketDepthMm: .8 },
+      2.5: { headDiameterMm: 4.7, headHeightMm: 1.5, socketAcrossFlatsMm: 1.5, socketDepthMm: .9 },
       3: { headDiameterMm: 5.7, headHeightMm: 1.65, socketAcrossFlatsMm: 2, socketDepthMm: 1.04 },
       4: { headDiameterMm: 7.6, headHeightMm: 2.2, socketAcrossFlatsMm: 2.5, socketDepthMm: 1.3 },
       5: { headDiameterMm: 9.5, headHeightMm: 2.75, socketAcrossFlatsMm: 3, socketDepthMm: 1.56 },
+      6: { headDiameterMm: 10.5, headHeightMm: 3.3, socketAcrossFlatsMm: 4, socketDepthMm: 1.9 },
+      8: { headDiameterMm: 14, headHeightMm: 4.4, socketAcrossFlatsMm: 5, socketDepthMm: 2.6 },
+    },
+  },
+  ISO4017: {
+    name: "Hexagon head bolt (ISO 4017)",
+    dimensions: {
+      2: { headDiameterMm: 4.62, headHeightMm: 1.4, socketAcrossFlatsMm: 0, socketDepthMm: 0 },
+      2.5: { headDiameterMm: 5.77, headHeightMm: 1.7, socketAcrossFlatsMm: 0, socketDepthMm: 0 },
+      3: { headDiameterMm: 6.35, headHeightMm: 2, socketAcrossFlatsMm: 0, socketDepthMm: 0 },
+      4: { headDiameterMm: 8.08, headHeightMm: 2.8, socketAcrossFlatsMm: 0, socketDepthMm: 0 },
+      5: { headDiameterMm: 9.24, headHeightMm: 3.5, socketAcrossFlatsMm: 0, socketDepthMm: 0 },
+      6: { headDiameterMm: 11.55, headHeightMm: 4, socketAcrossFlatsMm: 0, socketDepthMm: 0 },
+      8: { headDiameterMm: 15.01, headHeightMm: 5.3, socketAcrossFlatsMm: 0, socketDepthMm: 0 },
     },
   },
 });
@@ -98,7 +122,21 @@ const BEARING_CATALOG = Object.freeze({
   6903: { innerDiameterMm: 17, outerDiameterMm: 30, widthMm: 7 },
 });
 
-const isGeneratedComponent = (component) => ["fastener", "bearing", "instance"].includes(component.kind);
+const RC_COMPONENT_CATALOG = Object.freeze([
+  { id: "motor-3650", category: "motors", scale: "1/10", label: "3650 brushless motor", description: "Ø36 × 50 mm sensorless/sensored motor envelope", shape: { type: "motor", diameterMm: 36, bodyLengthMm: 50, shaftDiameterMm: 3.175, shaftLengthMm: 15 } },
+  { id: "motor-3660", category: "motors", scale: "1/10", label: "3660 brushless motor", description: "Ø36 × 60 mm long-can motor envelope", shape: { type: "motor", diameterMm: 36, bodyLengthMm: 60, shaftDiameterMm: 5, shaftLengthMm: 17 } },
+  { id: "motor-4268", category: "motors", scale: "1/8", label: "4268 brushless motor", description: "Ø42 × 68 mm 1/8 on-road motor envelope", shape: { type: "motor", diameterMm: 42, bodyLengthMm: 68, shaftDiameterMm: 5, shaftLengthMm: 18 } },
+  { id: "motor-4274", category: "motors", scale: "1/8", label: "4274 brushless motor", description: "Ø42 × 74 mm 1/8 on-road motor envelope", shape: { type: "motor", diameterMm: 42, bodyLengthMm: 74, shaftDiameterMm: 5, shaftLengthMm: 18 } },
+  { id: "esc-1-10-compact", category: "electronics", scale: "1/10", label: "1/10 compact ESC", description: "Compact on-road speed controller envelope", shape: { type: "esc", widthMm: 36, depthMm: 30, heightMm: 19, fanDiameterMm: 24 } },
+  { id: "esc-1-8", category: "electronics", scale: "1/8", label: "1/8 ESC", description: "1/8 brushless speed controller envelope", shape: { type: "esc", widthMm: 58, depthMm: 48, heightMm: 36, fanDiameterMm: 30 } },
+  { id: "servo-low-profile", category: "steering", scale: "1/10", label: "Low-profile servo", description: "40.9 × 20.1 × 25.9 mm on-road servo envelope", shape: { type: "servo", widthMm: 40.9, depthMm: 20.1, heightMm: 25.9, splineDiameterMm: 6, splineHeightMm: 4 } },
+  { id: "servo-standard", category: "steering", scale: "1/8 · 1/10", label: "Standard-profile servo", description: "40 × 20 × 38 mm standard servo envelope", shape: { type: "servo", widthMm: 40, depthMm: 20, heightMm: 38, splineDiameterMm: 6, splineHeightMm: 4 } },
+  { id: "receiver-compact", category: "electronics", scale: "1/10", label: "Compact receiver", description: "Generic waterproof receiver envelope", shape: { type: "box", widthMm: 35, depthMm: 25, heightMm: 14 } },
+  { id: "battery-shorty-2s", category: "power", scale: "1/10", label: "2S shorty LiPo", description: "Shorty hardcase LiPo envelope", shape: { type: "box", widthMm: 96, depthMm: 47, heightMm: 25 } },
+  { id: "battery-4s-1-8", category: "power", scale: "1/8", label: "4S hardcase LiPo", description: "1/8 hardcase LiPo envelope", shape: { type: "box", widthMm: 139, depthMm: 47, heightMm: 48 } },
+]);
+
+const isGeneratedComponent = (component) => ["fastener", "bearing", "instance", "catalog", "turnbuckle"].includes(component.kind);
 
 let mutationQueue = Promise.resolve();
 
@@ -279,7 +317,7 @@ function createFastenerComponent(state, operation) {
   if (!definition) throw new HttpError(400, `Unsupported fastener standard: ${standard}`);
   const diameterMm = Number(operation.diameterMm);
   const dimensions = definition.dimensions[diameterMm];
-  if (!dimensions) throw new HttpError(400, "Fastener diameter must be M3, M4 or M5");
+  if (!dimensions) throw new HttpError(400, "Fastener diameter must be M2, M2.5, M3, M4, M5, M6 or M8");
   const lengthMm = Number(operation.lengthMm);
   if (!Number.isFinite(lengthMm) || lengthMm < 4 || lengthMm > 80) {
     throw new HttpError(400, "Fastener length must be between 4 and 80 mm");
@@ -404,6 +442,174 @@ function createBearingComponent(state, operation) {
     visible: true, locked: false, color: "#9da3a6", appearance: "steel",
     groupId: ensureBearingsGroup(state),
     bearing: { series, ...dimensions, closure, sealColor, target: { ...target.ref, [sideKey]: side } },
+    interfaces: { holes: [], planes: [], shafts: [], seats: [], edges: [], points: [], centers: [], midplanes: [] },
+  };
+  operation.componentId = id;
+  state.components.push(component);
+  return component;
+}
+
+function replaceParametricComponent(state, existing, generated) {
+  state.components = state.components.filter((item) => item !== generated);
+  const preserved = {
+    id: existing.id,
+    groupId: existing.groupId,
+    color: existing.color,
+    appearance: existing.appearance,
+    opacity: existing.opacity,
+    visible: existing.visible,
+    locked: existing.locked,
+  };
+  Object.assign(existing, generated, preserved);
+  return existing;
+}
+
+function updateFastenerComponent(state, operation) {
+  const existing = componentById(state, String(operation.componentId || ""));
+  if (existing.kind !== "fastener") throw new HttpError(400, "Selected component is not a fastener");
+  if (existing.locked) throw new HttpError(409, `${existing.label} is locked as a reference`);
+  const target = jsonClone(existing.fastener.target);
+  if (existing.fastener.flipped) target.openingSide *= -1;
+  const generated = createFastenerComponent(state, {
+    ...operation,
+    type: "add_fastener",
+    target,
+  });
+  operation.componentId = existing.id;
+  return replaceParametricComponent(state, existing, generated);
+}
+
+function updateBearingComponent(state, operation) {
+  const existing = componentById(state, String(operation.componentId || ""));
+  if (existing.kind !== "bearing") throw new HttpError(400, "Selected component is not a bearing");
+  if (existing.locked) throw new HttpError(409, `${existing.label} is locked as a reference`);
+  const generated = createBearingComponent(state, {
+    ...operation,
+    type: "add_bearing",
+    target: jsonClone(existing.bearing.target),
+  });
+  operation.componentId = existing.id;
+  return replaceParametricComponent(state, existing, generated);
+}
+
+function ensureGeneratedGroup(state, name, preferredId) {
+  const existing = state.groups.find((group) => group.name.toLowerCase() === name.toLowerCase());
+  if (existing) return existing.id;
+  let id = preferredId;
+  if (state.groups.some((group) => group.id === id)) id = `${preferredId}_${crypto.randomUUID()}`;
+  state.groups.push({ id, name });
+  return id;
+}
+
+function catalogShapeSize(shape) {
+  if (shape.type === "motor") {
+    return [shape.diameterMm, shape.diameterMm, shape.bodyLengthMm + shape.shaftLengthMm];
+  }
+  if (shape.type === "servo") {
+    return [shape.widthMm, shape.depthMm, shape.heightMm + shape.splineHeightMm];
+  }
+  return [shape.widthMm, shape.depthMm, shape.heightMm];
+}
+
+function dropPositionAboveAssembly(state, sizeMm) {
+  const visible = state.components.filter((item) => item.visible);
+  if (!visible.length) return [0, 0, sizeMm[2] / 2];
+  const bounds = visible.map(componentAabb);
+  const minimum = [0, 1, 2].map((axis) => Math.min(...bounds.map((box) => box.min[axis])));
+  const maximum = [0, 1, 2].map((axis) => Math.max(...bounds.map((box) => box.max[axis])));
+  return [
+    (minimum[0] + maximum[0]) / 2,
+    (minimum[1] + maximum[1]) / 2,
+    maximum[2] + sizeMm[2] / 2 + 8,
+  ];
+}
+
+function createCatalogComponent(state, operation) {
+  const definition = RC_COMPONENT_CATALOG.find((item) => item.id === String(operation.catalogId || ""));
+  if (!definition) throw new HttpError(404, `Unknown RC catalog component: ${operation.catalogId}`);
+  const shape = jsonClone(definition.shape);
+  const sizeMm = catalogShapeSize(shape);
+  const positionMm = Array.isArray(operation.positionMm)
+    ? finiteVector(operation.positionMm, 3, "positionMm") : dropPositionAboveAssembly(state, sizeMm);
+  const id = `catalog_${definition.id.replaceAll("-", "_")}_${crypto.randomUUID().replaceAll("-", "_")}`;
+  const categoryNames = { motors: "Motors", electronics: "Electronics", steering: "Steering", power: "Power" };
+  const colors = { motors: "#3e464d", electronics: "#30343a", steering: "#5a6066", power: "#245cc7" };
+  const interfaces = { holes: [], planes: [], shafts: [], seats: [], edges: [], points: [], centers: [], midplanes: [] };
+  if (shape.type === "motor") {
+    interfaces.shafts.push({
+      id: "output-shaft", localCenterMm: [0, 0, shape.bodyLengthMm / 2], localAxis: [0, 0, 1],
+      diameterMm: shape.shaftDiameterMm, radiusMm: shape.shaftDiameterMm / 2, lengthMm: shape.shaftLengthMm,
+    });
+  }
+  if (shape.type === "servo") {
+    interfaces.shafts.push({
+      id: "output-spline", localCenterMm: [shape.widthMm * .28, 0, shape.heightMm / 2], localAxis: [0, 0, 1],
+      diameterMm: shape.splineDiameterMm, radiusMm: shape.splineDiameterMm / 2, lengthMm: shape.splineHeightMm,
+    });
+  }
+  const component = {
+    id, label: definition.label, status: "generated-rc-catalog", kind: "catalog", meshUrl: null,
+    triangles: shape.type === "box" ? 12 : 160,
+    sizeMm,
+    baseBoundsMm: {
+      min: positionMm.map((value, axis) => value - sizeMm[axis] / 2),
+      max: positionMm.map((value, axis) => value + sizeMm[axis] / 2),
+      center: jsonClone(positionMm),
+    },
+    transform: { positionMm, quaternionXyzw: [0, 0, 0, 1] },
+    baseTransform: { positionMm: jsonClone(positionMm), quaternionXyzw: [0, 0, 0, 1] },
+    visible: true, locked: false, color: colors[definition.category] || "#6b737a", appearance: "default",
+    groupId: ensureGeneratedGroup(state, categoryNames[definition.category] || "RC Components", "rc-components"),
+    catalog: { id: definition.id, category: definition.category, scale: definition.scale, description: definition.description, shape },
+    interfaces,
+  };
+  operation.componentId = id;
+  state.components.push(component);
+  return component;
+}
+
+function createTurnbuckleComponent(state, operation) {
+  const first = snapInterface(state, operation.first);
+  const second = snapInterface(state, operation.second);
+  if (first.type !== "hole" || second.type !== "hole") throw new HttpError(400, "Turnbuckles require two hole magnets");
+  const openingPoint = (target) => {
+    const side = [-1, 1].includes(Number(target.ref.openingSide)) ? Number(target.ref.openingSide) : 1;
+    const local = target.item.localCenterMm.map(
+      (value, axis) => value + target.item.localAxis[axis] * target.item.depthMm * .5 * side,
+    );
+    return transformedPoint(target.component, local);
+  };
+  const start = openingPoint(first);
+  const end = openingPoint(second);
+  const direction = end.map((value, axis) => value - start[axis]);
+  const centerDistanceMm = Math.hypot(...direction);
+  if (centerDistanceMm < 4 || centerDistanceMm > 300) {
+    throw new HttpError(400, "Turnbuckle hole distance must be between 4 and 300 mm");
+  }
+  const rodDiameterMm = Number(operation.rodDiameterMm || 4);
+  if (!Number.isFinite(rodDiameterMm) || rodDiameterMm < 1.5 || rodDiameterMm > 12) {
+    throw new HttpError(400, "Turnbuckle rod diameter must be between 1.5 and 12 mm");
+  }
+  const endDiameterMm = Math.max(rodDiameterMm * 1.8, first.item.diameterMm * 1.5, second.item.diameterMm * 1.5);
+  const positionMm = start.map((value, axis) => (value + end[axis]) / 2);
+  const quaternionXyzw = quaternionBetweenVectors([0, 0, 1], direction);
+  const id = `turnbuckle_${crypto.randomUUID().replaceAll("-", "_")}`;
+  const component = {
+    id, label: `Turnbuckle ${centerDistanceMm.toFixed(1)} mm`, status: "generated-turnbuckle", kind: "turnbuckle", meshUrl: null,
+    triangles: 256, sizeMm: [endDiameterMm, endDiameterMm, centerDistanceMm + endDiameterMm],
+    baseBoundsMm: {
+      min: positionMm.map((value, axis) => value - [endDiameterMm / 2, endDiameterMm / 2, (centerDistanceMm + endDiameterMm) / 2][axis]),
+      max: positionMm.map((value, axis) => value + [endDiameterMm / 2, endDiameterMm / 2, (centerDistanceMm + endDiameterMm) / 2][axis]),
+      center: jsonClone(positionMm),
+    },
+    transform: { positionMm, quaternionXyzw },
+    baseTransform: { positionMm: jsonClone(positionMm), quaternionXyzw: jsonClone(quaternionXyzw) },
+    visible: true, locked: false, color: "#717980", appearance: "steel",
+    groupId: ensureGeneratedGroup(state, "Steering links", "steering-links"),
+    turnbuckle: {
+      centerDistanceMm, rodDiameterMm, endDiameterMm,
+      first: jsonClone(first.ref), second: jsonClone(second.ref),
+    },
     interfaces: { holes: [], planes: [], shafts: [], seats: [], edges: [], points: [], centers: [], midplanes: [] },
   };
   operation.componentId = id;
@@ -979,6 +1185,24 @@ export function applyOperation(state, operation) {
   if (operation.type === "add_bearing") {
     return createBearingComponent(state, operation).id;
   }
+  if (operation.type === "update_fastener") {
+    return updateFastenerComponent(state, operation).id;
+  }
+  if (operation.type === "update_bearing") {
+    return updateBearingComponent(state, operation).id;
+  }
+  if (operation.type === "add_catalog_component") {
+    return createCatalogComponent(state, operation).id;
+  }
+  if (operation.type === "add_turnbuckle") {
+    return createTurnbuckleComponent(state, operation).id;
+  }
+  if (operation.type === "lock_component") {
+    const item = componentById(state, String(operation.componentId || ""));
+    if (typeof operation.locked !== "boolean") throw new HttpError(400, "Locked state must be boolean");
+    item.locked = operation.locked;
+    return item.id;
+  }
   if (operation.type === "duplicate_component") {
     return createComponentInstance(state, operation).id;
   }
@@ -1144,6 +1368,84 @@ function restoreEditorSnapshot(state, saved) {
   if (saved.workspace && typeof saved.workspace === "object") state.workspace = jsonClone(saved.workspace);
 }
 
+function jsonEqual(first, second) {
+  return JSON.stringify(first) === JSON.stringify(second);
+}
+
+// History v2 stores only the difference required to move between adjacent
+// editor states. The old format copied every component and every generated
+// solid into every one of 500 entries, turning a small assembly into a 47 MiB
+// JSON file that had to be parsed and rewritten for each inserted screw.
+function editorDelta(current, target) {
+  const currentComponents = new Map((current.components || []).map((item) => [item.id, item]));
+  const currentGenerated = new Map((current.generatedComponents || []).map((item) => [item.id, item]));
+  const targetGenerated = new Map((target.generatedComponents || []).map((item) => [item.id, item]));
+  const replacedGeneratedIds = new Set();
+  for (const [id, item] of targetGenerated) {
+    const existing = currentGenerated.get(id);
+    if (existing && !jsonEqual(existing, item)) replacedGeneratedIds.add(id);
+  }
+  const delta = {
+    components: (target.components || []).filter((item) => {
+      const existing = currentComponents.get(item.id);
+      return existing && !replacedGeneratedIds.has(item.id) && !jsonEqual(existing, item);
+    }),
+    removeGeneratedComponentIds: [...currentGenerated.keys()].filter(
+      (id) => !targetGenerated.has(id) || replacedGeneratedIds.has(id),
+    ),
+    restoreGeneratedComponents: [...targetGenerated.values()].filter(
+      (item) => !currentGenerated.has(item.id) || replacedGeneratedIds.has(item.id),
+    ),
+  };
+  for (const key of ["mates", "joints", "groups", "workspace"]) {
+    if (Object.hasOwn(target, key) && !jsonEqual(current[key], target[key])) {
+      delta[key] = jsonClone(target[key]);
+    }
+  }
+  return delta;
+}
+
+function applyEditorDelta(state, delta) {
+  const removed = new Set(delta.removeGeneratedComponentIds || []);
+  if (removed.size) state.components = state.components.filter((item) => !removed.has(item.id));
+  const existingIds = new Set(state.components.map((item) => item.id));
+  for (const item of delta.restoreGeneratedComponents || []) {
+    if (!existingIds.has(item.id)) state.components.push(jsonClone(item));
+  }
+  restoreSnapshot(state, delta.components || []);
+  for (const key of ["mates", "joints", "groups", "workspace"]) {
+    if (Object.hasOwn(delta, key)) state[key] = jsonClone(delta[key]);
+  }
+}
+
+function compactHistoryEntry(entry, before, after) {
+  entry.historyVersion = 2;
+  entry.undoDelta = editorDelta(after, before);
+  entry.redoDelta = editorDelta(before, after);
+  for (const key of [
+    "before", "beforeGeneratedComponents", "beforeMates", "beforeJoints",
+    "beforeGroups", "beforeWorkspace", "after",
+  ]) delete entry[key];
+}
+
+export function compactHistoryStacks(state) {
+  ensureHistoryStacks(state);
+  const legacyHistory = state.history.some((entry) => entry.historyVersion !== 2);
+  if (legacyHistory) {
+    const beforeStates = state.history.map((entry) => snapshotFromHistoryEntry(entry));
+    const current = editorSnapshot(state);
+    for (let index = 0; index < state.history.length; index += 1) {
+      const entry = state.history[index];
+      if (entry.historyVersion === 2) continue;
+      compactHistoryEntry(entry, beforeStates[index], beforeStates[index + 1] || current);
+    }
+  }
+  for (const entry of state.redoStack) {
+    if (entry.historyVersion === 2 || !entry.after) continue;
+    compactHistoryEntry(entry, snapshotFromHistoryEntry(entry), entry.after);
+  }
+}
+
 function relationReferencesKnownComponents(value, componentIds) {
   if (!value || typeof value !== "object") return true;
   if (typeof value.componentId === "string" && !componentIds.has(value.componentId)) return false;
@@ -1184,10 +1486,14 @@ export function loadProjectIntoState(state, project) {
   const savedFasteners = [];
   const savedBearings = [];
   const savedInstances = [];
+  const savedCatalogComponents = [];
+  const savedTurnbuckles = [];
   for (const item of saved.components) {
     if (item?.kind === "fastener") { savedFasteners.push(item); continue; }
     if (item?.kind === "bearing") { savedBearings.push(item); continue; }
     if (item?.kind === "instance") { savedInstances.push(item); continue; }
+    if (item?.kind === "catalog") { savedCatalogComponents.push(item); continue; }
+    if (item?.kind === "turnbuckle") { savedTurnbuckles.push(item); continue; }
     const component = currentById.get(String(item?.id || ""));
     if (!component) continue;
     component.transform = {
@@ -1275,6 +1581,45 @@ export function loadProjectIntoState(state, project) {
     generated.groupId = groupIds.has(savedBearing.groupId) ? savedBearing.groupId : generated.groupId;
   }
 
+  const restoreGeneratedPresentation = (generated, savedItem, idPattern, typeName) => {
+    const requestedId = String(savedItem.id || "");
+    if (!idPattern.test(requestedId)
+      || state.components.some((component) => component !== generated && component.id === requestedId)) {
+      throw new HttpError(400, `Invalid project ${typeName} ID`);
+    }
+    generated.id = requestedId;
+    generated.label = normalizedName(savedItem.label || generated.label, `${typeName} name`);
+    generated.transform = {
+      positionMm: finiteVector(savedItem.transform?.positionMm, 3, "positionMm"),
+      quaternionXyzw: normalizedQuaternion(savedItem.transform?.quaternionXyzw),
+    };
+    generated.visible = typeof savedItem.visible === "boolean" ? savedItem.visible : true;
+    generated.locked = Boolean(savedItem.locked);
+    const color = String(savedItem.color || generated.color).toLowerCase();
+    if (!/^#[0-9a-f]{6}$/.test(color)) throw new HttpError(400, `Invalid ${typeName} color`);
+    generated.color = color;
+    if (typeof savedItem.appearance === "string") generated.appearance = savedItem.appearance;
+    if (Number.isFinite(savedItem.opacity)) generated.opacity = savedItem.opacity;
+    generated.groupId = groupIds.has(savedItem.groupId) ? savedItem.groupId : generated.groupId;
+  };
+
+  for (const savedCatalog of savedCatalogComponents) {
+    const generated = createCatalogComponent(state, {
+      type: "add_catalog_component", catalogId: savedCatalog.catalog?.id,
+    });
+    restoreGeneratedPresentation(generated, savedCatalog, /^catalog_[a-zA-Z0-9_-]{1,160}$/, "catalog component");
+  }
+
+  for (const savedTurnbuckle of savedTurnbuckles) {
+    const generated = createTurnbuckleComponent(state, {
+      type: "add_turnbuckle",
+      first: savedTurnbuckle.turnbuckle?.first,
+      second: savedTurnbuckle.turnbuckle?.second,
+      rodDiameterMm: savedTurnbuckle.turnbuckle?.rodDiameterMm,
+    });
+    restoreGeneratedPresentation(generated, savedTurnbuckle, /^turnbuckle_[a-zA-Z0-9_-]{1,120}$/, "turnbuckle");
+  }
+
   for (const savedInstance of savedInstances) {
     const generated = createComponentInstance(state, {
       type: "duplicate_component", componentId: savedInstance.instanceOf,
@@ -1335,6 +1680,12 @@ function pushHistoryEntry(state, entry) {
   state.redoStack = [];
 }
 
+function pushDeltaHistoryEntry(state, beforeState, details) {
+  const entry = { revision: state.revision, timestamp: new Date().toISOString(), operations: [], ...details };
+  compactHistoryEntry(entry, beforeState, editorSnapshot(state));
+  pushHistoryEntry(state, entry);
+}
+
 function relationUsesComponent(value, componentIds) {
   if (!value || typeof value !== "object") return false;
   if (typeof value.componentId === "string" && componentIds.has(value.componentId)) return true;
@@ -1365,8 +1716,11 @@ export function undoState(state) {
   ensureHistoryStacks(state);
   const entry = state.history.pop();
   if (!entry) throw new HttpError(409, "No operation to undo");
-  entry.after = editorSnapshot(state);
-  restoreEditorSnapshot(state, snapshotFromHistoryEntry(entry));
+  if (entry.historyVersion === 2) applyEditorDelta(state, entry.undoDelta);
+  else {
+    entry.after = editorSnapshot(state);
+    restoreEditorSnapshot(state, snapshotFromHistoryEntry(entry));
+  }
   state.redoStack.push(entry);
   trimHistoryStack(state.redoStack);
   state.revision += 1;
@@ -1381,9 +1735,12 @@ export function redoState(state) {
   ensureHistoryStacks(state);
   const entry = state.redoStack.pop();
   if (!entry) throw new HttpError(409, "No operation to redo");
-  if (!entry.after) throw new HttpError(409, "Redo data is unavailable for this operation");
-  restoreEditorSnapshot(state, entry.after);
-  delete entry.after;
+  if (entry.historyVersion === 2) applyEditorDelta(state, entry.redoDelta);
+  else {
+    if (!entry.after) throw new HttpError(409, "Redo data is unavailable for this operation");
+    restoreEditorSnapshot(state, entry.after);
+    delete entry.after;
+  }
   state.history.push(entry);
   trimHistoryStack(state.history);
   state.revision += 1;
@@ -1415,9 +1772,23 @@ async function atomicWriteJson(filename, value) {
   }
 }
 
+export async function compactHistoryFile(filename = DATA_FILE) {
+  const state = JSON.parse(await fs.readFile(filename, "utf8"));
+  const legacyCount = [...(state.history || []), ...(state.redoStack || [])]
+    .filter((entry) => entry.historyVersion !== 2).length;
+  if (!legacyCount) return { migratedEntries: 0, bytes: Buffer.byteLength(JSON.stringify(state)) };
+  compactHistoryStacks(state);
+  await atomicWriteJson(filename, state);
+  return {
+    migratedEntries: legacyCount,
+    bytes: (await fs.stat(filename)).size,
+  };
+}
+
 function queueMutation(callback) {
   const work = mutationQueue.then(async () => {
     const state = await readState();
+    compactHistoryStacks(state);
     const result = await callback(state);
     await atomicWriteJson(DATA_FILE, state);
     return result;
@@ -1442,28 +1813,15 @@ async function previewOperations(operations) {
 
 async function commitOperations(operations, source = "human", metadata = null) {
   return queueMutation(async (state) => {
-    const before = snapshot(state);
-    const beforeMates = jsonClone(state.mates || []);
-    const beforeJoints = jsonClone(state.joints || []);
-    const beforeGroups = jsonClone(state.groups || []);
-    const beforeWorkspace = jsonClone(state.workspace || {});
-    const beforeGeneratedComponents = jsonClone(
-      state.components.filter(isGeneratedComponent),
-    );
+    const beforeState = editorSnapshot(state);
     const affected = operations.map((item) => applyOperation(state, item));
-    pushHistoryEntry(state, {
+    const entry = {
       revision: state.revision,
       timestamp: new Date().toISOString(),
       source,
       operations: jsonClone(operations),
       metadata: metadata ? jsonClone(metadata) : null,
-      before,
-      beforeMates,
-      beforeJoints,
-      beforeGroups,
-      beforeWorkspace,
-      beforeGeneratedComponents,
-    });
+    };
     state.revision += 1;
     state.mates ||= [];
     state.joints ||= [];
@@ -1481,7 +1839,8 @@ async function commitOperations(operations, source = "human", metadata = null) {
         .filter((item) => ![
           "visibility", "color", "material", "opacity", "rename_component", "assign_group",
           "create_group", "rename_group", "delete_group",
-          "rename_ungrouped", "add_fastener", "add_bearing", "duplicate_component",
+          "rename_ungrouped", "add_fastener", "add_bearing", "update_fastener", "update_bearing",
+          "add_catalog_component", "add_turnbuckle", "duplicate_component", "lock_component",
         ].includes(item.type))
         .map((item) => item.componentId),
     );
@@ -1497,6 +1856,8 @@ async function commitOperations(operations, source = "human", metadata = null) {
       ));
       state.mates.push({ ...jsonClone(metadata.mate), createdRevision: state.revision });
     }
+    compactHistoryEntry(entry, beforeState, editorSnapshot(state));
+    pushHistoryEntry(state, entry);
     invalidateValidation(state);
     return { state: clientState(state), affected };
   });
@@ -1793,33 +2154,20 @@ async function route(request, response) {
   if (request.method === "GET" && url.pathname === "/api/catalog/bearings") {
     return sendJson(response, 200, BEARING_CATALOG);
   }
+  if (request.method === "GET" && url.pathname === "/api/catalog/rc") {
+    return sendJson(response, 200, RC_COMPONENT_CATALOG);
+  }
   if (request.method === "GET" && url.pathname === "/api/assembly") {
     return sendJson(response, 200, clientState(await readState()));
   }
   if (request.method === "POST" && url.pathname === "/api/project/load") {
     const body = await readJsonBody(request);
     const result = await queueMutation(async (state) => {
-      const before = snapshot(state);
-      const beforeMates = jsonClone(state.mates || []);
-      const beforeJoints = jsonClone(state.joints || []);
-      const beforeGroups = jsonClone(state.groups || []);
-      const beforeWorkspace = jsonClone(state.workspace || {});
-      const beforeGeneratedComponents = jsonClone(
-        state.components.filter(isGeneratedComponent),
-      );
+      const beforeState = editorSnapshot(state);
       loadProjectIntoState(state, body.project);
-      pushHistoryEntry(state, {
-        revision: state.revision,
-        timestamp: new Date().toISOString(),
+      pushDeltaHistoryEntry(state, beforeState, {
         source: "project-load",
-        operations: [],
         metadata: { name: String(body.project?.name || "") },
-        before,
-        beforeMates,
-        beforeJoints,
-        beforeGroups,
-        beforeWorkspace,
-        beforeGeneratedComponents,
       });
       state.revision += 1;
       invalidateValidation(state);
@@ -1918,12 +2266,7 @@ async function route(request, response) {
     const result = await queueMutation(async (state) => {
       const sourceRef = Array.isArray(body.source) ? body.source[0] : body.source;
       const sourceComponent = componentById(state, String(sourceRef?.componentId || ""));
-      const before = snapshot(state);
-      const beforeMates = jsonClone(state.mates || []);
-      const beforeJoints = jsonClone(state.joints || []);
-      const beforeGeneratedComponents = jsonClone(
-        state.components.filter(isGeneratedComponent),
-      );
+      const beforeState = editorSnapshot(state);
       const minimum = body.minimum === "" || body.minimum == null ? null : Number(body.minimum);
       const maximum = body.maximum === "" || body.maximum == null ? null : Number(body.maximum);
       const ratio = body.ratio === "" || body.ratio == null ? null : Number(body.ratio);
@@ -1948,16 +2291,9 @@ async function route(request, response) {
       });
       state.joints.push(joint);
       if (body.jointType === "lock") sourceComponent.locked = true;
-      pushHistoryEntry(state, {
-        revision: state.revision,
-        timestamp: new Date().toISOString(),
+      pushDeltaHistoryEntry(state, beforeState, {
         source: "joint",
-        operations: [],
         metadata: { joint: jsonClone(joint) },
-        before,
-        beforeMates,
-        beforeJoints,
-        beforeGeneratedComponents,
       });
       state.revision += 1;
       invalidateValidation(state);
@@ -1983,12 +2319,7 @@ async function route(request, response) {
   }
   if (request.method === "POST" && url.pathname === "/api/operations/reset") {
     const result = await queueMutation(async (state) => {
-      const before = snapshot(state);
-      const beforeMates = jsonClone(state.mates || []);
-      const beforeJoints = jsonClone(state.joints || []);
-      const beforeGeneratedComponents = jsonClone(
-        state.components.filter(isGeneratedComponent),
-      );
+      const beforeState = editorSnapshot(state);
       for (const component of state.components) {
         component.transform.positionMm = jsonClone(
           component.baseTransform?.positionMm || component.baseBoundsMm.center,
@@ -1998,18 +2329,9 @@ async function route(request, response) {
         );
         component.visible = true;
       }
-      pushHistoryEntry(state, {
-        revision: state.revision,
-        timestamp: new Date().toISOString(),
-        source: "reset",
-        operations: [],
-        before,
-        beforeMates,
-        beforeJoints,
-        beforeGeneratedComponents,
-      });
       state.mates = [];
       state.joints = [];
+      pushDeltaHistoryEntry(state, beforeState, { source: "reset" });
       state.revision += 1;
       invalidateValidation(state);
       return clientState(state);

@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   applyOperation,
   approximateCollisions,
+  compactHistoryStacks,
   computeHoleMate,
   computePatternMate,
   computeShaftThroughHolesMate,
@@ -19,6 +20,8 @@ function component(id, center, size, locked = false) {
     label: id,
     locked,
     visible: true,
+    color: "#888888",
+    appearance: "default",
     sizeMm: size,
     transform: { positionMm: center, quaternionXyzw: [0, 0, 0, 1] },
   };
@@ -235,6 +238,9 @@ test("undo e redo rimuovono e ripristinano una vite generata", () => {
     revision: 0, source: "fastener", operations: [], before,
     beforeGeneratedComponents: [], beforeMates: [], beforeJoints: [], beforeGroups: [], beforeWorkspace: {},
   });
+  compactHistoryStacks(state);
+  assert.equal(state.history[0].historyVersion, 2);
+  assert.equal(state.history[0].before, undefined);
   assert.equal(state.components.filter((item) => item.kind === "fastener").length, 1);
   undoState(state);
   assert.equal(state.components.filter((item) => item.kind === "fastener").length, 0);
@@ -255,6 +261,78 @@ test("una vite a testa bombata ISO 7380-1 usa le dimensioni e l'esagono corretti
   assert.equal(screw.fastener.headDiameterMm, 7.6);
   assert.equal(screw.fastener.headHeightMm, 2.2);
   assert.equal(screw.fastener.socketAcrossFlatsMm, 2.5);
+});
+
+test("vite e bearing inseriti restano parametrici e modificabili in-place", () => {
+  const plate = addHole(component("plate", [0, 0, 0], [30, 30, 4], true), "mount", [0, 0, 0], [0, 0, 1], 8, 4);
+  const state = { components: [plate], groups: [] };
+  const screwId = applyOperation(state, {
+    type: "add_fastener", target: { componentId: "plate", interfaceType: "hole", interfaceId: "mount", openingSide: 1 },
+    standard: "ISO4762", diameterMm: 3, lengthMm: 10,
+  });
+  applyOperation(state, { type: "update_fastener", componentId: screwId, standard: "ISO7380", diameterMm: 4, lengthMm: 16, flip: true });
+  const screw = state.components.find((item) => item.id === screwId);
+  assert.equal(screw.fastener.standard, "ISO7380");
+  assert.equal(screw.fastener.lengthMm, 16);
+  assert.equal(screw.fastener.flipped, true);
+  assert.equal(state.components.filter((item) => item.kind === "fastener").length, 1);
+
+  const bearingId = applyOperation(state, {
+    type: "add_bearing", target: { componentId: "plate", interfaceType: "hole", interfaceId: "mount", openingSide: 1 },
+    series: "MR128", closure: "zz",
+  });
+  applyOperation(state, {
+    type: "update_bearing", componentId: bearingId, series: "608",
+    innerDiameterMm: 8, outerDiameterMm: 22, widthMm: 7, closure: "2rs", sealColor: "#202326",
+  });
+  const bearing = state.components.find((item) => item.id === bearingId);
+  assert.equal(bearing.bearing.series, "608");
+  assert.equal(bearing.bearing.closure, "2rs");
+  assert.equal(state.components.filter((item) => item.kind === "bearing").length, 1);
+});
+
+test("bulloni esagonali ISO 4017 coprono le misure RC comuni", () => {
+  const plate = addHole(component("plate", [0, 0, 0], [20, 20, 2], true), "mount", [0, 0, 0], [0, 0, 1], 2.2, 2);
+  const state = { components: [plate], groups: [] };
+  for (const diameterMm of [2, 2.5, 3, 4, 5, 6, 8]) {
+    const id = applyOperation(state, {
+      type: "add_fastener", target: { componentId: "plate", interfaceType: "hole", interfaceId: "mount", openingSide: 1 },
+      standard: "ISO4017", diameterMm, lengthMm: 12,
+    });
+    assert.equal(state.components.find((item) => item.id === id).fastener.socketDepthMm, 0);
+  }
+});
+
+test("catalogo RC e turnbuckle automatico generano componenti leggeri e parametrici", () => {
+  const first = addHole(component("first", [0, 0, 0], [10, 10, 2], true), "link", [0, 0, 0], [0, 0, 1], 3, 2);
+  const second = addHole(component("second", [30, 0, 0], [10, 10, 2], true), "link", [0, 0, 0], [0, 0, 1], 3, 2);
+  const state = { components: [first, second], groups: [] };
+  const motorId = applyOperation(state, { type: "add_catalog_component", catalogId: "motor-4274" });
+  const motor = state.components.find((item) => item.id === motorId);
+  assert.equal(motor.catalog.scale, "1/8");
+  assert.deepEqual(motor.sizeMm, [42, 42, 92]);
+  assert.equal(motor.interfaces.shafts[0].diameterMm, 5);
+
+  const linkId = applyOperation(state, {
+    type: "add_turnbuckle",
+    first: { componentId: "first", interfaceType: "hole", interfaceId: "link", openingSide: 1 },
+    second: { componentId: "second", interfaceType: "hole", interfaceId: "link", openingSide: 1 },
+  });
+  const link = state.components.find((item) => item.id === linkId);
+  assert.equal(link.kind, "turnbuckle");
+  assert.equal(link.turnbuckle.centerDistanceMm, 30);
+  assert.deepEqual(link.transform.positionMm, [15, 0, 1]);
+
+  const restored = { components: JSON.parse(JSON.stringify([first, second])), groups: [], workspace: {} };
+  loadProjectIntoState(restored, {
+    format: "rc-car-assembly-project", version: 1,
+    assembly: {
+      components: JSON.parse(JSON.stringify(state.components)),
+      groups: JSON.parse(JSON.stringify(state.groups)), workspace: {}, mates: [], joints: [],
+    },
+  });
+  assert.equal(restored.components.filter((item) => item.kind === "catalog").length, 1);
+  assert.equal(restored.components.filter((item) => item.kind === "turnbuckle").length, 1);
 });
 
 test("broad phase AABB individua solo sovrapposizioni", () => {

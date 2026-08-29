@@ -44,13 +44,20 @@ image exports.
 - Interactive Three.js assembly viewport with move and rotate gizmos.
 - Persistent groups, component names, colors, materials, opacity, and scene
   settings.
-- Up to 500 persistent undo/redo operations by default.
+- Up to 500 persistent undo/redo operations stored as compact reversible deltas.
 - Reusable component catalog with independent instances.
 - Parametric socket-cap, button-head, and countersunk fasteners with modeled hex drives and batch insertion into multiple holes.
+- Editable parametric fasteners and bearings with live geometry previews, plus
+  ISO 4017 hex-head bolts in common M2–M8 RC sizes.
 - A 49-size bearing catalog plus custom dimensions, with distinct Open, ZZ,
   and 2RS colors.
 - Automatic bearing size matching from a selected shaft, housing, or coaxial
   shaft-and-housing pair.
+- A lightweight RC on-road library for 1/8 and 1/10 motors, ESCs, low/standard
+  profile servos, receivers, and battery envelopes.
+- Automatic steering turnbuckles generated at the measured center distance
+  between two selected holes.
+- Direct lock/unlock controls and a two-row task-oriented toolbar.
 - Quick AABB interference checks in the browser workflow.
 - Optional exact collision checks through isolated FreeCAD workers.
 - FCStd, STEP, PNG, SVG, and portable project exports.

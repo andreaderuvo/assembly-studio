@@ -67,6 +67,25 @@ def fastener_shape(component):
         profile = Part.makePolygon([App.Vector(0, 0, 0), *dome, App.Vector(0, 0, 0)])
         head = Part.Face(profile).revolve(App.Vector(0, 0, 0), App.Vector(0, 0, 1), 360)
         shape = shank.fuse(head)
+    elif standard == "ISO4017":
+        shank = Part.makeCylinder(
+            diameter / 2.0,
+            length,
+            App.Vector(0, 0, -length),
+        )
+        head_radius = head_diameter / 2.0
+        head_points = [
+            App.Vector(
+                head_radius * math.cos(math.radians(60.0 * index + 30.0)),
+                head_radius * math.sin(math.radians(60.0 * index + 30.0)),
+                0,
+            )
+            for index in range(6)
+        ]
+        head = Part.Face(Part.makePolygon(head_points + [head_points[0]])).extrude(
+            App.Vector(0, 0, head_height)
+        )
+        shape = shank.fuse(head)
     else:
         shank = Part.makeCylinder(
             diameter / 2.0,
@@ -80,22 +99,23 @@ def fastener_shape(component):
         )
         shape = shank.fuse(head)
 
-    socket_across_flats = float(spec.get("socketAcrossFlatsMm", diameter * 0.75))
-    socket_depth = min(float(spec.get("socketDepthMm", head_height * 0.45)), head_height * 0.9)
-    socket_radius = socket_across_flats / math.sqrt(3.0)
-    socket_top = 0.0 if standard == "ISO10642" else head_height
-    socket_bottom = socket_top - socket_depth
-    socket_points = [
-        App.Vector(
-            socket_radius * math.cos(math.radians(60.0 * index + 30.0)),
-            socket_radius * math.sin(math.radians(60.0 * index + 30.0)),
-            socket_bottom,
-        )
-        for index in range(6)
-    ]
-    socket_wire = Part.makePolygon(socket_points + [socket_points[0]])
-    socket_tool = Part.Face(socket_wire).extrude(App.Vector(0, 0, socket_depth + 0.01))
-    shape = shape.cut(socket_tool)
+    if standard != "ISO4017":
+        socket_across_flats = float(spec.get("socketAcrossFlatsMm", diameter * 0.75))
+        socket_depth = min(float(spec.get("socketDepthMm", head_height * 0.45)), head_height * 0.9)
+        socket_radius = socket_across_flats / math.sqrt(3.0)
+        socket_top = 0.0 if standard == "ISO10642" else head_height
+        socket_bottom = socket_top - socket_depth
+        socket_points = [
+            App.Vector(
+                socket_radius * math.cos(math.radians(60.0 * index + 30.0)),
+                socket_radius * math.sin(math.radians(60.0 * index + 30.0)),
+                socket_bottom,
+            )
+            for index in range(6)
+        ]
+        socket_wire = Part.makePolygon(socket_points + [socket_points[0]])
+        socket_tool = Part.Face(socket_wire).extrude(App.Vector(0, 0, socket_depth + 0.01))
+        shape = shape.cut(socket_tool)
 
     center = shape.BoundBox.Center
     shape.translate(-center)
@@ -109,6 +129,62 @@ def bearing_shape(component):
     outer = Part.makeCylinder(float(spec["outerDiameterMm"]) / 2.0, width, origin)
     inner = Part.makeCylinder(float(spec["innerDiameterMm"]) / 2.0, width, origin)
     return outer.cut(inner)
+
+
+def catalog_shape(component):
+    shape_spec = component["catalog"]["shape"]
+    shape_type = shape_spec["type"]
+    if shape_type == "motor":
+        body_length = float(shape_spec["bodyLengthMm"])
+        shaft_length = float(shape_spec["shaftLengthMm"])
+        body = Part.makeCylinder(
+            float(shape_spec["diameterMm"]) / 2.0,
+            body_length,
+            App.Vector(0, 0, -body_length / 2.0),
+        )
+        shaft = Part.makeCylinder(
+            float(shape_spec["shaftDiameterMm"]) / 2.0,
+            shaft_length,
+            App.Vector(0, 0, body_length / 2.0),
+        )
+        shape = body.fuse(shaft)
+    else:
+        width = float(shape_spec["widthMm"])
+        depth = float(shape_spec["depthMm"])
+        height = float(shape_spec["heightMm"])
+        shape = Part.makeBox(width, depth, height, App.Vector(-width / 2.0, -depth / 2.0, -height / 2.0))
+        if shape_type == "servo":
+            spline_height = float(shape_spec["splineHeightMm"])
+            spline = Part.makeCylinder(
+                float(shape_spec["splineDiameterMm"]) / 2.0,
+                spline_height,
+                App.Vector(width * 0.28, 0, height / 2.0),
+            )
+            shape = shape.fuse(spline)
+        elif shape_type == "esc":
+            fan = Part.makeCylinder(
+                float(shape_spec["fanDiameterMm"]) / 2.0,
+                2.5,
+                App.Vector(0, 0, height / 2.0),
+            )
+            shape = shape.fuse(fan)
+    shape.translate(-shape.BoundBox.Center)
+    return shape
+
+
+def turnbuckle_shape(component):
+    spec = component["turnbuckle"]
+    center_distance = float(spec["centerDistanceMm"])
+    end_radius = float(spec["endDiameterMm"]) / 2.0
+    rod_length = max(1.0, center_distance - float(spec["endDiameterMm"]) * 0.65)
+    rod = Part.makeCylinder(
+        float(spec["rodDiameterMm"]) / 2.0,
+        rod_length,
+        App.Vector(0, 0, -rod_length / 2.0),
+    )
+    first = Part.makeSphere(end_radius, App.Vector(0, 0, -center_distance / 2.0))
+    second = Part.makeSphere(end_radius, App.Vector(0, 0, center_distance / 2.0))
+    return rod.fuse(first).fuse(second)
 
 
 def place_shape(shape, transform):
@@ -220,6 +296,32 @@ def main():
                         seal_color if type(face.Surface).__name__ == "Plane" else color
                         for face in obj.Shape.Faces
                     ]
+            except Exception:
+                pass
+            changed += 1
+            continue
+        if component.get("kind") in ("catalog", "turnbuckle"):
+            if not bool(component.get("visible", True)):
+                continue
+            obj = doc.addObject("Part::Feature", component["id"])
+            obj.Label = component.get("label", component["id"])
+            if component.get("kind") == "catalog":
+                obj.addProperty("App::PropertyString", "CatalogId", "RC Catalog")
+                obj.addProperty("App::PropertyString", "Scale", "RC Catalog")
+                obj.CatalogId = str(component["catalog"]["id"])
+                obj.Scale = str(component["catalog"].get("scale", ""))
+                shape = catalog_shape(component)
+            else:
+                obj.addProperty("App::PropertyLength", "CenterDistance", "Turnbuckle")
+                obj.addProperty("App::PropertyLength", "RodDiameter", "Turnbuckle")
+                obj.CenterDistance = float(component["turnbuckle"]["centerDistanceMm"])
+                obj.RodDiameter = float(component["turnbuckle"]["rodDiameterMm"])
+                shape = turnbuckle_shape(component)
+            obj.Shape = place_shape(shape, component["transform"])
+            try:
+                color = rgb_color(component.get("color"))
+                if color is not None:
+                    obj.ViewObject.ShapeColor = color
             except Exception:
                 pass
             changed += 1
