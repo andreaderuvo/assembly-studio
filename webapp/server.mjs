@@ -36,6 +36,14 @@ const FASTENER_STANDARDS = Object.freeze({
       5: { headDiameterMm: 10, headHeightMm: 2.8, socketAcrossFlatsMm: 3, socketDepthMm: 1.75 },
     },
   },
+  ISO7380: {
+    name: "Hex socket button head screw (ISO 7380-1)",
+    dimensions: {
+      3: { headDiameterMm: 5.7, headHeightMm: 1.65, socketAcrossFlatsMm: 2, socketDepthMm: 1.04 },
+      4: { headDiameterMm: 7.6, headHeightMm: 2.2, socketAcrossFlatsMm: 2.5, socketDepthMm: 1.3 },
+      5: { headDiameterMm: 9.5, headHeightMm: 2.75, socketAcrossFlatsMm: 3, socketDepthMm: 1.56 },
+    },
+  },
 });
 
 const BEARING_CATALOG = Object.freeze({

@@ -49,6 +49,24 @@ def fastener_shape(component):
             App.Vector(0, 0, -head_height),
         )
         shape = shank.fuse(head)
+    elif standard == "ISO7380":
+        shank = Part.makeCylinder(
+            diameter / 2.0,
+            length,
+            App.Vector(0, 0, -length),
+        )
+        radius = head_diameter / 2.0
+        dome = [
+            App.Vector(
+                radius * math.cos(index / 16.0 * math.pi / 2.0),
+                0,
+                head_height * math.sin(index / 16.0 * math.pi / 2.0),
+            )
+            for index in range(17)
+        ]
+        profile = Part.makePolygon([App.Vector(0, 0, 0), *dome, App.Vector(0, 0, 0)])
+        head = Part.Face(profile).revolve(App.Vector(0, 0, 0), App.Vector(0, 0, 1), 360)
+        shape = shank.fuse(head)
     else:
         shank = Part.makeCylinder(
             diameter / 2.0,

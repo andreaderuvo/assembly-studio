@@ -46,7 +46,7 @@ image exports.
   settings.
 - Up to 500 persistent undo/redo operations by default.
 - Reusable component catalog with independent instances.
-- Parametric socket-head fasteners with modeled hex drives.
+- Parametric socket-cap, button-head, and countersunk fasteners with modeled hex drives and batch insertion into multiple holes.
 - A 49-size bearing catalog plus custom dimensions, with distinct Open, ZZ,
   and 2RS colors.
 - Automatic bearing size matching from a selected shaft, housing, or coaxial

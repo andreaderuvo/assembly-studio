@@ -412,6 +412,7 @@ let toastTimer = null;
 let mateMode = false;
 let magnetEnabled = false;
 let sourceHoleRef = null;
+let fastenerTargetRefs = [];
 let pendingMate = null;
 let directDrag = null;
 let transformSnapCandidate = null;
@@ -709,19 +710,26 @@ function fastenerGeometry(spec) {
   const headHeight = Number(spec.headHeightMm);
   const shaftRadius = diameter / 2;
   const tipBevel = Math.min(0.35, length * 0.08);
+  const shaftProfile = [
+    new THREE.Vector2(0, -length),
+    new THREE.Vector2(shaftRadius * 0.78, -length),
+    new THREE.Vector2(shaftRadius, -length + tipBevel),
+  ];
+  const buttonDome = Array.from({ length: 11 }, (_, index) => {
+    const angle = index / 10 * Math.PI / 2;
+    return new THREE.Vector2(headRadius * Math.cos(angle), headHeight * Math.sin(angle));
+  });
   const profile = spec.standard === "ISO10642"
     ? [
-      new THREE.Vector2(0, -length),
-      new THREE.Vector2(shaftRadius * 0.78, -length),
-      new THREE.Vector2(shaftRadius, -length + tipBevel),
+      ...shaftProfile,
       new THREE.Vector2(shaftRadius, -headHeight),
       new THREE.Vector2(headRadius, 0),
       new THREE.Vector2(0, 0),
     ]
+    : spec.standard === "ISO7380"
+      ? [...shaftProfile, new THREE.Vector2(shaftRadius, 0), ...buttonDome]
     : [
-      new THREE.Vector2(0, -length),
-      new THREE.Vector2(shaftRadius * 0.78, -length),
-      new THREE.Vector2(shaftRadius, -length + tipBevel),
+      ...shaftProfile,
       new THREE.Vector2(shaftRadius, 0),
       new THREE.Vector2(headRadius, 0),
       new THREE.Vector2(headRadius, Math.max(0, headHeight - 0.25)),
@@ -1386,6 +1394,7 @@ function anchorDescription(type, item) {
 }
 
 function anchorTreeRole(ref) {
+  if (fastenerTargetRefs.some((target) => sameSnapRef(target, ref))) return "source";
   if (mateMode && throughMode) {
     const stage = throughSelections.length;
     if (stage === 0) return ["hole", "shaft"].includes(ref.interfaceType) ? "pick" : "incompatible";
@@ -1400,9 +1409,9 @@ function anchorTreeRole(ref) {
   return snapPairCompatible(sourceHoleRef, ref) ? "target" : "incompatible";
 }
 
-async function chooseAnchorFromTree(ref) {
+async function chooseAnchorFromTree(ref, additive = false) {
   if (!mateMode) startMateMode();
-  await chooseHoleMarker({ userData: { snapRef: ref, holeRole: anchorTreeRole(ref) } });
+  await chooseHoleMarker({ userData: { snapRef: ref, holeRole: anchorTreeRole(ref) } }, additive);
   if (selectedId) renderAnchorTree(component(selectedId));
 }
 
@@ -1454,7 +1463,9 @@ function renderAnchorTree(item) {
         button.className = `anchor-select ${anchorTreeRole(ref)}`;
         button.textContent = label;
         button.title = `${t(labelKey)} · ${anchor.id}`;
-        button.addEventListener("click", () => chooseAnchorFromTree(ref));
+        button.addEventListener("click", (event) => chooseAnchorFromTree(
+          ref, event.shiftKey || event.ctrlKey || event.metaKey,
+        ));
         actions.append(button);
       }
       row.append(actions);
@@ -1729,6 +1740,7 @@ function renderMateMarkers() {
     for (const ref of snapRefsFor(target)) {
       if (snapRefPassesActiveFilter(ref)) {
         const role = sameSnapRef(ref, sourceHoleRef)
+          || fastenerTargetRefs.some((selected) => sameSnapRef(selected, ref))
           ? "source"
           : target.id === sourceHoleRef.componentId
             ? "pick"
@@ -1835,6 +1847,7 @@ function startMateMode() {
   $("#matePanel").classList.remove("hidden");
   $("#mateStatus").textContent = t("mate.pickFirst");
   sourceHoleRef = null;
+  fastenerTargetRefs = [];
   patternSelections = [];
   throughMode = false;
   throughSelections = [];
@@ -1864,8 +1877,9 @@ function syncPlaneMateOptions() {
 }
 
 function openFastenerDialog() {
-  if (!sourceHoleRef || sourceHoleRef.interfaceType !== "hole") return;
-  const hole = holeFor(sourceHoleRef);
+  const targets = fastenerTargetRefs.length ? fastenerTargetRefs : [sourceHoleRef];
+  if (!targets.length || targets.some((target) => target?.interfaceType !== "hole")) return;
+  const hole = holeFor(targets[0]);
   if (!hole) return;
   const suggested = [3, 4, 5].reduce(
     (best, size) => Math.abs(size - hole.diameterMm) < Math.abs(best - hole.diameterMm) ? size : best,
@@ -1873,35 +1887,40 @@ function openFastenerDialog() {
   );
   $("#fastenerDiameter").value = String(suggested);
   $("#fastenerFlip").checked = false;
-  $("#fastenerTargetLabel").textContent = t("fastener.target", {
-    part: component(sourceHoleRef.componentId).label,
-    hole: sourceHoleRef.interfaceId,
-    diameter: Number(hole.diameterMm).toFixed(2),
-  });
+  $("#fastenerTargetLabel").textContent = targets.length > 1
+    ? t("fastener.targets", { count: targets.length })
+    : t("fastener.target", {
+      part: component(targets[0].componentId).label,
+      hole: targets[0].interfaceId,
+      diameter: Number(hole.diameterMm).toFixed(2),
+    });
   const dialog = $("#fastenerDialog");
   if (!dialog.open) dialog.showModal();
 }
 
 async function insertFastener() {
-  if (!sourceHoleRef || sourceHoleRef.interfaceType !== "hole") return;
-  const target = { ...sourceHoleRef };
+  const targets = fastenerTargetRefs.length ? fastenerTargetRefs : [sourceHoleRef];
+  if (!targets.length || targets.some((target) => target?.interfaceType !== "hole")) return;
   const button = $("#confirmFastener");
   setBusy(button, true, t("fastener.inserting"));
   try {
-    const result = await applyOperations([{
+    const result = await applyOperations(targets.map((target) => ({
       type: "add_fastener",
-      target,
+      target: { ...target },
       standard: $("#fastenerStandard").value,
       diameterMm: Number($("#fastenerDiameter").value),
       lengthMm: Number($("#fastenerLength").value),
       flip: $("#fastenerFlip").checked,
-    }], "fastener");
-    const fastenerId = result.affected[0];
+    })), "fastener");
+    const fastenerIds = result.affected;
+    const fastenerId = fastenerIds.at(-1);
     $("#fastenerDialog").close("inserted");
     cancelMateMode();
     selectComponent(fastenerId);
     setTransformMode("translate");
-    toast(t("fastener.inserted", { name: component(fastenerId).label }));
+    toast(fastenerIds.length > 1
+      ? t("fastener.insertedMany", { count: fastenerIds.length })
+      : t("fastener.inserted", { name: component(fastenerId).label }));
   } catch (error) { toast(error.message, "error"); }
   finally { setBusy(button, false); }
 }
@@ -2017,6 +2036,7 @@ async function insertBearing() {
 function cancelMateMode() {
   mateMode = false;
   sourceHoleRef = null;
+  fastenerTargetRefs = [];
   pendingMate = null;
   patternMode = false;
   patternSelections = [];
@@ -2038,7 +2058,7 @@ function cancelMateMode() {
   if (selectedId) renderAnchorTree(component(selectedId));
 }
 
-async function chooseHoleMarker(marker) {
+async function chooseHoleMarker(marker, additive = false) {
   const ref = marker.userData.snapRef || marker.userData.holeRef;
   if (throughMode) {
     await chooseThroughMarker(ref);
@@ -2048,12 +2068,29 @@ async function chooseHoleMarker(marker) {
     await choosePatternMarker(ref);
     return;
   }
+  if (additive && ref.interfaceType === "hole") {
+    const existing = fastenerTargetRefs.findIndex((target) => sameSnapRef(target, ref));
+    if (existing >= 0) fastenerTargetRefs.splice(existing, 1);
+    else fastenerTargetRefs.push({ ...ref });
+    sourceHoleRef = fastenerTargetRefs.at(-1) || null;
+    pendingMate = null;
+    $("#applyMate").disabled = true;
+    $("#addFastenerFromHole").classList.toggle("hidden", !fastenerTargetRefs.length);
+    $("#addBearingFromAnchor").classList.add("hidden");
+    $("#mateStatus").textContent = fastenerTargetRefs.length
+      ? t("fastener.selected", { count: fastenerTargetRefs.length })
+      : t("mate.pickFirst");
+    renderMateMarkers();
+    if (selectedId) renderAnchorTree(component(selectedId));
+    return;
+  }
   if (marker.userData.holeRole === "incompatible") {
     toast(t("mate.incompatible"), "error");
     return;
   }
   if (marker.userData.holeRole === "pick" || marker.userData.holeRole === "source") {
     sourceHoleRef = ref;
+    fastenerTargetRefs = ref.interfaceType === "hole" ? [{ ...ref }] : [];
     pendingMate = null;
     $("#applyMate").disabled = true;
     $("#mateStatus").textContent = t("mate.pickSecond");
@@ -2151,6 +2188,7 @@ async function chooseThroughMarker(ref) {
     toast(error.message, "error");
     throughSelections = [];
     sourceHoleRef = null;
+    fastenerTargetRefs = [];
     $("#mateStatus").textContent = t("through.pickShaft");
     renderMateMarkers();
   }
@@ -2204,6 +2242,7 @@ async function choosePatternMarker(ref) {
     toast(error.message, "error");
     patternSelections = [];
     sourceHoleRef = null;
+    fastenerTargetRefs = [];
     renderMateMarkers();
   }
 }
@@ -3061,6 +3100,7 @@ function wireEvents() {
     throughSelections = [];
     patternSelections = [];
     sourceHoleRef = null;
+    fastenerTargetRefs = [];
     $("#patternToggle").classList.toggle("active", patternMode);
     $("#throughToggle").classList.remove("active");
     if (patternMode) {
@@ -3079,6 +3119,7 @@ function wireEvents() {
     patternMode = false;
     patternSelections = [];
     sourceHoleRef = null;
+    fastenerTargetRefs = [];
     $("#throughToggle").classList.toggle("active", throughMode);
     $("#patternToggle").classList.remove("active");
     if (throughMode) {
@@ -3387,7 +3428,7 @@ function wireEvents() {
     if (frontHit) {
       event.preventDefault();
       event.stopImmediatePropagation();
-      chooseHoleMarker(frontHit.object);
+      chooseHoleMarker(frontHit.object, event.shiftKey || event.ctrlKey || event.metaKey);
       return;
     }
     const solidHit = raycaster.intersectObjects(

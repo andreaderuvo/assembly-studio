@@ -242,6 +242,21 @@ test("undo e redo rimuovono e ripristinano una vite generata", () => {
   assert.equal(state.components.filter((item) => item.kind === "fastener").length, 1);
 });
 
+test("una vite a testa bombata ISO 7380-1 usa le dimensioni e l'esagono corretti", () => {
+  const plate = addHole(component("plate", [0, 0, 0], [20, 20, 2], true), "mount", [0, 0, 0], [0, 0, 1], 4.2, 2);
+  const state = { components: [plate], groups: [] };
+  const id = applyOperation(state, {
+    type: "add_fastener",
+    target: { componentId: "plate", interfaceType: "hole", interfaceId: "mount", openingSide: 1 },
+    standard: "ISO7380", diameterMm: 4, lengthMm: 12,
+  });
+  const screw = state.components.find((item) => item.id === id);
+  assert.equal(screw.fastener.standard, "ISO7380");
+  assert.equal(screw.fastener.headDiameterMm, 7.6);
+  assert.equal(screw.fastener.headHeightMm, 2.2);
+  assert.equal(screw.fastener.socketAcrossFlatsMm, 2.5);
+});
+
 test("broad phase AABB individua solo sovrapposizioni", () => {
   const state = { components: [
     component("a", [0, 0, 0], [10, 10, 10]),
