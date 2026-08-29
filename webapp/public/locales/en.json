@@ -176,6 +176,7 @@
     "library.steering": "Steering & servos",
     "library.power": "Batteries & power",
     "library.adding": "Adding…",
+    "library.add": "Add to assembly",
     "library.added": "{name} added",
     "turnbuckle.button": "Auto turnbuckle",
     "turnbuckle.pickFirst": "Select the first turnbuckle hole",

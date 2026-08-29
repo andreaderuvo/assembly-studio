@@ -154,6 +154,30 @@ def catalog_shape(component):
         height = float(shape_spec["heightMm"])
         shape = Part.makeBox(width, depth, height, App.Vector(-width / 2.0, -depth / 2.0, -height / 2.0))
         if shape_type == "servo":
+            mount_width = float(shape_spec["mountWidthMm"])
+            mount_depth = float(shape_spec["mountDepthMm"])
+            tab_thickness = float(shape_spec["mountTabThicknessMm"])
+            tab_center_z = float(shape_spec["mountTabCenterZMm"])
+            flange = Part.makeBox(
+                mount_width,
+                mount_depth,
+                tab_thickness,
+                App.Vector(-mount_width / 2.0, -mount_depth / 2.0, tab_center_z - tab_thickness / 2.0),
+            )
+            hole_radius = float(shape_spec["mountHoleDiameterMm"]) / 2.0
+            for x_sign in (-1, 1):
+                for y_sign in (-1, 1):
+                    hole = Part.makeCylinder(
+                        hole_radius,
+                        tab_thickness + 0.2,
+                        App.Vector(
+                            x_sign * float(shape_spec["mountHoleSpacingXmm"]) / 2.0,
+                            y_sign * float(shape_spec["mountHoleSpacingYmm"]) / 2.0,
+                            tab_center_z - tab_thickness / 2.0 - 0.1,
+                        ),
+                    )
+                    flange = flange.cut(hole)
+            shape = shape.fuse(flange)
             spline_height = float(shape_spec["splineHeightMm"])
             spline = Part.makeCylinder(
                 float(shape_spec["splineDiameterMm"]) / 2.0,

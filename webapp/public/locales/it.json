@@ -167,6 +167,7 @@
     "library.steering": "Sterzo e servi",
     "library.power": "Batterie e alimentazione",
     "library.adding": "Aggiunta…",
+    "library.add": "Aggiungi all’assemblaggio",
     "library.added": "{name} aggiunto",
     "turnbuckle.button": "Turnbuckle automatico",
     "turnbuckle.pickFirst": "Seleziona il primo foro del turnbuckle",

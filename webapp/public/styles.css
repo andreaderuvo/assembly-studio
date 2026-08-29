@@ -353,10 +353,17 @@ kbd { border-color: #444; color: #999; }
 .library-filters label { display: grid; gap: 5px; color: #888; font-size: 9px; }
 .library-filters select { height: 31px; padding: 0 8px; border: 1px solid #333; border-radius: 5px; color: #ddd; background: #191919; }
 .library-items { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; max-height: 390px; overflow-y: auto; }
-.library-item { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding: 10px; border: 1px solid #303030; border-radius: 6px; color: #ddd; background: #171717; text-align: left; cursor: pointer; }
+.library-preview { grid-column: 1 / -1; display: grid; grid-template-columns: 170px 1fr; align-items: center; gap: 14px; min-height: 132px; padding: 10px; border: 1px solid #414141; border-radius: 7px; background: #101010; }
+.library-preview img { width: 170px; height: 112px; object-fit: contain; border-radius: 5px; background: #e8e8e8; }
+.library-preview span { color: #8b969d; font-size: 9px; font-weight: 800; }
+.library-preview h3 { margin: 5px 0 7px; font-size: 14px; }
+.library-preview p { margin: 0; color: #888; font-size: 10px; line-height: 1.5; }
+.library-item { display: grid; grid-template-columns: 70px 1fr auto; gap: 4px 10px; align-items: center; padding: 8px; border: 1px solid #303030; border-radius: 6px; color: #ddd; background: #171717; text-align: left; cursor: pointer; }
 .library-item:hover { border-color: #666; background: #202020; }
+.library-item.selected { border-color: #aaa; background: #282828; box-shadow: inset 0 0 0 1px #111; }
+.library-item img { grid-row: 1 / span 2; width: 70px; height: 52px; object-fit: contain; border-radius: 4px; background: #dedede; }
 .library-item strong { font-size: 11px; }
-.library-item small { grid-column: 1 / -1; color: #777; font-size: 9px; line-height: 1.4; }
+.library-item small { grid-column: 2 / -1; color: #777; font-size: 9px; line-height: 1.4; }
 .library-item b { color: #9da8b0; font-size: 9px; }
 .export-image-dialog { width: min(500px, calc(100vw - 32px)); }
 .export-image-fields { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 4px 0; }

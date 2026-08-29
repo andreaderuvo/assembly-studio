@@ -406,6 +406,8 @@ const holeMarkers = [];
 let state = null;
 let bearingCatalog = {};
 let rcCatalog = [];
+let selectedRcCatalogId = null;
+const rcCatalogThumbnails = new Map();
 let selectedId = null;
 let proposal = null;
 let dragStartTransform = null;
@@ -869,8 +871,12 @@ function bearingGeometry(spec, raceColor = "#9da3a6") {
 }
 
 function mergeOwnedGeometries(parts) {
-  const merged = mergeGeometries(parts, false);
+  const normalized = parts.map((part) => part.index ? part.toNonIndexed() : part);
+  const merged = mergeGeometries(normalized, false);
   for (const part of parts) part.dispose();
+  for (let index = 0; index < normalized.length; index += 1) {
+    if (normalized[index] !== parts[index]) normalized[index].dispose();
+  }
   if (!merged) throw new Error("Unable to merge procedural component geometry");
   return merged;
 }
@@ -879,26 +885,65 @@ function catalogGeometry(spec) {
   const shape = spec.shape;
   if (shape.type === "box") return new THREE.BoxGeometry(shape.widthMm, shape.depthMm, shape.heightMm);
   if (shape.type === "motor") {
-    const body = new THREE.CylinderGeometry(shape.diameterMm / 2, shape.diameterMm / 2, shape.bodyLengthMm, 32);
+    const bodyRadius = shape.diameterMm / 2;
+    const body = new THREE.CylinderGeometry(bodyRadius * .96, bodyRadius * .96, shape.bodyLengthMm - 4, 32);
     body.rotateX(Math.PI / 2);
+    const frontBell = new THREE.CylinderGeometry(bodyRadius, bodyRadius, 3, 32);
+    frontBell.rotateX(Math.PI / 2);
+    frontBell.translate(0, 0, shape.bodyLengthMm / 2 - 1.5);
+    const rearBell = new THREE.CylinderGeometry(bodyRadius, bodyRadius, 3, 32);
+    rearBell.rotateX(Math.PI / 2);
+    rearBell.translate(0, 0, -shape.bodyLengthMm / 2 + 1.5);
     const shaft = new THREE.CylinderGeometry(shape.shaftDiameterMm / 2, shape.shaftDiameterMm / 2, shape.shaftLengthMm, 20);
     shaft.rotateX(Math.PI / 2);
     shaft.translate(0, 0, shape.bodyLengthMm / 2 + shape.shaftLengthMm / 2);
-    return mergeOwnedGeometries([body, shaft]);
+    const parts = [body, frontBell, rearBell, shaft];
+    for (const offset of [-.28, -.14, 0, .14, .28]) {
+      const ring = new THREE.TorusGeometry(bodyRadius * .965, Math.max(.35, shape.diameterMm * .012), 6, 32);
+      ring.translate(0, 0, offset * shape.bodyLengthMm);
+      parts.push(ring);
+    }
+    return mergeOwnedGeometries(parts);
   }
   if (shape.type === "servo") {
     const body = new THREE.BoxGeometry(shape.widthMm, shape.depthMm, shape.heightMm);
+    const flangeShape = new THREE.Shape();
+    flangeShape.moveTo(-shape.mountWidthMm / 2, -shape.mountDepthMm / 2);
+    flangeShape.lineTo(shape.mountWidthMm / 2, -shape.mountDepthMm / 2);
+    flangeShape.lineTo(shape.mountWidthMm / 2, shape.mountDepthMm / 2);
+    flangeShape.lineTo(-shape.mountWidthMm / 2, shape.mountDepthMm / 2);
+    flangeShape.closePath();
+    for (const xSign of [-1, 1]) for (const ySign of [-1, 1]) {
+      const hole = new THREE.Path();
+      hole.absarc(
+        xSign * shape.mountHoleSpacingXmm / 2,
+        ySign * shape.mountHoleSpacingYmm / 2,
+        shape.mountHoleDiameterMm / 2,
+        0, Math.PI * 2, true,
+      );
+      flangeShape.holes.push(hole);
+    }
+    const flange = new THREE.ExtrudeGeometry(flangeShape, {
+      depth: shape.mountTabThicknessMm, bevelEnabled: false, curveSegments: 16,
+    });
+    flange.translate(0, 0, shape.mountTabCenterZMm - shape.mountTabThicknessMm / 2);
     const spline = new THREE.CylinderGeometry(shape.splineDiameterMm / 2, shape.splineDiameterMm / 2, shape.splineHeightMm, 20);
     spline.rotateX(Math.PI / 2);
     spline.translate(shape.widthMm * .28, 0, shape.heightMm / 2 + shape.splineHeightMm / 2);
-    return mergeOwnedGeometries([body, spline]);
+    const splineBoss = new THREE.CylinderGeometry(shape.splineDiameterMm, shape.splineDiameterMm, 2, 24);
+    splineBoss.rotateX(Math.PI / 2);
+    splineBoss.translate(shape.widthMm * .28, 0, shape.heightMm / 2 + 1);
+    return mergeOwnedGeometries([body, flange, splineBoss, spline]);
   }
   if (shape.type === "esc") {
     const body = new THREE.BoxGeometry(shape.widthMm, shape.depthMm, shape.heightMm);
     const fan = new THREE.CylinderGeometry(shape.fanDiameterMm / 2, shape.fanDiameterMm / 2, 2.5, 28);
     fan.rotateX(Math.PI / 2);
     fan.translate(0, 0, shape.heightMm / 2 + 1.25);
-    return mergeOwnedGeometries([body, fan]);
+    const hub = new THREE.CylinderGeometry(shape.fanDiameterMm * .12, shape.fanDiameterMm * .12, 3.2, 20);
+    hub.rotateX(Math.PI / 2);
+    hub.translate(0, 0, shape.heightMm / 2 + 1.6);
+    return mergeOwnedGeometries([body, fan, hub]);
   }
   throw new Error(`Unsupported catalog geometry: ${shape.type}`);
 }
@@ -2084,20 +2129,49 @@ function renderRcCatalog() {
   const items = rcCatalog.filter((item) =>
     (scale === "all" || item.scale.includes(scale))
     && (category === "all" || item.category === category));
+  if (!items.some((item) => item.id === selectedRcCatalogId)) selectedRcCatalogId = null;
   for (const item of items) {
+    if (!rcCatalogThumbnails.has(item.id)) {
+      const colors = { motors: "#3e464d", electronics: "#30343a", steering: "#5a6066", power: "#245cc7" };
+      const geometry = prepareComponentGeometry(catalogGeometry({ shape: item.shape }));
+      rcCatalogThumbnails.set(item.id, geometryThumbnail(geometry, colors[item.category] || "#6b737a"));
+      geometry.dispose();
+    }
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "library-item";
-    button.innerHTML = `<strong>${escapeHtml(item.label)}</strong><b>${escapeHtml(item.scale)}</b><small>${escapeHtml(item.description)}</small>`;
-    button.addEventListener("click", () => insertRcCatalogComponent(item.id, button));
+    button.className = `library-item${item.id === selectedRcCatalogId ? " selected" : ""}`;
+    button.dataset.catalogId = item.id;
+    button.innerHTML = `<img src="${rcCatalogThumbnails.get(item.id)}" alt=""><strong>${escapeHtml(item.label)}</strong><b>${escapeHtml(item.scale)}</b><small>${escapeHtml(item.description)}</small>`;
+    button.addEventListener("click", () => selectRcCatalogItem(item.id));
     container.append(button);
   }
+  if (!selectedRcCatalogId && items.length) selectRcCatalogItem(items[0].id);
 }
 
-async function insertRcCatalogComponent(catalogId, button) {
+function selectRcCatalogItem(catalogId) {
+  const item = rcCatalog.find((candidate) => candidate.id === catalogId);
+  if (!item) return;
+  selectedRcCatalogId = catalogId;
+  for (const card of document.querySelectorAll(".library-item")) {
+    card.classList.toggle("selected", card.dataset.catalogId === catalogId);
+  }
+  $("#libraryPreview").classList.remove("hidden");
+  $("#libraryPreviewImage").src = rcCatalogThumbnails.get(catalogId) || "";
+  $("#libraryPreviewImage").alt = item.label;
+  $("#libraryPreviewScale").textContent = `${item.scale} · ${t(`library.${item.category}`)}`;
+  $("#libraryPreviewTitle").textContent = item.label;
+  $("#libraryPreviewDescription").textContent = item.description;
+  $("#addLibraryComponent").disabled = false;
+}
+
+async function insertRcCatalogComponent() {
+  if (!selectedRcCatalogId) return;
+  const button = $("#addLibraryComponent");
   setBusy(button, true, t("library.adding"));
   try {
-    const result = await applyOperations([{ type: "add_catalog_component", catalogId }], "rc-catalog");
+    const result = await applyOperations([{
+      type: "add_catalog_component", catalogId: selectedRcCatalogId,
+    }], "rc-catalog");
     const id = result.affected[0];
     $("#libraryDialog").close("inserted");
     selectComponent(id);
@@ -3410,7 +3484,11 @@ function wireEvents() {
   $("#applyParametricEdit").addEventListener("click", applyParametricEdit);
   $("#resetParametricEdit").addEventListener("click", resetParametricEdit);
   $("#toggleComponentLock").addEventListener("click", toggleSelectedComponentLock);
-  $("#libraryButton").addEventListener("click", () => $("#libraryDialog").showModal());
+  $("#libraryButton").addEventListener("click", () => {
+    renderRcCatalog();
+    $("#libraryDialog").showModal();
+  });
+  $("#addLibraryComponent").addEventListener("click", insertRcCatalogComponent);
   $("#libraryScale").addEventListener("change", renderRcCatalog);
   $("#libraryCategory").addEventListener("change", renderRcCatalog);
   for (const id of [

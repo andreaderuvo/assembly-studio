@@ -312,6 +312,11 @@ test("catalogo RC e turnbuckle automatico generano componenti leggeri e parametr
   assert.equal(motor.catalog.scale, "1/8");
   assert.deepEqual(motor.sizeMm, [42, 42, 92]);
   assert.equal(motor.interfaces.shafts[0].diameterMm, 5);
+  const servoId = applyOperation(state, { type: "add_catalog_component", catalogId: "servo-low-profile" });
+  const servo = state.components.find((item) => item.id === servoId);
+  assert.deepEqual(servo.sizeMm, [54.5, 20.1, 29.9]);
+  assert.equal(servo.interfaces.holes.length, 4);
+  assert.ok(servo.interfaces.holes.every((hole) => hole.diameterMm === 3.2));
 
   const linkId = applyOperation(state, {
     type: "add_turnbuckle",
@@ -331,7 +336,7 @@ test("catalogo RC e turnbuckle automatico generano componenti leggeri e parametr
       groups: JSON.parse(JSON.stringify(state.groups)), workspace: {}, mates: [], joints: [],
     },
   });
-  assert.equal(restored.components.filter((item) => item.kind === "catalog").length, 1);
+  assert.equal(restored.components.filter((item) => item.kind === "catalog").length, 2);
   assert.equal(restored.components.filter((item) => item.kind === "turnbuckle").length, 1);
 });
 

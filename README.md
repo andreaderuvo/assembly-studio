@@ -54,7 +54,9 @@ image exports.
 - Automatic bearing size matching from a selected shaft, housing, or coaxial
   shaft-and-housing pair.
 - A lightweight RC on-road library for 1/8 and 1/10 motors, ESCs, low/standard
-  profile servos, receivers, and battery envelopes.
+  profile servos, receivers, and battery envelopes, with visual previews before
+  insertion. Servo models include mounting flanges, four through-holes, and
+  selectable mounting anchors.
 - Automatic steering turnbuckles generated at the measured center distance
   between two selected holes.
 - Direct lock/unlock controls and a two-row task-oriented toolbar.

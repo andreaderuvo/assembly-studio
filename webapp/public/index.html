@@ -353,9 +353,14 @@
           <label><span data-i18n="library.scale">Scale</span><select id="libraryScale"><option value="all" data-i18n="library.allScales">All scales</option><option value="1/8">1/8</option><option value="1/10">1/10</option></select></label>
           <label><span data-i18n="library.category">Category</span><select id="libraryCategory"><option value="all" data-i18n="library.allCategories">All categories</option><option value="motors" data-i18n="library.motors">Motors</option><option value="electronics" data-i18n="library.electronics">Electronics</option><option value="steering" data-i18n="library.steering">Steering</option><option value="power" data-i18n="library.power">Power</option></select></label>
         </div>
+        <section id="libraryPreview" class="library-preview hidden">
+          <img id="libraryPreviewImage" alt="">
+          <div><span id="libraryPreviewScale"></span><h3 id="libraryPreviewTitle"></h3><p id="libraryPreviewDescription"></p></div>
+        </section>
         <div id="libraryItems" class="library-items"></div>
         <div class="dialog-actions">
           <button class="button ghost" value="cancel" data-i18n="common.close">Close</button>
+          <button id="addLibraryComponent" class="button primary" type="button" disabled data-i18n="library.add">Add to assembly</button>
         </div>
       </form>
     </dialog>

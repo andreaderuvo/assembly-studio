@@ -163,6 +163,7 @@
     "library.steering": "Direction et servos",
     "library.power": "Batteries et alimentation",
     "library.adding": "Ajout…",
+    "library.add": "Ajouter à l’assemblage",
     "library.added": "{name} ajouté",
     "turnbuckle.button": "Turnbuckle automatique",
     "turnbuckle.pickFirst": "Sélectionnez le premier trou du turnbuckle",

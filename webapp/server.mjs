@@ -129,8 +129,8 @@ const RC_COMPONENT_CATALOG = Object.freeze([
   { id: "motor-4274", category: "motors", scale: "1/8", label: "4274 brushless motor", description: "Ø42 × 74 mm 1/8 on-road motor envelope", shape: { type: "motor", diameterMm: 42, bodyLengthMm: 74, shaftDiameterMm: 5, shaftLengthMm: 18 } },
   { id: "esc-1-10-compact", category: "electronics", scale: "1/10", label: "1/10 compact ESC", description: "Compact on-road speed controller envelope", shape: { type: "esc", widthMm: 36, depthMm: 30, heightMm: 19, fanDiameterMm: 24 } },
   { id: "esc-1-8", category: "electronics", scale: "1/8", label: "1/8 ESC", description: "1/8 brushless speed controller envelope", shape: { type: "esc", widthMm: 58, depthMm: 48, heightMm: 36, fanDiameterMm: 30 } },
-  { id: "servo-low-profile", category: "steering", scale: "1/10", label: "Low-profile servo", description: "40.9 × 20.1 × 25.9 mm on-road servo envelope", shape: { type: "servo", widthMm: 40.9, depthMm: 20.1, heightMm: 25.9, splineDiameterMm: 6, splineHeightMm: 4 } },
-  { id: "servo-standard", category: "steering", scale: "1/8 · 1/10", label: "Standard-profile servo", description: "40 × 20 × 38 mm standard servo envelope", shape: { type: "servo", widthMm: 40, depthMm: 20, heightMm: 38, splineDiameterMm: 6, splineHeightMm: 4 } },
+  { id: "servo-low-profile", category: "steering", scale: "1/10", label: "Low-profile servo", description: "40.9 × 20.1 × 25.9 mm body with four-hole mounting flange", shape: { type: "servo", widthMm: 40.9, depthMm: 20.1, heightMm: 25.9, splineDiameterMm: 6, splineHeightMm: 4, mountWidthMm: 54.5, mountDepthMm: 20.1, mountHoleSpacingXmm: 48, mountHoleSpacingYmm: 10, mountHoleDiameterMm: 3.2, mountTabThicknessMm: 2.5, mountTabCenterZMm: 8 } },
+  { id: "servo-standard", category: "steering", scale: "1/8 · 1/10", label: "Standard-profile servo", description: "40 × 20 × 38 mm body with four-hole mounting flange", shape: { type: "servo", widthMm: 40, depthMm: 20, heightMm: 38, splineDiameterMm: 6, splineHeightMm: 4, mountWidthMm: 54, mountDepthMm: 20, mountHoleSpacingXmm: 48, mountHoleSpacingYmm: 10, mountHoleDiameterMm: 3.2, mountTabThicknessMm: 2.5, mountTabCenterZMm: 10 } },
   { id: "receiver-compact", category: "electronics", scale: "1/10", label: "Compact receiver", description: "Generic waterproof receiver envelope", shape: { type: "box", widthMm: 35, depthMm: 25, heightMm: 14 } },
   { id: "battery-shorty-2s", category: "power", scale: "1/10", label: "2S shorty LiPo", description: "Shorty hardcase LiPo envelope", shape: { type: "box", widthMm: 96, depthMm: 47, heightMm: 25 } },
   { id: "battery-4s-1-8", category: "power", scale: "1/8", label: "4S hardcase LiPo", description: "1/8 hardcase LiPo envelope", shape: { type: "box", widthMm: 139, depthMm: 47, heightMm: 48 } },
@@ -506,7 +506,7 @@ function catalogShapeSize(shape) {
     return [shape.diameterMm, shape.diameterMm, shape.bodyLengthMm + shape.shaftLengthMm];
   }
   if (shape.type === "servo") {
-    return [shape.widthMm, shape.depthMm, shape.heightMm + shape.splineHeightMm];
+    return [shape.mountWidthMm, shape.mountDepthMm, shape.heightMm + shape.splineHeightMm];
   }
   return [shape.widthMm, shape.depthMm, shape.heightMm];
 }
@@ -546,6 +546,20 @@ function createCatalogComponent(state, operation) {
       id: "output-spline", localCenterMm: [shape.widthMm * .28, 0, shape.heightMm / 2], localAxis: [0, 0, 1],
       diameterMm: shape.splineDiameterMm, radiusMm: shape.splineDiameterMm / 2, lengthMm: shape.splineHeightMm,
     });
+    for (const xSign of [-1, 1]) for (const ySign of [-1, 1]) {
+      interfaces.holes.push({
+        id: `mount-${xSign < 0 ? "left" : "right"}-${ySign < 0 ? "rear" : "front"}`,
+        localCenterMm: [
+          xSign * shape.mountHoleSpacingXmm / 2,
+          ySign * shape.mountHoleSpacingYmm / 2,
+          shape.mountTabCenterZMm - shape.splineHeightMm / 2,
+        ],
+        localAxis: [0, 0, 1],
+        diameterMm: shape.mountHoleDiameterMm,
+        radiusMm: shape.mountHoleDiameterMm / 2,
+        depthMm: shape.mountTabThicknessMm,
+      });
+    }
   }
   const component = {
     id, label: definition.label, status: "generated-rc-catalog", kind: "catalog", meshUrl: null,
