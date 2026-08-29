@@ -34,7 +34,8 @@ Every released catalog family must provide:
 
 - 1/8 and 1/10 brushless motor, ESC, servo, receiver, and LiPo families;
 - ISO fasteners, hex bolts, and common RC bearing sizes;
-- automatic adjustable turnbuckles with plastic rod ends;
+- OpenSCAD-generated 4.8 mm ball studs and automatic adjustable turnbuckles
+  whose plastic rod ends are centred on the installed balls;
 - automatic driveshafts with transverse drive pins.
 
 Catalog coverage is expanded family by family only after the quality gate above

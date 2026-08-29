@@ -358,6 +358,9 @@ kbd { border-color: #444; color: #999; }
 .library-preview span { color: #8b969d; font-size: 9px; font-weight: 800; }
 .library-preview h3 { margin: 5px 0 7px; font-size: 14px; }
 .library-preview p { margin: 0; color: #888; font-size: 10px; line-height: 1.5; }
+.library-parameters { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; max-height: 150px; overflow-y: auto; padding: 9px; border: 1px solid #303030; border-radius: 6px; background: #121212; }
+.library-parameters label { display: grid; gap: 4px; color: #929292; font-size: 9px; }
+.library-parameters input, .library-parameters select { width: 100%; min-width: 0; height: 29px; padding: 0 6px; border: 1px solid #333; border-radius: 4px; color: #ddd; background: #191919; }
 .library-item { display: grid; grid-template-columns: 70px 1fr auto; gap: 4px 10px; align-items: center; padding: 8px; border: 1px solid #303030; border-radius: 6px; color: #ddd; background: #171717; text-align: left; cursor: pointer; }
 .library-item:hover { border-color: #666; background: #202020; }
 .library-item.selected { border-color: #aaa; background: #282828; box-shadow: inset 0 0 0 1px #111; }

@@ -1,0 +1,3 @@
+[submodule "vendor/rc-openscad-library"]
+	path = vendor/rc-openscad-library
+	url = https://github.com/andreaderuvo/rc-openscad-library.git

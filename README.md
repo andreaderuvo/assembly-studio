@@ -19,10 +19,12 @@ validation. The included demonstration project is an RC car.
 
 ## Quick start
 
-Requirements: Node.js 18 or newer. The STL assets used by the demonstration
-assembly are included in the repository.
+Requirements: Node.js 18 or newer. OpenSCAD is required for the fully
+parametric RC catalog. Clone with submodules so the catalog source is available.
 
 ```bash
+git clone --recurse-submodules https://github.com/andreaderuvo/assembly-studio.git
+cd assembly-studio
 npm install
 npm start
 ```
@@ -57,9 +59,13 @@ image exports.
   profile servos, receivers, and battery envelopes, with visual previews before
   insertion. Servo models include mounting flanges, four through-holes, and
   selectable mounting anchors.
-- Automatic steering turnbuckles generated at the measured center distance
-  between two selected holes, with plastic rod ends and editable center
-  adjustment, plus automatic pinned driveshafts using the same two-hole flow.
+- The external [RC OpenSCAD Library](https://github.com/andreaderuvo/rc-openscad-library)
+  is loaded as a pinned dependency, with validated parameter controls, cached
+  STL previews, and in-place editing.
+- Parametric 4.8 mm ball studs insert into selected holes like fasteners.
+  Automatic turnbuckles then snap their plastic rod-end sockets to two installed
+  ball centres, with editable center adjustment. Automatic pinned driveshafts
+  remain available through their own two-hole flow.
 - Direct lock/unlock controls and a two-row task-oriented toolbar.
 
 The catalog scope and acceptance criteria are tracked in

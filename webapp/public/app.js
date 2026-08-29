@@ -406,8 +406,15 @@ const holeMarkers = [];
 let state = null;
 let bearingCatalog = {};
 let rcCatalog = [];
+let openScadCatalog = { parts: [] };
 let selectedRcCatalogId = null;
+let selectedCatalogParameters = {};
+let ballStudTargetRef = null;
 const rcCatalogThumbnails = new Map();
+let openScadPreviewTimer = null;
+let openScadPreviewGeneration = 0;
+let parametricPreviewGeneration = 0;
+let parametricPreviewTimer = null;
 let selectedId = null;
 let proposal = null;
 let dragStartTransform = null;
@@ -1024,6 +1031,7 @@ function proceduralGeometrySignature(item) {
   if (item.kind === "fastener") return `fastener:${JSON.stringify(item.fastener)}`;
   if (item.kind === "bearing") return `bearing:${JSON.stringify(item.bearing)}:${item.color}`;
   if (item.kind === "catalog") return `catalog:${JSON.stringify(item.catalog)}`;
+  if (item.kind === "openscad") return `openscad:${JSON.stringify(item.openscad)}`;
   if (item.kind === "turnbuckle") return `turnbuckle:${JSON.stringify(item.turnbuckle)}`;
   if (item.kind === "driveshaft") return `driveshaft:${JSON.stringify(item.driveshaft)}`;
   return null;
@@ -1034,7 +1042,7 @@ function createComponentGeometry(item) {
     ? fastenerGeometry(item.fastener)
     : item.kind === "bearing" ? bearingGeometry(item.bearing, item.color)
       : item.kind === "catalog" ? catalogGeometry(item.catalog)
-        : item.kind === "turnbuckle" ? turnbuckleGeometry(item.turnbuckle)
+        : item.kind === "turnbuckle" ? (item.meshUrl ? null : turnbuckleGeometry(item.turnbuckle))
           : item.kind === "driveshaft" ? driveshaftGeometry(item.driveshaft) : null;
 }
 
@@ -1235,12 +1243,16 @@ async function loadComponentsProgressively(items, concurrency = 8) {
   return { loaded, failed, sceneRevealed };
 }
 
-function syncMesh(item) {
+async function syncMesh(item) {
   const mesh = meshes.get(item.id);
   if (!mesh) return;
   const geometrySignature = proceduralGeometrySignature(item);
   if (geometrySignature && mesh.userData.geometrySignature !== geometrySignature) {
-    const geometry = prepareComponentGeometry(createComponentGeometry(item));
+    const rawGeometry = createComponentGeometry(item) || await loader.loadAsync(item.meshUrl);
+    if (proceduralGeometrySignature(component(item.id)) !== geometrySignature) {
+      rawGeometry.dispose(); return;
+    }
+    const geometry = prepareComponentGeometry(rawGeometry);
     mesh.geometry.dispose();
     mesh.geometry = geometry;
     mesh.userData.geometrySignature = geometrySignature;
@@ -1381,6 +1393,7 @@ function componentStlFilename(item) {
     return `${item.bearing.series} ${String(item.bearing.closure || "zz").toUpperCase()} · ${item.bearing.innerDiameterMm}×${item.bearing.outerDiameterMm}×${item.bearing.widthMm} mm · generated`;
   }
   if (item.kind === "catalog") return `${item.catalog.id} · ${item.catalog.scale} · generated`;
+  if (item.kind === "openscad") return `OpenSCAD · ${item.openscad.id} · parametric`;
   if (item.kind === "turnbuckle") {
     const adjustment = item.turnbuckle.adjustmentMm || 0;
     return `Turnbuckle · ${item.turnbuckle.centerDistanceMm.toFixed(1)} mm · ${adjustment >= 0 ? "+" : ""}${adjustment.toFixed(1)} mm`;
@@ -1617,7 +1630,8 @@ function anchorDescription(type, item) {
 function anchorTreeRole(ref) {
   if (fastenerTargetRefs.some((target) => sameSnapRef(target, ref))) return "source";
   if (mateMode && turnbuckleMode) {
-    if (ref.interfaceType !== "hole") return "incompatible";
+    const anchor = interfaceForRef(ref);
+    if (ref.interfaceType !== "point" || anchor?.role !== "ball-stud") return "incompatible";
     if (!turnbuckleSelections.length) return "pick";
     return sameSnapRef(ref, turnbuckleSelections[0]) ? "source" : "target";
   }
@@ -1949,7 +1963,7 @@ function renderMateMarkers() {
   if (turnbuckleMode) {
     for (const item of focusedItems) {
       for (const ref of snapRefsFor(item)) {
-        if (ref.interfaceType !== "hole") continue;
+        if (ref.interfaceType !== "point" || interfaceForRef(ref)?.role !== "ball-stud") continue;
         const role = turnbuckleSelections.some((selected) => sameSnapRef(selected, ref))
           ? "source" : turnbuckleSelections.length ? "target" : "pick";
         addSnapMarker(ref, role);
@@ -2115,6 +2129,7 @@ function startMateMode() {
   if (selectedId && component(selectedId)?.visible) snapFocusedComponentIds.add(selectedId);
   pendingMate = null;
   $("#addFastenerFromHole").classList.add("hidden");
+  $("#addBallStudFromHole").classList.add("hidden");
   $("#addBearingFromAnchor").classList.add("hidden");
   syncPlaneMateOptions();
   renderMateMarkers();
@@ -2156,6 +2171,18 @@ function openFastenerDialog() {
     });
   const dialog = $("#fastenerDialog");
   if (!dialog.open) dialog.showModal();
+}
+
+function openBallStudDialog() {
+  const target = fastenerTargetRefs.at(-1) || sourceHoleRef;
+  if (!target || target.interfaceType !== "hole") return;
+  ballStudTargetRef = { ...target };
+  selectedRcCatalogId = "ball_stud";
+  $("#libraryScale").value = "all";
+  $("#libraryCategory").value = "steering";
+  renderRcCatalog();
+  selectRcCatalogItem("ball_stud");
+  $("#libraryDialog").showModal();
 }
 
 async function insertFastener() {
@@ -2205,18 +2232,48 @@ function renderBearingCatalog() {
   }
 }
 
+function allCatalogItems() {
+  return [
+    ...rcCatalog.map((item) => ({ ...item, source: "assembly" })),
+    ...(openScadCatalog.parts || []).map((item) => ({
+      ...item, source: "openscad", scale: "1/8 · 1/10",
+    })),
+  ];
+}
+
+function openScadUrl(item, parameters) {
+  const query = new URLSearchParams();
+  for (const [name, value] of Object.entries(parameters)) query.set(name, String(value));
+  return `/api/openscad/${encodeURIComponent(item.id)}.stl?${query}`;
+}
+
+function defaultOpenScadParameters(item) {
+  return Object.fromEntries(Object.entries(item.parameters || {}).map(([name, definition]) => [name, definition.default]));
+}
+
+async function openScadThumbnail(item, parameters) {
+  const key = `openscad:${item.id}:${JSON.stringify(parameters)}`;
+  if (rcCatalogThumbnails.has(key)) return rcCatalogThumbnails.get(key);
+  const geometry = prepareComponentGeometry(await loader.loadAsync(openScadUrl(item, parameters)));
+  const colors = { steering: "#40464a", drivetrain: "#777e83", transmission: "#25292c", electronics: "#30343a", body: "#aeb4ba" };
+  const thumbnail = geometryThumbnail(geometry, colors[item.category] || "#6b737a");
+  geometry.dispose();
+  rcCatalogThumbnails.set(key, thumbnail);
+  return thumbnail;
+}
+
 function renderRcCatalog() {
   const container = $("#libraryItems");
   if (!container) return;
   container.replaceChildren();
   const scale = $("#libraryScale").value;
   const category = $("#libraryCategory").value;
-  const items = rcCatalog.filter((item) =>
+  const items = allCatalogItems().filter((item) =>
     (scale === "all" || item.scale.includes(scale))
     && (category === "all" || item.category === category));
   if (!items.some((item) => item.id === selectedRcCatalogId)) selectedRcCatalogId = null;
   for (const item of items) {
-    if (!rcCatalogThumbnails.has(item.id)) {
+    if (item.source === "assembly" && !rcCatalogThumbnails.has(item.id)) {
       const colors = { motors: "#3e464d", electronics: "#30343a", steering: "#5a6066", power: "#245cc7" };
       const geometry = prepareComponentGeometry(catalogGeometry({ shape: item.shape }));
       rcCatalogThumbnails.set(item.id, geometryThumbnail(geometry, colors[item.category] || "#6b737a"));
@@ -2226,7 +2283,8 @@ function renderRcCatalog() {
     button.type = "button";
     button.className = `library-item${item.id === selectedRcCatalogId ? " selected" : ""}`;
     button.dataset.catalogId = item.id;
-    button.innerHTML = `<img src="${rcCatalogThumbnails.get(item.id)}" alt=""><strong>${escapeHtml(item.label)}</strong><b>${escapeHtml(item.scale)}</b><small>${escapeHtml(item.description)}</small>`;
+    const openScadPlaceholder = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='104'%3E%3Crect width='100%25' height='100%25' fill='%23d9dcde'/%3E%3Cpath d='M38 72 70 16l32 56z' fill='none' stroke='%235b6368' stroke-width='5'/%3E%3Ctext x='70' y='91' text-anchor='middle' font-family='sans-serif' font-size='13' fill='%23434a4e'%3EOpenSCAD%3C/text%3E%3C/svg%3E";
+    button.innerHTML = `<img src="${item.source === "assembly" ? rcCatalogThumbnails.get(item.id) : openScadPlaceholder}" alt=""><strong>${escapeHtml(item.label)}</strong><b>${escapeHtml(item.source === "openscad" ? "OpenSCAD" : item.scale)}</b><small>${escapeHtml(item.description)}</small>`;
     button.addEventListener("click", () => selectRcCatalogItem(item.id));
     container.append(button);
   }
@@ -2234,19 +2292,64 @@ function renderRcCatalog() {
 }
 
 function selectRcCatalogItem(catalogId) {
-  const item = rcCatalog.find((candidate) => candidate.id === catalogId);
+  const item = allCatalogItems().find((candidate) => candidate.id === catalogId);
   if (!item) return;
   selectedRcCatalogId = catalogId;
   for (const card of document.querySelectorAll(".library-item")) {
     card.classList.toggle("selected", card.dataset.catalogId === catalogId);
   }
   $("#libraryPreview").classList.remove("hidden");
-  $("#libraryPreviewImage").src = rcCatalogThumbnails.get(catalogId) || "";
+  $("#libraryPreviewImage").src = item.source === "assembly" ? rcCatalogThumbnails.get(catalogId) || "" : "";
   $("#libraryPreviewImage").alt = item.label;
-  $("#libraryPreviewScale").textContent = `${item.scale} · ${t(`library.${item.category}`)}`;
+  $("#libraryPreviewScale").textContent = `${item.source === "openscad" ? "OpenSCAD · " : `${item.scale} · `}${t(`library.${item.category}`)}`;
   $("#libraryPreviewTitle").textContent = item.label;
-  $("#libraryPreviewDescription").textContent = item.description;
-  $("#addLibraryComponent").disabled = false;
+  $("#libraryPreviewDescription").textContent = item.description
+    + (item.id === "turnbuckle" ? ` ${t("turnbuckle.catalogHelp")}` : "")
+    + (item.id === "ball_stud" && !ballStudTargetRef ? ` ${t("ballStud.pickHole")}` : "");
+  const parameters = $("#libraryParameters");
+  parameters.replaceChildren();
+  parameters.classList.toggle("hidden", item.source !== "openscad");
+  if (item.source === "openscad") {
+    selectedCatalogParameters = defaultOpenScadParameters(item);
+    for (const [name, definition] of Object.entries(item.parameters)) {
+      const label = document.createElement("label");
+      const title = document.createElement("span");
+      title.textContent = name.replaceAll("_", " ");
+      let input;
+      if (definition.type === "boolean") {
+        input = document.createElement("select");
+        input.innerHTML = '<option value="true">true</option><option value="false">false</option>';
+      } else {
+        input = document.createElement("input");
+        input.type = "number"; input.min = definition.min; input.max = definition.max;
+        input.step = definition.integer ? 1 : .1;
+      }
+      input.value = String(definition.default);
+      input.addEventListener("input", () => {
+        selectedCatalogParameters[name] = definition.type === "boolean" ? input.value === "true" : Number(input.value);
+        scheduleOpenScadPreview(item);
+      });
+      label.append(title, input); parameters.append(label);
+    }
+    scheduleOpenScadPreview(item, true);
+  }
+  $("#addLibraryComponent").disabled = item.id === "turnbuckle" || (item.id === "ball_stud" && !ballStudTargetRef);
+}
+
+function scheduleOpenScadPreview(item, immediate = false) {
+  window.clearTimeout(openScadPreviewTimer);
+  const generation = ++openScadPreviewGeneration;
+  const render = async () => {
+    try {
+      const thumbnail = await openScadThumbnail(item, { ...selectedCatalogParameters });
+      if (generation === openScadPreviewGeneration && selectedRcCatalogId === item.id) {
+        $("#libraryPreviewImage").src = thumbnail;
+      }
+    } catch (error) {
+      if (generation === openScadPreviewGeneration) toast(error.message, "error");
+    }
+  };
+  openScadPreviewTimer = window.setTimeout(render, immediate ? 0 : 180);
 }
 
 async function insertRcCatalogComponent() {
@@ -2254,13 +2357,21 @@ async function insertRcCatalogComponent() {
   const button = $("#addLibraryComponent");
   setBusy(button, true, t("library.adding"));
   try {
-    const result = await applyOperations([{
-      type: "add_catalog_component", catalogId: selectedRcCatalogId,
-    }], "rc-catalog");
+    const item = allCatalogItems().find((candidate) => candidate.id === selectedRcCatalogId);
+    const operation = item.source === "openscad"
+      ? {
+        type: "add_openscad_component", partId: item.id,
+        parameters: { ...selectedCatalogParameters },
+        ...(item.id === "ball_stud" ? { target: { ...ballStudTargetRef } } : {}),
+      }
+      : { type: "add_catalog_component", catalogId: selectedRcCatalogId };
+    const result = await applyOperations([operation], item.source === "openscad" ? "openscad-catalog" : "rc-catalog");
     const id = result.affected[0];
     $("#libraryDialog").close("inserted");
+    if (item.id === "ball_stud") cancelMateMode();
     selectComponent(id);
     setTransformMode("translate");
+    ballStudTargetRef = null;
     toast(t("library.added", { name: component(id).label }));
   } catch (error) { toast(error.message, "error"); }
   finally { setBusy(button, false); }
@@ -2299,18 +2410,27 @@ function bearingSpecFromEditor(item) {
 
 function turnbuckleSpecFromEditor(item) {
   const rodDiameterMm = Number($("#editTurnbuckleRodDiameter").value);
-  const eyeHoleDiameterMm = Number($("#editTurnbuckleEyeDiameter").value);
+  const ballDiameterMm = Number($("#editTurnbuckleEyeDiameter").value);
   const adjustmentMm = Number($("#editTurnbuckleAdjustment").value);
   const anchorDistanceMm = item.turnbuckle.anchorDistanceMm
     ?? item.turnbuckle.centerDistanceMm - (item.turnbuckle.adjustmentMm || 0);
   const centerDistanceMm = anchorDistanceMm + adjustmentMm;
-  const endDiameterMm = Math.max(rodDiameterMm * 2.2, eyeHoleDiameterMm + rodDiameterMm * 1.3);
+  const socketClearanceMm = item.turnbuckle.socketClearanceMm ?? .18;
+  const socketWallMm = item.turnbuckle.socketWallMm ?? 1.4;
+  const endDiameterMm = ballDiameterMm + socketWallMm * 2;
+  const rodEndLengthMm = Math.min(Math.max(endDiameterMm * 1.35, 8), centerDistanceMm * .3);
+  const adjusterLengthMm = Math.min(Math.max(rodDiameterMm * 3.2, 10), centerDistanceMm * .32);
+  const hexAcrossFlatsMm = Math.max(rodDiameterMm * 1.65, 6);
   return {
-    ...item.turnbuckle, anchorDistanceMm, centerDistanceMm, adjustmentMm, rodDiameterMm, eyeHoleDiameterMm,
-    endDiameterMm,
-    rodEndLengthMm: Math.min(Math.max(endDiameterMm * 1.35, 8), centerDistanceMm * .3),
-    adjusterLengthMm: Math.min(Math.max(rodDiameterMm * 3.2, 10), centerDistanceMm * .32),
-    hexAcrossFlatsMm: Math.max(rodDiameterMm * 1.65, 6),
+    ...item.turnbuckle, anchorDistanceMm, centerDistanceMm, adjustmentMm, rodDiameterMm,
+    ballDiameterMm, eyeHoleDiameterMm: ballDiameterMm, socketClearanceMm, socketWallMm,
+    endDiameterMm, rodEndLengthMm, adjusterLengthMm, hexAcrossFlatsMm,
+    openScadParameters: {
+      center_distance: anchorDistanceMm, adjustment: adjustmentMm, ball_d: ballDiameterMm,
+      socket_clearance: socketClearanceMm, socket_wall: socketWallMm, rod_d: rodDiameterMm,
+      rod_end_length: rodEndLengthMm, adjuster_length: adjusterLengthMm,
+      adjuster_af: hexAcrossFlatsMm, window_ratio: .72,
+    },
   };
 }
 
@@ -2323,18 +2443,26 @@ function driveshaftSpecFromEditor(item) {
   };
 }
 
+function openScadSpecFromEditor(item) {
+  return Object.fromEntries([...$("#openScadEditor").querySelectorAll("[data-openscad-param]")].map((input) => [
+    input.dataset.openscadParam,
+    input.dataset.paramType === "boolean" ? input.value === "true" : Number(input.value),
+  ]));
+}
+
 function parametricSpecFromEditor(item) {
   if (item.kind === "fastener") return fastenerSpecFromEditor(item);
   if (item.kind === "bearing") return bearingSpecFromEditor(item);
   if (item.kind === "turnbuckle") return turnbuckleSpecFromEditor(item);
   if (item.kind === "driveshaft") return driveshaftSpecFromEditor(item);
+  if (item.kind === "openscad") return openScadSpecFromEditor(item);
   return null;
 }
 
-function previewParametricEdit() {
+async function previewParametricEdit() {
   const item = selectedId && component(selectedId);
   const mesh = item && meshes.get(item.id);
-  if (!mesh || !["fastener", "bearing", "turnbuckle", "driveshaft"].includes(item.kind)) return;
+  if (!mesh || !["fastener", "bearing", "turnbuckle", "driveshaft", "openscad"].includes(item.kind)) return;
   const spec = parametricSpecFromEditor(item);
   if (!spec || Object.values(spec).some((value) => typeof value === "number" && !Number.isFinite(value))) return;
   if (item.kind === "fastener" && (spec.lengthMm < 4 || spec.lengthMm > 80)) return;
@@ -2344,19 +2472,39 @@ function previewParametricEdit() {
     || spec.adjustmentMm > 10 || spec.rodDiameterMm < 1.5 || spec.eyeHoleDiameterMm < 1.5)) return;
   if (item.kind === "driveshaft" && (spec.shaftDiameterMm < 2 || spec.pinDiameterMm < 1)) return;
   const previewItem = { ...item, [item.kind]: spec };
-  const geometry = prepareComponentGeometry(createComponentGeometry(previewItem));
+  if (item.kind === "turnbuckle") previewItem.meshUrl = openScadUrl({ id: "turnbuckle" }, spec.openScadParameters);
+  if (item.kind === "openscad") {
+    previewItem.openscad = { ...item.openscad, parameters: spec };
+    previewItem.meshUrl = openScadUrl({ id: item.openscad.id }, spec);
+  }
+  const generation = ++parametricPreviewGeneration;
+  let rawGeometry;
+  try {
+    rawGeometry = createComponentGeometry(previewItem) || await loader.loadAsync(previewItem.meshUrl);
+  } catch (error) {
+    if (generation === parametricPreviewGeneration) toast(error.message, "error");
+    return;
+  }
+  if (generation !== parametricPreviewGeneration || selectedId !== item.id) { rawGeometry.dispose(); return; }
+  const geometry = prepareComponentGeometry(rawGeometry);
   mesh.geometry.dispose();
   mesh.geometry = geometry;
   mesh.userData.geometrySignature = proceduralGeometrySignature(previewItem);
 }
 
+function scheduleParametricPreview() {
+  window.clearTimeout(parametricPreviewTimer);
+  parametricPreviewTimer = window.setTimeout(previewParametricEdit, 180);
+}
+
 function populateParametricEditor(item) {
-  const visible = ["fastener", "bearing", "turnbuckle", "driveshaft"].includes(item.kind);
+  const visible = ["fastener", "bearing", "turnbuckle", "driveshaft", "openscad"].includes(item.kind);
   $("#parametricEditor").classList.toggle("hidden", !visible);
   $("#fastenerEditor").classList.toggle("hidden", item.kind !== "fastener");
   $("#bearingEditor").classList.toggle("hidden", item.kind !== "bearing");
   $("#turnbuckleEditor").classList.toggle("hidden", item.kind !== "turnbuckle");
   $("#driveshaftEditor").classList.toggle("hidden", item.kind !== "driveshaft");
+  $("#openScadEditor").classList.toggle("hidden", item.kind !== "openscad");
   if (!visible) return;
   $("#applyParametricEdit").disabled = item.locked || !item.visible;
   if (item.kind === "fastener") {
@@ -2374,27 +2522,48 @@ function populateParametricEditor(item) {
   } else if (item.kind === "turnbuckle") {
     $("#editTurnbuckleAdjustment").value = item.turnbuckle.adjustmentMm || 0;
     $("#editTurnbuckleRodDiameter").value = item.turnbuckle.rodDiameterMm;
-    $("#editTurnbuckleEyeDiameter").value = item.turnbuckle.eyeHoleDiameterMm || Math.max(2, item.turnbuckle.rodDiameterMm * .75);
-  } else {
+    $("#editTurnbuckleEyeDiameter").value = item.turnbuckle.ballDiameterMm || item.turnbuckle.eyeHoleDiameterMm || 4.8;
+  } else if (item.kind === "driveshaft") {
     $("#editDriveshaftDiameter").value = item.driveshaft.shaftDiameterMm;
     $("#editDriveshaftPinDiameter").value = item.driveshaft.pinDiameterMm;
+  } else {
+    const editor = $("#openScadEditor");
+    editor.replaceChildren();
+    const definition = openScadCatalog.parts.find((part) => part.id === item.openscad.id);
+    for (const [name, parameter] of Object.entries(definition?.parameters || {})) {
+      const label = document.createElement("label");
+      const title = document.createElement("span"); title.textContent = name.replaceAll("_", " ");
+      let input;
+      if (parameter.type === "boolean") {
+        input = document.createElement("select");
+        input.innerHTML = '<option value="true">true</option><option value="false">false</option>';
+      } else {
+        input = document.createElement("input"); input.type = "number";
+        input.min = parameter.min; input.max = parameter.max; input.step = parameter.integer ? 1 : .1;
+      }
+      input.dataset.openscadParam = name; input.dataset.paramType = parameter.type || "number";
+      input.value = String(item.openscad.parameters[name]);
+      input.addEventListener("input", scheduleParametricPreview);
+      label.append(title, input); editor.append(label);
+    }
   }
 }
 
 async function applyParametricEdit() {
   const item = selectedId && component(selectedId);
-  if (!item || !["fastener", "bearing", "turnbuckle", "driveshaft"].includes(item.kind)) return;
+  if (!item || !["fastener", "bearing", "turnbuckle", "driveshaft", "openscad"].includes(item.kind)) return;
   const fastenerSpec = item.kind === "fastener" ? fastenerSpecFromEditor(item) : null;
   let operation;
   if (item.kind === "fastener") operation = { type: "update_fastener", componentId: item.id, ...fastenerSpec, flip: fastenerSpec.flipped };
   else if (item.kind === "bearing") operation = { type: "update_bearing", componentId: item.id, ...bearingSpecFromEditor(item) };
   else if (item.kind === "turnbuckle") operation = { type: "update_turnbuckle", componentId: item.id, ...turnbuckleSpecFromEditor(item) };
-  else operation = { type: "update_driveshaft", componentId: item.id, ...driveshaftSpecFromEditor(item) };
+  else if (item.kind === "driveshaft") operation = { type: "update_driveshaft", componentId: item.id, ...driveshaftSpecFromEditor(item) };
+  else operation = { type: "update_openscad_component", componentId: item.id, parameters: openScadSpecFromEditor(item) };
   const button = $("#applyParametricEdit");
   setBusy(button, true, t("parametric.applying"));
   try {
     await applyOperations([operation], "parametric-edit");
-    syncMesh(component(item.id));
+    await syncMesh(component(item.id));
     const thumbnail = geometryThumbnail(meshes.get(item.id).geometry, component(item.id).color);
     thumbnails.set(item.id, thumbnail);
     const preview = document.querySelector(`[data-thumbnail="${CSS.escape(item.id)}"]`);
@@ -2542,6 +2711,7 @@ function cancelMateMode() {
   $("#mateSummary").classList.add("hidden");
   $("#applyMate").disabled = true;
   $("#addFastenerFromHole").classList.add("hidden");
+  $("#addBallStudFromHole").classList.add("hidden");
   $("#addBearingFromAnchor").classList.add("hidden");
   if (selectedId) renderAnchorTree(component(selectedId));
 }
@@ -2572,6 +2742,7 @@ async function chooseHoleMarker(marker, additive = false) {
     pendingMate = null;
     $("#applyMate").disabled = true;
     $("#addFastenerFromHole").classList.toggle("hidden", !fastenerTargetRefs.length);
+    $("#addBallStudFromHole").classList.toggle("hidden", !fastenerTargetRefs.length);
     $("#addBearingFromAnchor").classList.add("hidden");
     $("#mateStatus").textContent = fastenerTargetRefs.length
       ? t("fastener.selected", { count: fastenerTargetRefs.length })
@@ -2591,6 +2762,7 @@ async function chooseHoleMarker(marker, additive = false) {
     $("#applyMate").disabled = true;
     $("#mateStatus").textContent = t("mate.pickSecond");
     $("#addFastenerFromHole").classList.toggle("hidden", ref.interfaceType !== "hole");
+    $("#addBallStudFromHole").classList.toggle("hidden", ref.interfaceType !== "hole");
     $("#addBearingFromAnchor").classList.toggle("hidden", !["hole", "shaft"].includes(ref.interfaceType));
     syncPlaneMateOptions();
     renderMateMarkers();
@@ -2634,7 +2806,7 @@ async function chooseHoleMarker(marker, additive = false) {
 }
 
 async function chooseTurnbuckleMarker(ref) {
-  if (ref.interfaceType !== "hole") {
+  if (ref.interfaceType !== "point" || interfaceForRef(ref)?.role !== "ball-stud") {
     toast(t("turnbuckle.holesOnly"), "error");
     return;
   }
@@ -3478,6 +3650,7 @@ function portableProject() {
         ...(item.kind === "fastener" ? { fastener: jsonTransform(item.fastener) } : {}),
         ...(item.kind === "bearing" ? { bearing: jsonTransform(item.bearing) } : {}),
         ...(item.kind === "catalog" ? { catalog: jsonTransform(item.catalog) } : {}),
+        ...(item.kind === "openscad" ? { openscad: jsonTransform(item.openscad) } : {}),
         ...(item.kind === "turnbuckle" ? { turnbuckle: jsonTransform(item.turnbuckle) } : {}),
         ...(item.kind === "driveshaft" ? { driveshaft: jsonTransform(item.driveshaft) } : {}),
       })),
@@ -3612,7 +3785,7 @@ function wireEvents() {
   window.addEventListener("i18n:changed", () => {
     renderLocaleOptions();
     if (Object.keys(bearingCatalog).length) renderBearingCatalog();
-    if (rcCatalog.length) renderRcCatalog();
+    if (rcCatalog.length && $("#libraryDialog").open) renderRcCatalog();
     if (!state) return;
     renderComponentList($("#componentSearch").value);
     if (selectedId) selectComponent(selectedId, false);
@@ -3658,11 +3831,13 @@ function wireEvents() {
     if (mateMode) renderMateMarkers();
   });
   $("#addFastenerFromHole").addEventListener("click", openFastenerDialog);
+  $("#addBallStudFromHole").addEventListener("click", openBallStudDialog);
   $("#confirmFastener").addEventListener("click", insertFastener);
   $("#applyParametricEdit").addEventListener("click", applyParametricEdit);
   $("#resetParametricEdit").addEventListener("click", resetParametricEdit);
   $("#toggleComponentLock").addEventListener("click", toggleSelectedComponentLock);
   $("#libraryButton").addEventListener("click", () => {
+    ballStudTargetRef = null;
     renderRcCatalog();
     $("#libraryDialog").showModal();
   });
@@ -3674,7 +3849,7 @@ function wireEvents() {
     "editBearingInner", "editBearingOuter", "editBearingWidth", "editBearingSealColor",
     "editTurnbuckleAdjustment", "editTurnbuckleRodDiameter", "editTurnbuckleEyeDiameter",
     "editDriveshaftDiameter", "editDriveshaftPinDiameter",
-  ]) $("#" + id).addEventListener("input", previewParametricEdit);
+  ]) $("#" + id).addEventListener("input", scheduleParametricPreview);
   $("#editBearingClosure").addEventListener("change", () => {
     const colors = { open: "#c69b46", zz: "#c8cdd1", "2rs": "#202326" };
     $("#editBearingSealColor").value = colors[$("#editBearingClosure").value];
@@ -3714,7 +3889,7 @@ function wireEvents() {
     $("#turnbuckleToggle").classList.remove("active");
     $("#driveshaftToggle").classList.remove("active");
     if (patternMode) {
-      $("#snapFilter").value = "hole";
+      $("#snapFilter").value = "point";
       syncPlaneMateOptions();
       $("#mateStatus").textContent = t("pattern.pick1");
     } else {
@@ -4226,14 +4401,15 @@ async function init() {
   resize();
   animate();
   try {
-    const [assembly, health, bearings, catalog] = await Promise.all([
+    const [assembly, health, bearings, catalog, openScad] = await Promise.all([
       api("/api/assembly"), api("/api/health"), api("/api/catalog/bearings"), api("/api/catalog/rc"),
+      api("/api/catalog/openscad"),
     ]);
     state = assembly;
     bearingCatalog = bearings;
     rcCatalog = catalog;
+    openScadCatalog = openScad;
     renderBearingCatalog();
-    renderRcCatalog();
     $("#aiBadge").textContent = health.aiConfigured ? `AI ${health.model}` : t("health.aiManual");
     $("#aiBadge").className = `badge ${health.aiConfigured ? "ok" : "warn"}`;
     $("#freecadBadge").textContent = health.freecadConfigured ? t("health.freecadReady") : t("health.freecadMissing");

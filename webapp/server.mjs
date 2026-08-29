@@ -14,6 +14,12 @@ const DATA_FILE = path.resolve(
 const BUILD_DIR = path.resolve(
   process.env.RC_CAR_BUILD_DIR || path.join(PROJECT_DIR, "build", "web"),
 );
+const OPENSCAD_LIBRARY_DIR = path.join(PROJECT_DIR, "vendor", "rc-openscad-library");
+const OPENSCAD_CATALOG = JSON.parse(
+  await fs.readFile(path.join(OPENSCAD_LIBRARY_DIR, "catalog.json"), "utf8"),
+);
+const OPENSCAD_PARTS = new Map(OPENSCAD_CATALOG.parts.map((item) => [item.id, item]));
+const OPENSCAD_CACHE_DIR = path.join(BUILD_DIR, "openscad-cache");
 const HOST = process.env.HOST || "127.0.0.1";
 const PORT = Number(process.env.PORT || 4173);
 const MAX_BODY_BYTES = 1024 * 1024;
@@ -136,9 +142,40 @@ const RC_COMPONENT_CATALOG = Object.freeze([
   { id: "battery-4s-1-8", category: "power", scale: "1/8", label: "4S hardcase LiPo", description: "1/8 hardcase LiPo envelope", shape: { type: "box", widthMm: 139, depthMm: 47, heightMm: 48 } },
 ]);
 
-const isGeneratedComponent = (component) => ["fastener", "bearing", "instance", "catalog", "turnbuckle", "driveshaft"].includes(component.kind);
+const isGeneratedComponent = (component) => ["fastener", "bearing", "instance", "catalog", "openscad", "turnbuckle", "driveshaft"].includes(component.kind);
 
 let mutationQueue = Promise.resolve();
+let openScadQueue = Promise.resolve();
+const openScadInFlight = new Map();
+
+function validatedOpenScadParameters(partId, supplied = {}) {
+  const part = OPENSCAD_PARTS.get(String(partId || ""));
+  if (!part) throw new HttpError(404, `Unknown OpenSCAD catalog part: ${partId}`);
+  const unknown = Object.keys(supplied).filter((name) => !Object.hasOwn(part.parameters, name));
+  if (unknown.length) throw new HttpError(400, `Unknown OpenSCAD parameters: ${unknown.join(", ")}`);
+  const parameters = {};
+  for (const [name, definition] of Object.entries(part.parameters)) {
+    const raw = Object.hasOwn(supplied, name) ? supplied[name] : definition.default;
+    if (definition.type === "boolean") {
+      if (![true, false, "true", "false"].includes(raw)) throw new HttpError(400, `${name} must be boolean`);
+      parameters[name] = raw === true || raw === "true";
+      continue;
+    }
+    const value = Number(raw);
+    if (!Number.isFinite(value) || value < definition.min || value > definition.max) {
+      throw new HttpError(400, `${name} must be between ${definition.min} and ${definition.max}`);
+    }
+    if (definition.integer && !Number.isInteger(value)) throw new HttpError(400, `${name} must be an integer`);
+    parameters[name] = value;
+  }
+  return { part, parameters };
+}
+
+function openScadMeshUrl(partId, parameters) {
+  const query = new URLSearchParams();
+  for (const [name, value] of Object.entries(parameters)) query.set(name, String(value));
+  return `/api/openscad/${encodeURIComponent(partId)}.stl?${query}`;
+}
 
 function jsonClone(value) {
   return JSON.parse(JSON.stringify(value));
@@ -582,31 +619,148 @@ function createCatalogComponent(state, operation) {
   return component;
 }
 
+function openScadComponentSize(partId, parameters) {
+  if (partId === "turnbuckle") {
+    const diameter = parameters.ball_d + parameters.socket_wall * 2;
+    return [diameter, diameter, parameters.center_distance + parameters.adjustment];
+  }
+  if (partId === "driveshaft") return [parameters.pin_length, parameters.head_d, parameters.center_distance + parameters.head_d];
+  if (["spur_gear", "pinion"].includes(partId)) {
+    const diameter = parameters.module_size * (parameters.teeth + 2);
+    return [diameter, diameter, Math.max(parameters.width, parameters.hub_width || 0)];
+  }
+  if (partId === "belt") {
+    const diameter = Math.max(parameters.pulley_d_1, parameters.pulley_d_2) + parameters.belt_thickness;
+    return [parameters.center_distance + diameter, diameter, parameters.belt_width];
+  }
+  if (partId === "motor") return [parameters.can_d + parameters.fin_height * 2, parameters.can_d + parameters.fin_height * 2, parameters.can_length + parameters.shaft_length];
+  if (partId === "esc") return [parameters.width + parameters.mount_tab_width * 2, parameters.depth, parameters.height + parameters.fan_height];
+  if (partId === "receiver_box") return [
+    Math.max(parameters.inner_width + parameters.wall * 2, parameters.mount_spacing + parameters.mount_hole_d + parameters.wall * 2),
+    parameters.inner_depth + parameters.wall * 2,
+    parameters.inner_height + parameters.wall + parameters.lid_thickness + .4,
+  ];
+  if (partId === "body_clip") return [parameters.overall_length, parameters.loop_width * 2, parameters.wire_d];
+  throw new HttpError(400, `Unsupported free-placement OpenSCAD part: ${partId}`);
+}
+
+function createOpenScadComponent(state, operation) {
+  const { part, parameters } = validatedOpenScadParameters(operation.partId, operation.parameters || {});
+  if (part.id === "ball_stud") {
+    const target = snapInterface(state, operation.target);
+    if (target.type !== "hole") throw new HttpError(400, "Ball studs can only be inserted into hole magnets");
+    const openingSide = [-1, 1].includes(Number(target.ref.openingSide)) ? Number(target.ref.openingSide) : 1;
+    const directionSign = operation.flip ? -openingSide : openingSide;
+    const outward = transformedAxis(target.component, target.item.localAxis).map((value) => value * directionSign);
+    const openingLocal = target.item.localCenterMm.map(
+      (value, index) => value + target.item.localAxis[index] * target.item.depthMm * .5 * directionSign,
+    );
+    const openingWorld = transformedPoint(target.component, openingLocal);
+    const minimumZ = -parameters.thread_length;
+    const maximumZ = parameters.hex_height + parameters.neck_length + parameters.ball_d;
+    const localCenterZ = (minimumZ + maximumZ) / 2;
+    const ballCenterZ = parameters.hex_height + parameters.neck_length + parameters.ball_d / 2 - localCenterZ;
+    const positionMm = openingWorld.map((value, index) => value + outward[index] * localCenterZ);
+    const quaternionXyzw = quaternionBetweenVectors([0, 0, 1], outward);
+    const diameter = Math.max(parameters.ball_d, parameters.hex_af / Math.cos(Math.PI / 6));
+    const sizeMm = [diameter, diameter, maximumZ - minimumZ];
+    const id = `openscad_ball_stud_${crypto.randomUUID().replaceAll("-", "_")}`;
+    const component = {
+      id, label: `Ø${parameters.ball_d} M${parameters.thread_d} ball stud`, status: "generated-openscad", kind: "openscad", meshUrl: openScadMeshUrl(part.id, parameters),
+      triangles: 2400, sizeMm,
+      baseBoundsMm: {
+        min: positionMm.map((value, axis) => value - sizeMm[axis] / 2),
+        max: positionMm.map((value, axis) => value + sizeMm[axis] / 2), center: jsonClone(positionMm),
+      },
+      transform: { positionMm, quaternionXyzw },
+      baseTransform: { positionMm: jsonClone(positionMm), quaternionXyzw: jsonClone(quaternionXyzw) },
+      visible: true, locked: false, color: "#aeb4ba", appearance: "steel",
+      groupId: ensureGeneratedGroup(state, "Ball studs", "ball-studs"),
+      openscad: {
+        id: part.id, category: part.category, description: part.description, parameters,
+        target: { ...target.ref, openingSide: directionSign }, flipped: Boolean(operation.flip),
+      },
+      interfaces: {
+        holes: [], planes: [], shafts: [], seats: [], edges: [], centers: [], midplanes: [],
+        points: [{ id: "ball-center", role: "ball-stud", diameterMm: parameters.ball_d, localCenterMm: [0, 0, ballCenterZ] }],
+      },
+    };
+    operation.componentId = id;
+    state.components.push(component);
+    return component;
+  }
+  if (part.id === "turnbuckle") {
+    throw new HttpError(400, "Use Auto turnbuckle after installing and selecting two ball studs");
+  }
+  const sizeMm = openScadComponentSize(part.id, parameters);
+  const positionMm = Array.isArray(operation.positionMm)
+    ? finiteVector(operation.positionMm, 3, "positionMm") : dropPositionAboveAssembly(state, sizeMm);
+  const id = `openscad_${part.id}_${crypto.randomUUID().replaceAll("-", "_")}`;
+  const component = {
+    id, label: part.label, status: "generated-openscad", kind: "openscad", meshUrl: openScadMeshUrl(part.id, parameters),
+    triangles: 5000, sizeMm,
+    baseBoundsMm: { min: positionMm.map((value, axis) => value - sizeMm[axis] / 2), max: positionMm.map((value, axis) => value + sizeMm[axis] / 2), center: jsonClone(positionMm) },
+    transform: { positionMm, quaternionXyzw: [0, 0, 0, 1] },
+    baseTransform: { positionMm: jsonClone(positionMm), quaternionXyzw: [0, 0, 0, 1] },
+    visible: true, locked: false, color: "#788187", appearance: part.category === "electronics" ? "plastic-matte" : "steel",
+    groupId: ensureGeneratedGroup(state, `OpenSCAD · ${part.category}`, `openscad-${part.category}`),
+    openscad: { id: part.id, category: part.category, description: part.description, parameters },
+    interfaces: { holes: [], planes: [], shafts: [], seats: [], edges: [], points: [], centers: [], midplanes: [] },
+  };
+  operation.componentId = id;
+  state.components.push(component);
+  return component;
+}
+
+function updateOpenScadComponent(state, operation) {
+  const existing = componentById(state, String(operation.componentId || ""));
+  if (existing.kind !== "openscad") throw new HttpError(400, "Selected component is not an OpenSCAD catalog part");
+  if (existing.locked) throw new HttpError(409, `${existing.label} is locked as a reference`);
+  const generated = createOpenScadComponent(state, {
+    type: "add_openscad_component", partId: existing.openscad.id,
+    parameters: operation.parameters,
+    target: jsonClone(existing.openscad.target), flip: existing.openscad.flipped,
+    positionMm: existing.transform.positionMm,
+  });
+  if (existing.openscad.id !== "ball_stud") {
+    generated.transform = jsonClone(existing.transform);
+    generated.baseTransform = jsonClone(existing.baseTransform);
+  }
+  operation.componentId = existing.id;
+  return replaceParametricComponent(state, existing, generated);
+}
+
 function createTurnbuckleComponent(state, operation) {
   const first = snapInterface(state, operation.first);
   const second = snapInterface(state, operation.second);
-  if (first.type !== "hole" || second.type !== "hole") throw new HttpError(400, "Turnbuckles require two hole magnets");
-  const openingPoint = (target) => {
+  const ballTarget = (target) => target.type === "point" && target.item.role === "ball-stud";
+  const legacyHoles = operation.legacyHoleFallback && first.type === "hole" && second.type === "hole";
+  if (!(ballTarget(first) && ballTarget(second)) && !legacyHoles) {
+    throw new HttpError(400, "Turnbuckles require two installed ball-stud centers");
+  }
+  const targetPoint = (target) => {
+    if (target.type === "point") return transformedPoint(target.component, target.item.localCenterMm);
     const side = [-1, 1].includes(Number(target.ref.openingSide)) ? Number(target.ref.openingSide) : 1;
     const local = target.item.localCenterMm.map(
       (value, axis) => value + target.item.localAxis[axis] * target.item.depthMm * .5 * side,
     );
     return transformedPoint(target.component, local);
   };
-  const start = openingPoint(first);
-  const end = openingPoint(second);
+  const start = targetPoint(first);
+  const end = targetPoint(second);
   const direction = end.map((value, axis) => value - start[axis]);
   const anchorDistanceMm = Math.hypot(...direction);
   if (anchorDistanceMm < 12 || anchorDistanceMm > 300) {
-    throw new HttpError(400, "Turnbuckle hole distance must be between 12 and 300 mm");
+    throw new HttpError(400, "Turnbuckle ball-center distance must be between 12 and 300 mm");
   }
   const rodDiameterMm = Number(operation.rodDiameterMm || 4);
   if (!Number.isFinite(rodDiameterMm) || rodDiameterMm < 1.5 || rodDiameterMm > 12) {
     throw new HttpError(400, "Turnbuckle rod diameter must be between 1.5 and 12 mm");
   }
-  const eyeHoleDiameterMm = Number(operation.eyeHoleDiameterMm || Math.max(first.item.diameterMm, second.item.diameterMm));
-  if (!Number.isFinite(eyeHoleDiameterMm) || eyeHoleDiameterMm < 1.5 || eyeHoleDiameterMm > 12) {
-    throw new HttpError(400, "Turnbuckle eye diameter must be between 1.5 and 12 mm");
+  const ballDiameterMm = Number(operation.ballDiameterMm || operation.eyeHoleDiameterMm
+    || Math.max(first.item.diameterMm, second.item.diameterMm));
+  if (!Number.isFinite(ballDiameterMm) || ballDiameterMm < 3 || ballDiameterMm > 10) {
+    throw new HttpError(400, "Turnbuckle ball diameter must be between 3 and 10 mm");
   }
   const adjustmentMm = Number(operation.adjustmentMm || 0);
   if (!Number.isFinite(adjustmentMm) || adjustmentMm < -10 || adjustmentMm > 10) {
@@ -614,15 +768,29 @@ function createTurnbuckleComponent(state, operation) {
   }
   const centerDistanceMm = anchorDistanceMm + adjustmentMm;
   if (centerDistanceMm < 12) throw new HttpError(400, "Adjusted turnbuckle length is too short");
-  const endDiameterMm = Math.max(rodDiameterMm * 2.2, eyeHoleDiameterMm + rodDiameterMm * 1.3);
+  const socketClearanceMm = Number(operation.socketClearanceMm ?? .18);
+  const socketWallMm = Number(operation.socketWallMm ?? 1.4);
+  if (!Number.isFinite(socketClearanceMm) || socketClearanceMm < .05 || socketClearanceMm > .8) {
+    throw new HttpError(400, "Turnbuckle socket clearance must be between 0.05 and 0.8 mm");
+  }
+  if (!Number.isFinite(socketWallMm) || socketWallMm < .8 || socketWallMm > 4) {
+    throw new HttpError(400, "Turnbuckle socket wall must be between 0.8 and 4 mm");
+  }
+  const endDiameterMm = ballDiameterMm + socketWallMm * 2;
   const rodEndLengthMm = Math.min(Math.max(endDiameterMm * 1.35, 8), centerDistanceMm * .3);
   const adjusterLengthMm = Math.min(Math.max(rodDiameterMm * 3.2, 10), centerDistanceMm * .32);
   const hexAcrossFlatsMm = Math.max(rodDiameterMm * 1.65, 6);
+  const openScadParameters = validatedOpenScadParameters("turnbuckle", {
+    center_distance: anchorDistanceMm, adjustment: adjustmentMm, ball_d: ballDiameterMm,
+    socket_clearance: socketClearanceMm, socket_wall: socketWallMm, rod_d: rodDiameterMm,
+    rod_end_length: rodEndLengthMm, adjuster_length: adjusterLengthMm,
+    adjuster_af: hexAcrossFlatsMm, window_ratio: .72,
+  }).parameters;
   const positionMm = start.map((value, axis) => (value + end[axis]) / 2);
   const quaternionXyzw = quaternionBetweenVectors([0, 0, 1], direction);
   const id = `turnbuckle_${crypto.randomUUID().replaceAll("-", "_")}`;
   const component = {
-    id, label: `Turnbuckle ${centerDistanceMm.toFixed(1)} mm`, status: "generated-turnbuckle", kind: "turnbuckle", meshUrl: null,
+    id, label: `Turnbuckle ${centerDistanceMm.toFixed(1)} mm`, status: "generated-turnbuckle", kind: "turnbuckle", meshUrl: openScadMeshUrl("turnbuckle", openScadParameters),
     triangles: 256, sizeMm: [endDiameterMm, endDiameterMm, centerDistanceMm + endDiameterMm],
     baseBoundsMm: {
       min: positionMm.map((value, axis) => value - [endDiameterMm / 2, endDiameterMm / 2, (centerDistanceMm + endDiameterMm) / 2][axis]),
@@ -634,8 +802,9 @@ function createTurnbuckleComponent(state, operation) {
     visible: true, locked: false, color: "#a4aaae", appearance: "steel",
     groupId: ensureGeneratedGroup(state, "Steering links", "steering-links"),
     turnbuckle: {
-      anchorDistanceMm, centerDistanceMm, adjustmentMm, rodDiameterMm, eyeHoleDiameterMm,
-      endDiameterMm, rodEndLengthMm, adjusterLengthMm, hexAcrossFlatsMm,
+      anchorDistanceMm, centerDistanceMm, adjustmentMm, rodDiameterMm,
+      ballDiameterMm, eyeHoleDiameterMm: ballDiameterMm, socketClearanceMm, socketWallMm,
+      endDiameterMm, rodEndLengthMm, adjusterLengthMm, hexAcrossFlatsMm, openScadParameters,
       first: jsonClone(first.ref), second: jsonClone(second.ref),
     },
     interfaces: { holes: [], planes: [], shafts: [], seats: [], edges: [], points: [], centers: [], midplanes: [] },
@@ -653,8 +822,11 @@ function updateTurnbuckleComponent(state, operation) {
     type: "add_turnbuckle",
     first: jsonClone(existing.turnbuckle.first), second: jsonClone(existing.turnbuckle.second),
     rodDiameterMm: operation.rodDiameterMm,
-    eyeHoleDiameterMm: operation.eyeHoleDiameterMm,
+    ballDiameterMm: operation.ballDiameterMm || operation.eyeHoleDiameterMm,
+    socketClearanceMm: operation.socketClearanceMm,
+    socketWallMm: operation.socketWallMm,
     adjustmentMm: operation.adjustmentMm,
+    legacyHoleFallback: existing.turnbuckle.first?.interfaceType === "hole",
   });
   generated.transform = jsonClone(existing.transform);
   generated.baseTransform = jsonClone(existing.baseTransform);
@@ -1305,6 +1477,12 @@ export function applyOperation(state, operation) {
   if (operation.type === "add_catalog_component") {
     return createCatalogComponent(state, operation).id;
   }
+  if (operation.type === "add_openscad_component") {
+    return createOpenScadComponent(state, operation).id;
+  }
+  if (operation.type === "update_openscad_component") {
+    return updateOpenScadComponent(state, operation).id;
+  }
   if (operation.type === "add_turnbuckle") {
     return createTurnbuckleComponent(state, operation).id;
   }
@@ -1607,6 +1785,7 @@ export function loadProjectIntoState(state, project) {
   const savedBearings = [];
   const savedInstances = [];
   const savedCatalogComponents = [];
+  const savedOpenScadComponents = [];
   const savedTurnbuckles = [];
   const savedDriveshafts = [];
   for (const item of saved.components) {
@@ -1614,6 +1793,7 @@ export function loadProjectIntoState(state, project) {
     if (item?.kind === "bearing") { savedBearings.push(item); continue; }
     if (item?.kind === "instance") { savedInstances.push(item); continue; }
     if (item?.kind === "catalog") { savedCatalogComponents.push(item); continue; }
+    if (item?.kind === "openscad") { savedOpenScadComponents.push(item); continue; }
     if (item?.kind === "turnbuckle") { savedTurnbuckles.push(item); continue; }
     if (item?.kind === "driveshaft") { savedDriveshafts.push(item); continue; }
     const component = currentById.get(String(item?.id || ""));
@@ -1732,14 +1912,28 @@ export function loadProjectIntoState(state, project) {
     restoreGeneratedPresentation(generated, savedCatalog, /^catalog_[a-zA-Z0-9_-]{1,160}$/, "catalog component");
   }
 
+  for (const savedOpenScad of savedOpenScadComponents) {
+    const generated = createOpenScadComponent(state, {
+      type: "add_openscad_component", partId: savedOpenScad.openscad?.id,
+      parameters: savedOpenScad.openscad?.parameters,
+      target: savedOpenScad.openscad?.target,
+      flip: savedOpenScad.openscad?.flipped,
+      positionMm: savedOpenScad.transform?.positionMm,
+    });
+    restoreGeneratedPresentation(generated, savedOpenScad, /^openscad_[a-zA-Z0-9_-]{1,180}$/, "OpenSCAD component");
+  }
+
   for (const savedTurnbuckle of savedTurnbuckles) {
     const generated = createTurnbuckleComponent(state, {
       type: "add_turnbuckle",
       first: savedTurnbuckle.turnbuckle?.first,
       second: savedTurnbuckle.turnbuckle?.second,
       rodDiameterMm: savedTurnbuckle.turnbuckle?.rodDiameterMm,
-      eyeHoleDiameterMm: savedTurnbuckle.turnbuckle?.eyeHoleDiameterMm,
+      ballDiameterMm: savedTurnbuckle.turnbuckle?.ballDiameterMm || savedTurnbuckle.turnbuckle?.eyeHoleDiameterMm,
+      socketClearanceMm: savedTurnbuckle.turnbuckle?.socketClearanceMm,
+      socketWallMm: savedTurnbuckle.turnbuckle?.socketWallMm,
       adjustmentMm: savedTurnbuckle.turnbuckle?.adjustmentMm,
+      legacyHoleFallback: savedTurnbuckle.turnbuckle?.first?.interfaceType === "hole",
     });
     restoreGeneratedPresentation(generated, savedTurnbuckle, /^turnbuckle_[a-zA-Z0-9_-]{1,120}$/, "turnbuckle");
   }
@@ -1975,7 +2169,7 @@ async function commitOperations(operations, source = "human", metadata = null) {
           "visibility", "color", "material", "opacity", "rename_component", "assign_group",
           "create_group", "rename_group", "delete_group",
           "rename_ungrouped", "add_fastener", "add_bearing", "update_fastener", "update_bearing",
-          "add_catalog_component", "add_turnbuckle", "update_turnbuckle",
+          "add_catalog_component", "add_openscad_component", "update_openscad_component", "add_turnbuckle", "update_turnbuckle",
           "add_driveshaft", "update_driveshaft", "duplicate_component", "lock_component",
         ].includes(item.type))
         .map((item) => item.componentId),
@@ -2139,6 +2333,46 @@ function runProcess(command, args, options = {}) {
   });
 }
 
+async function ensureOpenScadMesh(partId, suppliedParameters) {
+  const { part, parameters } = validatedOpenScadParameters(partId, suppliedParameters);
+  const source = path.join(OPENSCAD_LIBRARY_DIR, part.source);
+  const dependencyContent = await Promise.all([
+    fs.readFile(source),
+    fs.readFile(path.join(OPENSCAD_LIBRARY_DIR, "lib", "common.scad")),
+    fs.readFile(path.join(OPENSCAD_LIBRARY_DIR, "lib", "involute_gear.scad")),
+  ]);
+  const hash = crypto.createHash("sha256")
+    .update(Buffer.concat(dependencyContent))
+    .update(JSON.stringify(parameters, Object.keys(parameters).sort()))
+    .digest("hex").slice(0, 20);
+  const filename = `${part.id}-${hash}.stl`;
+  const output = path.join(OPENSCAD_CACHE_DIR, filename);
+  if (existsSync(output)) return { output, filename, parameters };
+  if (openScadInFlight.has(filename)) return openScadInFlight.get(filename);
+  const task = openScadQueue.then(async () => {
+    if (existsSync(output)) return { output, filename, parameters };
+    await fs.mkdir(OPENSCAD_CACHE_DIR, { recursive: true });
+    const temporary = `${output}.${process.pid}.tmp.stl`;
+    const args = ["-o", temporary, "-D", "resolution=32"];
+    for (const [name, value] of Object.entries(parameters).sort(([a], [b]) => a.localeCompare(b))) {
+      args.push("-D", `${name}=${typeof value === "boolean" ? String(value) : Number(value)}`);
+    }
+    args.push(source);
+    try {
+      await runProcess("/usr/bin/openscad", args, { timeoutMs: 120000 });
+      const stat = await fs.stat(temporary).catch(() => null);
+      if (!stat?.isFile() || stat.size < 84) throw new HttpError(500, `OpenSCAD produced no mesh for ${part.id}`);
+      await fs.rename(temporary, output);
+      return { output, filename, parameters };
+    } finally {
+      await fs.rm(temporary, { force: true }).catch(() => {});
+    }
+  });
+  openScadQueue = task.catch(() => {});
+  openScadInFlight.set(filename, task);
+  try { return await task; } finally { openScadInFlight.delete(filename); }
+}
+
 async function availableMemoryMb() {
   try {
     const meminfo = await fs.readFile("/proc/meminfo", "utf8");
@@ -2170,7 +2404,21 @@ async function buildFreeCad(runExactValidation, exportStep = false) {
     ? path.join(BUILD_DIR, `rc_car_assembly-r${revision}.step`)
     : null;
   const reportPath = path.join(BUILD_DIR, `collisions-r${revision}.json`);
-  await atomicWriteJson(stateSnapshot, state);
+  const exportState = jsonClone(state);
+  for (const component of exportState.components) {
+    if (!component.visible) continue;
+    let partId = null;
+    let parameters = null;
+    if (component.kind === "openscad") {
+      partId = component.openscad.id;
+      parameters = component.openscad.parameters;
+    } else if (component.kind === "turnbuckle" && component.turnbuckle.openScadParameters) {
+      partId = "turnbuckle";
+      parameters = component.turnbuckle.openScadParameters;
+    }
+    if (partId) component.generatedMeshPath = (await ensureOpenScadMesh(partId, parameters)).output;
+  }
+  await atomicWriteJson(stateSnapshot, exportState);
   const applyArgs = [
     "tools/apply_web_assembly_state.py", "--pass", state.baseAssembly, stateSnapshot, outputModel,
   ];
@@ -2292,6 +2540,15 @@ async function route(request, response) {
   }
   if (request.method === "GET" && url.pathname === "/api/catalog/rc") {
     return sendJson(response, 200, RC_COMPONENT_CATALOG);
+  }
+  if (request.method === "GET" && url.pathname === "/api/catalog/openscad") {
+    return sendJson(response, 200, OPENSCAD_CATALOG);
+  }
+  const openScadMatch = url.pathname.match(/^\/api\/openscad\/([a-z0-9_-]+)\.stl$/);
+  if (["GET", "HEAD"].includes(request.method) && openScadMatch) {
+    const supplied = Object.fromEntries(url.searchParams.entries());
+    const generated = await ensureOpenScadMesh(openScadMatch[1], supplied);
+    return sendFile(response, OPENSCAD_CACHE_DIR, generated.filename, false, request.method === "HEAD");
   }
   if (request.method === "GET" && url.pathname === "/api/assembly") {
     return sendJson(response, 200, clientState(await readState()));

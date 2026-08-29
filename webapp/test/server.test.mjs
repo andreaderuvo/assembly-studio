@@ -318,20 +318,32 @@ test("catalogo RC e turnbuckle automatico generano componenti leggeri e parametr
   assert.equal(servo.interfaces.holes.length, 4);
   assert.ok(servo.interfaces.holes.every((hole) => hole.diameterMm === 3.2));
 
+  const firstBallId = applyOperation(state, {
+    type: "add_openscad_component", partId: "ball_stud",
+    target: { componentId: "first", interfaceType: "hole", interfaceId: "link", openingSide: 1 },
+  });
+  const secondBallId = applyOperation(state, {
+    type: "add_openscad_component", partId: "ball_stud",
+    target: { componentId: "second", interfaceType: "hole", interfaceId: "link", openingSide: 1 },
+  });
+  const firstBall = state.components.find((item) => item.id === firstBallId);
+  assert.equal(firstBall.openscad.parameters.ball_d, 4.8);
+  assert.equal(firstBall.interfaces.points[0].role, "ball-stud");
+
   const linkId = applyOperation(state, {
     type: "add_turnbuckle",
-    first: { componentId: "first", interfaceType: "hole", interfaceId: "link", openingSide: 1 },
-    second: { componentId: "second", interfaceType: "hole", interfaceId: "link", openingSide: 1 },
+    first: { componentId: firstBallId, interfaceType: "point", interfaceId: "ball-center" },
+    second: { componentId: secondBallId, interfaceType: "point", interfaceId: "ball-center" },
   });
   const link = state.components.find((item) => item.id === linkId);
   assert.equal(link.kind, "turnbuckle");
   assert.equal(link.turnbuckle.centerDistanceMm, 30);
   assert.equal(link.turnbuckle.adjustmentMm, 0);
-  assert.equal(link.turnbuckle.eyeHoleDiameterMm, 3);
-  assert.deepEqual(link.transform.positionMm, [15, 0, 1]);
+  assert.equal(link.turnbuckle.ballDiameterMm, 4.8);
+  assert.deepEqual(link.transform.positionMm, [15, 0, 6.6]);
   applyOperation(state, {
     type: "update_turnbuckle", componentId: linkId,
-    adjustmentMm: 2.5, rodDiameterMm: 3, eyeHoleDiameterMm: 3.2,
+    adjustmentMm: 2.5, rodDiameterMm: 3, ballDiameterMm: 4.8,
   });
   assert.equal(link.turnbuckle.centerDistanceMm, 32.5);
   assert.equal(link.turnbuckle.rodDiameterMm, 3);
@@ -356,6 +368,7 @@ test("catalogo RC e turnbuckle automatico generano componenti leggeri e parametr
     },
   });
   assert.equal(restored.components.filter((item) => item.kind === "catalog").length, 2);
+  assert.equal(restored.components.filter((item) => item.kind === "openscad").length, 2);
   assert.equal(restored.components.filter((item) => item.kind === "turnbuckle").length, 1);
   assert.equal(restored.components.filter((item) => item.kind === "driveshaft").length, 1);
   assert.equal(restored.components.find((item) => item.kind === "turnbuckle").turnbuckle.adjustmentMm, 2.5);

@@ -10,6 +10,7 @@ from pathlib import Path
 
 import FreeCAD as App
 import Import
+import Mesh
 import Part
 
 
@@ -271,6 +272,20 @@ def place_shape(shape, transform):
     return shape
 
 
+def shape_from_stl(filename):
+    mesh = Mesh.Mesh(str(filename))
+    shape = Part.Shape()
+    shape.makeShapeFromMesh(mesh.Topology, 0.05)
+    if len(shape.Shells) == 1:
+        try:
+            solid = Part.makeSolid(shape.Shells[0])
+            if solid.isValid():
+                return solid
+        except Exception:
+            pass
+    return shape
+
+
 def main():
     args = list(sys.argv)
     try:
@@ -368,6 +383,24 @@ def main():
                 pass
             changed += 1
             continue
+        if component.get("kind") == "openscad":
+            if not bool(component.get("visible", True)):
+                continue
+            obj = doc.addObject("Part::Feature", component["id"])
+            obj.Label = component.get("label", component["id"])
+            obj.addProperty("App::PropertyString", "OpenSCADPart", "OpenSCAD")
+            obj.addProperty("App::PropertyString", "Parameters", "OpenSCAD")
+            obj.OpenSCADPart = str(component["openscad"]["id"])
+            obj.Parameters = json.dumps(component["openscad"].get("parameters", {}), sort_keys=True)
+            obj.Shape = place_shape(shape_from_stl(component["generatedMeshPath"]), component["transform"])
+            try:
+                color = rgb_color(component.get("color"))
+                if color is not None:
+                    obj.ViewObject.ShapeColor = color
+            except Exception:
+                pass
+            changed += 1
+            continue
         if component.get("kind") in ("catalog", "turnbuckle", "driveshaft"):
             if not bool(component.get("visible", True)):
                 continue
@@ -384,7 +417,7 @@ def main():
                 obj.addProperty("App::PropertyLength", "RodDiameter", "Turnbuckle")
                 obj.CenterDistance = float(component["turnbuckle"]["centerDistanceMm"])
                 obj.RodDiameter = float(component["turnbuckle"]["rodDiameterMm"])
-                shape = turnbuckle_shape(component)
+                shape = shape_from_stl(component["generatedMeshPath"]) if component.get("generatedMeshPath") else turnbuckle_shape(component)
             else:
                 obj.addProperty("App::PropertyLength", "CenterDistance", "Driveshaft")
                 obj.addProperty("App::PropertyLength", "ShaftDiameter", "Driveshaft")
